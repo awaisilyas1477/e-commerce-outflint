@@ -1,0 +1,314 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect, useId, useRef, type FormEvent } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
+import { useNavCollections } from "@/app/providers/nav-collections-provider";
+import { useHeaderNavMenuItems } from "@/app/providers/header-nav-menu-provider";
+import type { NavCollectionLink } from "@/app/lib/nav-collections";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
+
+/**
+ * Default when caller does not pass `panelOffsetClass`.
+ * Prefer passing offsets from `Header` so they match whether `TopStrip` is visible.
+ */
+const HEADER_TOP_OFFSET =
+  "top-[101px] sm:top-[109px] md:top-[120px]";
+
+function popularSearchTerms(
+  links: NavCollectionLink[],
+  headerNavLabels: string[],
+): string[] {
+  const fromCollections = links.map((c) => c.name);
+  const merged = [...fromCollections, ...headerNavLabels];
+  return [...new Set(merged)].slice(0, 14);
+}
+
+type Props = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  /** Render only trigger button when false (no panel/effects). */
+  renderPanel?: boolean;
+  /** Optional top offset utility classes for panel/scrim positioning. */
+  panelOffsetClass?: string;
+};
+
+/** Match `components/cart/CartDrawer.tsx` for open/close rhythm */
+const easeSilk: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const easeSoftIn: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+/** Slow, smooth open */
+const panelEnterTransition = {
+  duration: 0.68,
+  ease: [0.25, 1, 0.5, 1] as const,
+};
+
+/** Panel fully leaves like cart drawer slide (cart uses `x` 0.42s + easeSoftIn) */
+const panelExitTransition = {
+  duration: 0.42,
+  ease: easeSoftIn,
+};
+
+/** Same duration as panel exit so both finish together (avoids staggered “pop” before onExitComplete) */
+const scrimExitTransition = {
+  duration: 0.42,
+  ease: easeSilk,
+};
+
+const scrimEnterTransition = {
+  duration: 0.45,
+  ease: easeSilk,
+};
+
+export function HeaderSearchPopover({
+  open,
+  onOpenChange,
+  renderPanel = true,
+  panelOffsetClass = HEADER_TOP_OFFSET,
+}: Props) {
+  const navLinks = useNavCollections();
+  const headerNavItems = useHeaderNavMenuItems();
+  const router = useRouter();
+  const reduceMotion = useReducedMotion();
+  const panelId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  /** Pairs with global `scroll-lock` ref-count (unlock after exit animation completes). */
+  const scrollLockedRef = useRef(false);
+  /** Latest `open` for exit callback — avoid unlocking if user re-opened before exit finished. */
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+  const terms = popularSearchTerms(
+    navLinks,
+    headerNavItems.map((h) => h.label),
+  );
+
+  useEffect(() => {
+    if (!open || !renderPanel) return;
+    const t = window.setTimeout(() => inputRef.current?.focus(), 50);
+    return () => window.clearTimeout(t);
+  }, [open, renderPanel]);
+
+  /** Close Shop mega menu so it does not sit in the gap above the search layer. */
+  useEffect(() => {
+    if (!open || !renderPanel) return;
+    window.dispatchEvent(new CustomEvent("storefront:close-mega-menus"));
+  }, [open, renderPanel]);
+
+  useEffect(() => {
+    if (!open || !renderPanel) return;
+    if (!scrollLockedRef.current) {
+      lockScroll();
+      scrollLockedRef.current = true;
+    }
+  }, [open, renderPanel]);
+
+  const releaseBodyScrollLock = () => {
+    if (!scrollLockedRef.current) return;
+    unlockScroll();
+    scrollLockedRef.current = false;
+  };
+
+  useEffect(() => {
+    return () => {
+      if (scrollLockedRef.current) {
+        unlockScroll();
+        scrollLockedRef.current = false;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open || !renderPanel) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onOpenChange(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onOpenChange, renderPanel]);
+
+  useEffect(() => {
+    if (!open || !renderPanel) return;
+    const onPointerDown = (e: PointerEvent) => {
+      const t = e.target as Node | null;
+      if (!t) return;
+      if (panelRef.current?.contains(t)) return;
+      if (triggerRef.current?.contains(t)) return;
+      onOpenChange(false);
+    };
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => window.removeEventListener("pointerdown", onPointerDown);
+  }, [open, onOpenChange, renderPanel]);
+
+  const goSearch = (q: string) => {
+    const query = q.trim();
+    if (!query) return;
+    onOpenChange(false);
+    router.push(`/search?q=${encodeURIComponent(query)}`);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const q = String(fd.get("q") ?? "");
+    goSearch(q);
+  };
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-label="Search"
+        className="cursor-pointer inline-flex items-center gap-1.5 rounded-md px-2 py-2 text-neutral-800 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400 sm:px-2.5 lg:gap-2"
+        aria-expanded={open}
+        aria-controls={renderPanel ? panelId : undefined}
+        onClick={() => onOpenChange(!open)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="h-[22px] w-[22px] shrink-0 sm:h-6 sm:w-6"
+          aria-hidden
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+        <span className="sr-only">Search</span>
+      </button>
+
+      <AnimatePresence
+        onExitComplete={() => {
+          if (openRef.current) return;
+          /** Two frames after exit: lets compositor finish without ~50ms setTimeout delay */
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (!openRef.current) releaseBodyScrollLock();
+            });
+          });
+        }}
+      >
+        {open && renderPanel ? (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close search"
+              className={`fixed inset-x-0 bottom-0 z-90 ${panelOffsetClass} bg-[rgba(0,0,0,0.62)]`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{
+                opacity: 0,
+                transition: reduceMotion
+                  ? { duration: 0.14, ease: "easeOut" }
+                  : scrimExitTransition,
+              }}
+              transition={
+                reduceMotion
+                  ? { duration: 0.22, ease: "easeOut" }
+                  : scrimEnterTransition
+              }
+              onClick={() => onOpenChange(false)}
+            />
+            <motion.div
+              ref={panelRef}
+              id={panelId}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Search"
+              style={{ transformOrigin: "top center" }}
+              className={`fixed inset-x-0 z-100 ${panelOffsetClass} max-h-[min(85dvh,560px)] overflow-y-auto overflow-x-hidden border-b border-neutral-200 bg-white shadow-[0_12px_40px_rgba(0,0,0,0.12)]`}
+              initial={
+                reduceMotion ? { opacity: 0 } : { y: "-100%", opacity: 1 }
+              }
+              animate={reduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
+              exit={
+                reduceMotion
+                  ? {
+                      opacity: 0,
+                      transition: { duration: 0.14, ease: "easeOut" },
+                    }
+                  : {
+                      y: "-100%",
+                      opacity: 0,
+                      transition: panelExitTransition,
+                    }
+              }
+              transition={
+                reduceMotion ? { duration: 0.22 } : panelEnterTransition
+              }
+            >
+              <div className="mx-auto max-w-7xl shell-x py-3 sm:py-4">
+                <form onSubmit={handleSubmit} className="relative">
+                  <label htmlFor={`${panelId}-q`} className="sr-only">
+                    Search products
+                  </label>
+                  <div className="flex items-center gap-3 rounded-full border border-neutral-900/15 bg-[#f5f5f5] px-4 py-3 focus-within:border-neutral-900 focus-within:bg-white focus-within:ring-1 focus-within:ring-neutral-900/20">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="h-5 w-5 shrink-0 text-neutral-500"
+                      aria-hidden
+                    >
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="m20 20-3.5-3.5" />
+                    </svg>
+                    <input
+                      ref={inputRef}
+                      id={`${panelId}-q`}
+                      name="q"
+                      type="search"
+                      autoComplete="off"
+                      placeholder="Search products…"
+                      className="min-w-0 flex-1 bg-transparent text-base text-neutral-900 placeholder:text-neutral-500 outline-none"
+                    />
+                    <button
+                      type="submit"
+                      className="shrink-0 rounded-full bg-neutral-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-neutral-800"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </form>
+
+                <section
+                  aria-label="Popular Search Terms"
+                  className="mt-6 border-t border-neutral-100 pt-5"
+                  data-testid="visual-search-results-container"
+                >
+                  <h2 className="text-xs font-semibold capitalize tracking-[0.12em] text-neutral-500">
+                    Popular Search Terms
+                  </h2>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {terms.map((term) => (
+                      <button
+                        key={term}
+                        type="button"
+                        className="rounded-full bg-[#f5f5f5] px-3 py-2 text-sm text-neutral-900 transition hover:bg-[#ebebeb]"
+                        onClick={() => goSearch(term)}
+                      >
+                        {term}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>
+    </>
+  );
+}

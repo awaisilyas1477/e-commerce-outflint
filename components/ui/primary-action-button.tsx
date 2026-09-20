@@ -1,0 +1,84 @@
+"use client";
+
+import { forwardRef, type CSSProperties, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
+
+const base =
+  "group relative isolate inline-flex shrink-0 cursor-pointer items-center justify-center overflow-hidden transition-shadow duration-200 ease-out will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+
+const theme =
+  "rounded-none px-2.5 py-2 text-[11px] font-black uppercase leading-none tracking-normal whitespace-nowrap sm:px-5 sm:py-[11px] sm:text-base bg-(--colorBtnPrimary) text-(--colorBtnPrimaryText) shadow-none hover:shadow-none focus-visible:ring-(--colorBtnPrimary)";
+
+export type PrimaryActionButtonProps = Omit<HTMLMotionProps<"button">, "ref"> & {
+  children: ReactNode;
+  /** Shows an inline spinner and disables the button (e.g. while adding to cart). */
+  loading?: boolean;
+};
+
+/**
+ * Primary CTA — Rad-style: square, bold, uppercase.
+ * Always single-line label (never wraps on narrow phones).
+ */
+export const PrimaryActionButton = forwardRef<HTMLButtonElement, PrimaryActionButtonProps>(
+  function PrimaryActionButton(
+    { className, children, disabled, loading, style, ...rest },
+    ref,
+  ) {
+    const inactive = Boolean(disabled || loading);
+    return (
+      <motion.button
+        ref={ref}
+        type="button"
+        disabled={inactive}
+        aria-busy={loading}
+        whileHover={
+          inactive
+            ? undefined
+            : {
+                scale: 1.02,
+                y: -1,
+              }
+        }
+        whileTap={inactive ? undefined : { scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 520, damping: 28, mass: 0.6 }}
+        className={[base, theme, className].filter(Boolean).join(" ")}
+        style={
+          {
+            whiteSpace: "nowrap",
+            wordBreak: "keep-all",
+            overflowWrap: "normal",
+            ...(style as CSSProperties | undefined),
+          } satisfies CSSProperties
+        }
+        {...rest}
+      >
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        >
+          <span className="absolute inset-0 -translate-x-full skew-x-[-18deg] bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+        </span>
+        <span
+          className="relative z-10 inline-flex min-h-5 items-center justify-center whitespace-nowrap"
+          style={{ whiteSpace: "nowrap" }}
+        >
+          <span
+            className={loading ? "invisible whitespace-nowrap" : "whitespace-nowrap"}
+            style={{ whiteSpace: "nowrap" }}
+          >
+            {children}
+          </span>
+          {loading ? (
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span
+                className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-(--colorBtnPrimaryText) border-t-transparent"
+                aria-hidden
+              />
+              <span className="sr-only">Loading</span>
+            </span>
+          ) : null}
+        </span>
+      </motion.button>
+    );
+  },
+);

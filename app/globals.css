@@ -1,0 +1,761 @@
+@import "tailwindcss";
+
+/* Radstore / Shopify theme tokens (subset) — matches storefront CSS variables */
+:root {
+  --background: #ffffff;
+  --foreground: #1c1d1d;
+  --colorBody: #ffffff;
+  --colorTextBody: #1c1d1d;
+  --colorBorder: #e8e8e1;
+  --colorBtnPrimary: #111111;
+  --colorBtnPrimaryText: #ffffff;
+  --colorAnnouncement: #1c1d1d;
+  --colorAnnouncementText: #ffffff;
+  --colorNav: #ffffff;
+  --colorNavText: #1c1d1d;
+  --colorFooter: #111111;
+  --colorFooterText: #ffffff;
+  --colorHeroText: #ffffff;
+  --typeBaseSize: 15px;
+  --typeBaseLineHeight: 1.6;
+  /**
+   * Main page shell width (header / home / PDP / collections).
+   * Matches radstore.pk `.page-width` (1500px). Default Tailwind `max-w-7xl` is 1280px —
+   * that felt “small” at 100% vs browser 125% zoom; widen via this token only (no zoom).
+   */
+  --page-shell-max: 1500px;
+  /** Footer content shell — radstore.pk footer `.page-width` is 1100px (narrower than main). */
+  --footer-shell-max: 1100px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* Remap utility so every `max-w-7xl` shell picks up radstore-width automatically */
+  --container-7xl: var(--page-shell-max);
+  --max-width-7xl: var(--page-shell-max);
+}
+
+/* Main header always visible; second sticky header appears after hero scroll. */
+#site-header {
+  position: relative;
+  z-index: 20;
+}
+
+#site-header-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 70;
+  transform: translateY(calc(-100% - 6px));
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease,
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body[data-header-sticky="true"] #site-header-sticky {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 8px 24px -18px rgba(0, 0, 0, 0.35);
+}
+
+/* Reserve scrollbar space so toggling overflow (e.g. search modal) doesn’t shift layout at close */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Action CTAs — Rad Store style: square, bold, uppercase */
+a.btn,
+.btn,
+button.btn {
+  appearance: none;
+  border-radius: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1.42;
+  letter-spacing: normal;
+  text-transform: uppercase !important;
+  padding: 11px 20px !important;
+  min-width: 90px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition:
+    background 0.3s ease,
+    opacity 0.3s ease;
+}
+
+a.btn:active,
+.btn:active,
+button.btn:active {
+  opacity: 0.6;
+}
+
+@media (max-width: 639px) {
+  a.btn,
+  .btn,
+  button.btn {
+    font-size: 13px !important;
+    padding: 9px 14px !important;
+    min-width: 0;
+  }
+}
+
+body {
+  background: var(--colorBody);
+  color: var(--colorTextBody);
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--typeBaseSize);
+  font-weight: 400;
+  line-height: var(--typeBaseLineHeight);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Title case: first letter of each word (Hello World). Override with `uppercase` or `normal-case` on the element when needed. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-transform: capitalize;
+    font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
+  h2,
+  h3 {
+    font-weight: 600;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
+
+  button,
+  input[type="submit"] {
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+
+  label {
+    font-weight: 500;
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+  }
+
+  button:not(:disabled),
+  input[type="submit"]:not(:disabled),
+  input[type="button"]:not(:disabled),
+  input[type="reset"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* Shopify theme layout — https://radstore.pk structure */
+.page-container {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+}
+
+/**
+ * Safety net: ensure `max-w-7xl` shells use --page-shell-max even if theme tokens differ by TW version.
+ * Unlayered so it wins over Tailwind utility layer. No zoom.
+ */
+.max-w-7xl {
+  max-width: min(100%, var(--page-shell-max));
+}
+
+/** Footer inner shell — matches radstore.pk footer `.page-width` (1100px). */
+.footer-shell {
+  width: 100%;
+  max-width: min(100%, var(--footer-shell-max));
+  margin-inline: auto;
+}
+
+/* Radstore: .transition-body wraps main + footer; keep visible (see layout). */
+[data-transitions="true"] .transition-body {
+  opacity: 1;
+}
+
+.main-content {
+  display: block;
+  min-height: 300px;
+}
+
+/**
+ * Horizontal inset for `max-w-*` page shells (header, footer, main, home sections).
+ * Single source: px-2 → sm:px-3 → lg:px-4 (tighter than legacy sm:px-5 / lg:px-6).
+ */
+.shell-x {
+  padding-inline: 0.5rem;
+}
+@media (min-width: 640px) {
+  .shell-x {
+    padding-inline: 0.75rem;
+  }
+}
+@media (min-width: 1024px) {
+  .shell-x {
+    padding-inline: 1rem;
+  }
+}
+
+/* Home collection rails — scrollbar hidden until user scrolls (see .rail-scroll--interacting) */
+.rail-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.rail-scroll::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+
+.rail-scroll.rail-scroll--interacting {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(23, 23, 23, 0.35) transparent;
+  -ms-overflow-style: auto;
+}
+.rail-scroll.rail-scroll--interacting::-webkit-scrollbar {
+  display: block;
+  height: 6px;
+}
+.rail-scroll.rail-scroll--interacting::-webkit-scrollbar-track {
+  background: transparent;
+}
+.rail-scroll.rail-scroll--interacting::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(23, 23, 23, 0.28);
+}
+.rail-scroll.rail-scroll--interacting::-webkit-scrollbar-thumb:hover {
+  background: rgba(23, 23, 23, 0.4);
+}
+
+/* react-international-phone — one shell with profile form inputs (no double box) */
+.profile-phone-field .react-international-phone-input-container {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid #d4d4d8;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.profile-phone-field:focus-within .react-international-phone-input-container {
+  border-color: #171717;
+  box-shadow: 0 0 0 3px rgba(23, 23, 23, 0.12);
+}
+
+.profile-phone-field .react-international-phone-country-selector-button {
+  height: 42px !important;
+  min-width: 3.25rem;
+  padding-inline: 0.5rem;
+  border: none !important;
+  border-right: 1px solid #d4d4d8 !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+.profile-phone-field .react-international-phone-input {
+  height: 42px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding-left: 0.75rem !important;
+}
+
+.profile-phone-field .react-international-phone-input:focus {
+  outline: none !important;
+}
+
+/* Policy / legal pages — wide readable prose (Shopify-style) */
+.policy-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: rgb(64 64 64);
+  max-width: 52rem;
+}
+.policy-prose > * + * {
+  margin-top: 1rem;
+}
+.policy-prose h1,
+.policy-prose h2,
+.policy-prose h3,
+.policy-prose h4,
+.policy-prose h5,
+.policy-prose h6 {
+  color: rgb(23 23 23);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  text-transform: none;
+}
+.policy-prose h1 {
+  font-size: 1.75rem;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+.policy-prose h2 {
+  font-size: 1.35rem;
+  margin-top: 2rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgb(229 229 229);
+}
+.policy-prose h3 {
+  font-size: 1.125rem;
+  margin-top: 1.5rem;
+}
+.policy-prose p {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+.policy-prose ul,
+.policy-prose ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.35rem;
+}
+.policy-prose ul {
+  list-style-type: disc;
+}
+.policy-prose ol {
+  list-style-type: decimal;
+}
+
+/* Product cards: hard clamp titles to 2 lines on listing grids. */
+.product-card-title-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/**
+ * Card rise without framer-motion — SSR stays visible (no opacity:0).
+ * Animation is progressive enhancement; reduced-motion users get a static card.
+ */
+@keyframes product-card-rise {
+  from {
+    transform: translateY(8px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.product-card-reveal {
+  animation: product-card-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--card-reveal-delay, 0s);
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-card-reveal {
+    animation: none;
+  }
+}
+
+/* Homepage shop-collections tiles — staggered rise (SSR stays visible). */
+@keyframes home-collection-rise {
+  from {
+    opacity: 0.55;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.home-collection-tile {
+  animation: home-collection-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--tile-i, 0) * 55ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-collection-tile {
+    animation: none;
+  }
+}
+
+/* Compact homepage collections marquee — seamless infinite loop (-50%). */
+@keyframes home-collections-marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.home-collections-marquee-track {
+  animation: home-collections-marquee-x 36s linear infinite;
+  will-change: transform;
+}
+.home-collections-marquee-shell:hover .home-collections-marquee-track,
+.home-collections-marquee-shell:focus-within .home-collections-marquee-track,
+.home-collections-marquee-shell.is-paused .home-collections-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-collections-marquee-track {
+    animation: none;
+    will-change: auto;
+  }
+}
+.policy-prose li {
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+.policy-prose a {
+  color: rgb(23 23 23);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.policy-prose a:hover {
+  color: rgb(0 0 0);
+}
+.policy-prose blockquote {
+  margin: 1.25rem 0;
+  border-left: 3px solid rgb(212 212 216);
+  padding-left: 1rem;
+  font-style: italic;
+  color: rgb(82 82 91);
+}
+.policy-prose strong {
+  font-weight: 600;
+  color: rgb(23 23 23);
+}
+.policy-prose hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid rgb(228 228 231);
+}
+.policy-prose pre {
+  margin: 1rem 0;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: rgb(250 250 250);
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+/* AppSelect menu open motion */
+@keyframes app-select-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes callout-image-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Rad-style collection callout collage (homepage ActiveWearBlock) */
+.feature-row__callout-image {
+  container-type: inline-size;
+  container-name: callout-col;
+  min-width: 0;
+}
+
+#shopify-section-template-collection-callout .callout-images {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto;
+  width: 260px;
+  max-width: 100%;
+}
+
+#shopify-section-template-collection-callout .callout-image-centered {
+  position: relative;
+  width: 150px;
+}
+
+#shopify-section-template-collection-callout .callout-image {
+  background-color: #fff;
+  height: auto;
+  object-fit: cover;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: transform 2.5s cubic-bezier(0.39, 0.68, 0.29, 1) 0.5s;
+}
+
+#shopify-section-template-collection-callout .callout-image.callout-image--1 {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 28px auto;
+}
+
+#shopify-section-template-collection-callout .callout-image.callout-image--2 {
+  left: 0;
+  top: 28px;
+  max-width: 95px;
+}
+
+#shopify-section-template-collection-callout .callout-image.callout-image--3 {
+  right: 0;
+  bottom: 28px;
+  max-width: 88px;
+}
+
+#shopify-section-template-collection-callout .callout-image.callout-image--4 {
+  left: 0;
+  bottom: 28px;
+  max-width: 110px;
+}
+
+#shopify-section-template-collection-callout .callout-image.callout-image--5 {
+  right: 0;
+  top: 28px;
+  max-width: 56px;
+}
+
+#shopify-section-template-collection-callout
+  .callout-images.is-callout-active
+  .callout-image {
+  opacity: 1;
+  animation: callout-image-fade-in 0.5s cubic-bezier(0.29, 0.65, 0.58, 1) forwards;
+}
+
+#shopify-section-template-collection-callout
+  .callout-images.is-callout-active
+  .callout-image.callout-image--1 {
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.28);
+}
+
+#shopify-section-template-collection-callout
+  .callout-images.is-callout-active
+  .callout-image.callout-image--2 {
+  transform: translate3d(-72px, -32px, 0);
+}
+
+#shopify-section-template-collection-callout
+  .callout-images.is-callout-active
+  .callout-image.callout-image--3 {
+  transform: translate3d(72px, 10%, 0);
+}
+
+#shopify-section-template-collection-callout
+  .callout-images.is-callout-active
+  .callout-image.callout-image--4 {
+  transform: translate3d(-56px, 42px, 0);
+}
+
+#shopify-section-template-collection-callout
+  .callout-images.is-callout-active
+  .callout-image.callout-image--5 {
+  transform: translate3d(44px, 10px, 0);
+}
+
+/* Restore fuller collage scale from tablet up */
+@media (min-width: 590px) {
+  #shopify-section-template-collection-callout .callout-images {
+    margin: 28px auto;
+    width: 310px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image-centered {
+    width: 195px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--1 {
+    margin: 52px auto;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--2 {
+    top: 52px;
+    max-width: 125px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--3 {
+    bottom: 52px;
+    max-width: 112px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--4 {
+    bottom: 52px;
+    max-width: 140px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--5 {
+    top: 52px;
+    max-width: 70px;
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--1 {
+    box-shadow: 0 14px 22px rgba(0, 0, 0, 0.3);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--2 {
+    transform: translate3d(-90px, -42px, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--3 {
+    transform: translate3d(90px, 13%, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--4 {
+    transform: translate3d(-70px, 56px, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--5 {
+    transform: translate3d(56px, 14px, 0);
+  }
+}
+
+/* Tablet / narrow column — scale collage to fit ~50% layout without overlapping text */
+@container callout-col (min-width: 480px) and (max-width: 679px) {
+  #shopify-section-template-collection-callout .callout-images {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image-centered {
+    width: 270px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--2 {
+    max-width: 175px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--3 {
+    max-width: 158px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--4 {
+    max-width: 194px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--5 {
+    max-width: 97px;
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--2 {
+    transform: translate3d(-118px, -42px, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--3 {
+    transform: translate3d(112px, 13%, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--4 {
+    transform: translate3d(-92px, 78px, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--5 {
+    transform: translate3d(76px, 40px, 0);
+  }
+}
+
+/* Wide column (stacked mobile/tablet or desktop half with enough room) */
+@container callout-col (min-width: 680px) {
+  #shopify-section-template-collection-callout .callout-images {
+    width: min(620px, 100%);
+  }
+
+  #shopify-section-template-collection-callout .callout-image-centered {
+    width: 380px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--2 {
+    max-width: 245px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--3 {
+    max-width: 220px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--4 {
+    max-width: 270px;
+  }
+
+  #shopify-section-template-collection-callout .callout-image.callout-image--5 {
+    max-width: 135px;
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--2 {
+    transform: translate3d(-175px, -55px, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--3 {
+    transform: translate3d(165px, 13%, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--4 {
+    transform: translate3d(-135px, 110px, 0);
+  }
+
+  #shopify-section-template-collection-callout
+    .callout-images.is-callout-active
+    .callout-image.callout-image--5 {
+    transform: translate3d(110px, 55px, 0);
+  }
+}
+
+

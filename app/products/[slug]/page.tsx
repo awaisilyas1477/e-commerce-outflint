@@ -1,0 +1,462 @@
+import { Suspense } from "react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound, permanentRedirect } from "next/navigation";
+import { ProductPdp } from "@/components/product/product-pdp";
+import { RecentlyViewedSection } from "@/components/product/recently-viewed-section";
+import { CustomerReviews } from "@/components/product/customer-reviews";
+import { ProductCard, PRODUCT_RAIL_ITEM } from "@/components/storefront";
+import { ProductCardSkeleton } from "@/components/ui/product-card-skeleton";
+import { dbListProductReviewsForPdp } from "@/app/lib/db/catalog";
+import {
+  buildPageMetadata,
+  productMetadataTitle,
+  canonicalUrlFor,
+  loadProductSeoExtras,
+  loadSeoOverrideForSubject,
+  loadSiteIdentity,
+  resolveSeoCanonicalOverride,
+  seoHeadingFromMetaTitle,
+  stripHtml,
+  type ProductOpenGraphExtras,
+} from "@/lib/seo";
+import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
+import {
+  JsonLd,
+  applyJsonLdOverrides,
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  productJsonLd,
+  storeFaqItems,
+} from "@/lib/seo/jsonld";
+import { PageBreadcrumbs } from "@/components/seo/page-breadcrumbs";
+import {
+  findUniqueActiveProductSlugByPrefix,
+  getCachedProductDetailBySlug,
+  getCachedProductReviewAggregates,
+  getCachedProductsByCollectionSlug,
+} from "@/lib/cache/catalog-data";
+import { hasCatalogDb } from "@/app/lib/db/env";
+
+/**
+ * Compute Facebook product OG extension fields from a `ProductDetail`:
+ * `product:price:amount`, `product:price:currency`, `product:availability`,
+ * `product:condition`, `product:retailer_item_id`, `product:brand`. These are
+ * the fields Facebook Catalog and Pinterest Rich Pins read.
+ */
+function computeProductOgExtras(args: {
+  variants: Array<{ price: number; quantity_on_hand?: number; quantity_reserved?: number; sku?: string }>;
+  identity: { currency: string; storeName: string; siteTitle: string; organizationLegalName: string };
+  brandName?: string;
+  gtin?: string;
+}): ProductOpenGraphExtras | null {
+  const { variants, identity } = args;
+  if (!variants.length) return null;
+
+  let low = Infinity;
+  let anyAvailable = false;
+  let preferredSku = "";
+  for (const v of variants) {
+    const p = Number(v.price);
+    if (Number.isFinite(p) && p < low) {
+      low = p;
+      preferredSku = v.sku || preferredSku;
+    }
+    const stock = Math.max(0, (v.quantity_on_hand ?? 0) - (v.quantity_reserved ?? 0));
+    if (stock > 0) anyAvailable = true;
+  }
+  if (!Number.isFinite(low)) return null;
+
+  const brand =
+    (args.brandName ?? "").trim() ||
+    identity.organizationLegalName.trim() ||
+    identity.storeName.trim() ||
+    identity.siteTitle.trim() ||
+    undefined;
+
+  return {
+    priceAmount: low,
+    priceCurrency: identity.currency || "PKR",
+    availability: anyAvailable ? "instock" : "oos",
+    condition: "new",
+    retailerItemId: preferredSku || undefined,
+    brand,
+    gtin: args.gtin?.trim() || undefined,
+  };
+}
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+/**
+ * Stars are shown on the PDP from product.rating / reviews_count.
+ * Emit AggregateRating in JSON-LD so markup matches visible UI (Google expects parity).
+ * Keep false only if you intentionally hide star markup from crawlers.
+ */
+const PDP_REVIEWS_ARE_SYNTHETIC = false;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const pathname = `/products/${slug}`;
+
+  if (!hasCatalogDb()) {
+    const identity = await loadSiteIdentity();
+    return buildPageMetadata({
+      pathname,
+      identity,
+      override: null,
+      defaults: {
+        title: "Product",
+        description: identity.siteDescription,
+        forceNoindex: true,
+      },
+    });
+  }
+
+  const [detail, identity] = await Promise.all([
+    getCachedProductDetailBySlug(slug),
+    loadSiteIdentity(),
+  ]);
+
+  if (!detail) {
+    return buildPageMetadata({
+      pathname,
+      identity,
+      override: null,
+      defaults: {
+        title: "Product not found",
+        description: identity.siteDescription,
+        forceNoindex: true,
+      },
+    });
+  }
+
+  const [override, seoExtras] = await Promise.all([
+    loadSeoOverrideForSubject("product", detail.product.id, identity.locale),
+    loadProductSeoExtras(detail.product.id),
+  ]);
+  const description =
+    stripHtml(detail.product.short_description) ||
+    stripHtml(detail.product.description);
+  const images = detail.assets
+    .filter((a) => a.kind === "image" && a.url)
+    .slice(0, 4)
+    .map((a) => ({ url: a.url, alt: a.alt_text || detail.product.name }));
+
+  const productExtras = computeProductOgExtras({
+    variants: detail.variants,
+    identity,
+    brandName: seoExtras.brandName,
+    gtin: seoExtras.gtin,
+  });
+
+  return buildPageMetadata({
+    pathname,
+    identity,
+    override,
+    defaults: {
+      title: productMetadataTitle(detail.product.name),
+      description,
+      images,
+      keywords: detail.product.tags ?? [],
+      ogType: "website",
+      productExtras,
+      lastModifiedISO: detail.product.created_at ?? null,
+    },
+  });
+}
+
+export default async function ProductPage({ params }: Props) {
+  const { slug: rawSlug } = await params;
+  const slug = decodeURIComponent(rawSlug ?? "").trim();
+
+  if (!hasCatalogDb() || !slug) {
+    notFound();
+  }
+
+  let detail = await getCachedProductDetailBySlug(slug);
+  if (!detail) {
+    const recovered = await findUniqueActiveProductSlugByPrefix(slug);
+    if (recovered && recovered !== slug) {
+      permanentRedirect(`/products/${recovered}`);
+    }
+    notFound();
+  }
+  if (detail.variants.length === 0) {
+    notFound();
+  }
+
+  // Critical-path data (above-the-fold buy box + structured data) — block on
+  // these. Related products and reviews are streamed in via Suspense below
+  // so the user sees the buy box before those slower joins finish.
+  // Skip loading the full collections list + collection SEO on the critical path;
+  // breadcrumb/H1 use the collection name already on the product detail row.
+  const productId = detail.product.id;
+  const identityPromise = loadSiteIdentity();
+  const [aggregates, identity, seoExtras, seoOverride] = await Promise.all([
+    getCachedProductReviewAggregates(productId),
+    identityPromise,
+    loadProductSeoExtras(productId),
+    identityPromise.then((id) =>
+      loadSeoOverrideForSubject("product", productId, id.locale),
+    ),
+  ]);
+  if (aggregates) {
+    detail = {
+      ...detail,
+      product: {
+        ...detail.product,
+        rating: aggregates.rating,
+        reviews_count: aggregates.reviews_count,
+        tags: aggregates.tags ?? detail.product.tags,
+      },
+    };
+  }
+
+  const hasRealCollection =
+    detail.collectionSlug.trim() !== "" &&
+    detail.collectionSlug.toLowerCase() !== "uncategorized";
+
+  const collectionLabel = hasRealCollection
+    ? (detail.collectionName || detail.collectionSlug).trim()
+    : "";
+  const pdpHeading = seoHeadingFromMetaTitle(seoOverride?.title, detail.product.name);
+
+  const canonical = resolveSeoCanonicalOverride(
+    seoOverride?.canonicalUrl,
+    canonicalUrlFor(`/products/${slug}`),
+  );
+  const productLd = productJsonLd({
+    product: detail.product,
+    variants: detail.variants,
+    assets: detail.assets,
+    identity,
+    url: canonical,
+    brandName: seoExtras.brandName,
+    gtin: seoExtras.gtin,
+    mpn: seoExtras.mpn,
+    reviewsAreSynthetic: PDP_REVIEWS_ARE_SYNTHETIC,
+    seoOverride,
+    shoppingExtras: seoExtras,
+    optionDefinitions: detail.optionDefinitions,
+    category: collectionLabel || detail.collectionName || detail.collectionSlug,
+  });
+  const crumbs = breadcrumbJsonLd([
+    { name: "Home", url: "/" },
+    ...(hasRealCollection
+      ? [
+          {
+            name: collectionLabel,
+            url: `/collections/${detail.collectionSlug}`,
+          },
+        ]
+      : []),
+    { name: detail.product.name, url: canonical },
+  ]);
+  (crumbs as { "@id"?: string })["@id"] = `${canonical}#breadcrumb`;
+  const productLdFinal = applyJsonLdOverrides(
+    { ...productLd, breadcrumb: { "@id": `${canonical}#breadcrumb` } },
+    seoOverride?.jsonLdOverrides,
+  );
+  const faqItems = storeFaqItems({
+    productName: detail.product.name,
+    material: seoExtras.material,
+  });
+  const faqLd = faqPageJsonLd({ url: canonical, items: faqItems });
+
+  return (
+    <>
+      <JsonLd id="ld-product" data={productLdFinal} />
+      <JsonLd id="ld-breadcrumb" data={crumbs} />
+      {faqLd ? <JsonLd id="ld-faq" data={faqLd} /> : null}
+      <main
+        id="MainContent"
+        className="main-content mx-auto max-w-7xl shell-x py-3.5 sm:py-6"
+      >
+        <PageBreadcrumbs
+          items={[
+            { name: "Home", href: "/" },
+            ...(hasRealCollection
+              ? [
+                  {
+                    name: collectionLabel,
+                    href: `/collections/${detail.collectionSlug}`,
+                  },
+                ]
+              : []),
+            { name: detail.product.name },
+          ]}
+        />
+        <ProductPdp
+          key={detail.product.id}
+          product={detail.product}
+          productSlug={slug}
+          optionDefinitions={detail.optionDefinitions}
+          heading={pdpHeading}
+          collectionLabel={collectionLabel}
+          collectionHref={
+            hasRealCollection ? `/collections/${detail.collectionSlug}` : ""
+          }
+          variants={detail.variants}
+          assets={detail.assets}
+          colorById={detail.colorById}
+          safeDescriptionHtml={sanitizeRichHtml(detail.product.description)}
+          faqItems={faqItems}
+        />
+        <Suspense fallback={<ReviewsFallback />}>
+          <ProductReviewsSection
+            productId={detail.product.id}
+            rating={Number(detail.product.rating ?? 0)}
+            reviewsCount={Number(detail.product.reviews_count ?? 0)}
+            productTags={detail.product.tags}
+          />
+        </Suspense>
+        <Suspense fallback={<RelatedProductsFallback />}>
+          <RelatedProductsSection
+            collectionSlug={detail.collectionSlug}
+            collectionName={collectionLabel || detail.collectionName || detail.collectionSlug}
+            currentSlug={slug}
+          />
+        </Suspense>
+        <RecentlyViewedSection excludeSlug={slug} />
+      </main>
+    </>
+  );
+}
+
+// ---- Streamed sub-sections (rendered behind <Suspense>) ----
+
+async function RelatedProductsSection({
+  collectionSlug,
+  collectionName,
+  currentSlug,
+}: {
+  collectionSlug: string;
+  collectionName: string;
+  currentSlug: string;
+}) {
+  if (!collectionSlug || collectionSlug.toLowerCase() === "uncategorized") {
+    return null;
+  }
+  const relatedDb = await getCachedProductsByCollectionSlug(collectionSlug);
+  const related = relatedDb.filter((item) => item.slug !== currentSlug).slice(0, 8);
+  if (related.length === 0) return null;
+  const viewAllHref = `/collections/${collectionSlug}`;
+  const heading = collectionName?.trim() || "Similar products";
+  return (
+    <section className="mt-8 sm:mt-10" id="similar-products">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-x-6 sm:gap-y-3">
+        <h2 className="text-[1.50rem] font-semibold tracking-tight sm:text-2xl">
+          Similar products
+        </h2>
+        <Link
+          href={viewAllHref}
+          className="text-sm font-medium text-neutral-700 underline-offset-4 hover:underline"
+        >
+          View all {heading}
+        </Link>
+      </div>
+      <div className="mt-6 sm:mt-8 md:hidden">
+        <ul
+          className="-mx-2 flex list-none items-stretch gap-1 overflow-x-auto scroll-px-2 scroll-smooth px-2 pb-2 pt-1 snap-x snap-mandatory sm:mx-0 sm:gap-1.5 sm:px-0 sm:scroll-px-0"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          {related.map((item, idx) => (
+            <li key={item.id} className={PRODUCT_RAIL_ITEM}>
+              <div className="flex h-full min-h-0 flex-1 flex-col">
+                <ProductCard
+                  product={item}
+                  showAddToCart={false}
+                  rail
+                  clampTitle
+                  revealDelay={Math.min(idx * 0.08, 0.36)}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-6 hidden md:mt-8 md:grid md:grid-cols-3 md:gap-2 lg:grid-cols-5 lg:gap-2">
+        {related.map((item, idx) => (
+          <ProductCard
+            key={item.id}
+            product={item}
+            showAddToCart={false}
+            clampTitle
+            revealDelay={Math.min(idx * 0.08, 0.36)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RelatedProductsFallback() {
+  return (
+    <section className="mt-8 sm:mt-10">
+      <h2 className="text-[1.50rem] font-semibold tracking-tight sm:text-2xl">Related products</h2>
+      <div className="mt-6 grid grid-cols-2 gap-1 sm:mt-8 sm:gap-1.5 md:grid-cols-3 md:gap-2 lg:grid-cols-5 lg:gap-2">
+        {Array.from({ length: 4 }).map((_, idx) => (
+          <ProductCardSkeleton key={idx} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+async function ProductReviewsSection({
+  productId,
+  rating,
+  reviewsCount,
+  productTags,
+}: {
+  productId: string;
+  rating: number;
+  reviewsCount: number;
+  productTags?: string[] | null;
+}) {
+  const initialReviews = await dbListProductReviewsForPdp(productId);
+  const breakdownTag = (productTags ?? []).find((t) =>
+    String(t).startsWith("rating_breakdown:"),
+  );
+  let ratingBreakdown: number[] | null = null;
+  if (breakdownTag) {
+    const parts = String(breakdownTag)
+      .slice("rating_breakdown:".length)
+      .split(",")
+      .map((x) => Number(x.trim()));
+    if (parts.length === 5 && parts.every((n) => Number.isFinite(n))) {
+      ratingBreakdown = parts;
+    }
+  }
+  return (
+    <CustomerReviews
+      productId={productId}
+      rating={rating}
+      reviewsCount={reviewsCount}
+      initialReviews={initialReviews}
+      ratingBreakdown={ratingBreakdown}
+    />
+  );
+}
+
+function ReviewsFallback() {
+  return (
+    <section className="mt-10">
+      <div className="h-8 w-48 animate-pulse rounded-md bg-zinc-200/70 dark:bg-zinc-800/60" />
+      <div className="mt-4 space-y-3">
+        {Array.from({ length: 2 }).map((_, idx) => (
+          <div
+            key={idx}
+            className="rounded-2xl border border-zinc-200/70 bg-white p-4 dark:border-zinc-800/70 dark:bg-zinc-900"
+          >
+            <div className="h-4 w-32 animate-pulse rounded bg-zinc-200/80 dark:bg-zinc-800/70" />
+            <div className="mt-2 h-3 w-full animate-pulse rounded bg-zinc-200/70 dark:bg-zinc-800/60" />
+            <div className="mt-2 h-3 w-3/4 animate-pulse rounded bg-zinc-200/70 dark:bg-zinc-800/60" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}

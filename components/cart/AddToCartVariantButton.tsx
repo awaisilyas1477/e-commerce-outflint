@@ -1,0 +1,144 @@
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { useCart, type CartLineSeed } from "@/app/providers/cart-provider";
+import {
+  defaultMetaCurrency,
+  metaContentsSingleItem,
+  resolveVariantTrackingId,
+  toPkrValue,
+  trackMetaPixel,
+} from "@/lib/seo/meta-pixel-client";
+import { PrimaryActionButton } from "@/components/ui/primary-action-button";
+import { toastAddedToCart } from "@/lib/cart-toast";
+import { ADD_TO_CART_BUTTON_MS, delayMs } from "@/lib/cart-add-feedback";
+
+type Props = {
+  variantId: string;
+  productId: string;
+  className?: string;
+  label?: ReactNode;
+  /** Accessible name when `label` is abbreviated/short for small screens. */
+  ariaLabel?: string;
+  /** When `redirectHref` is set, ignored (drawer is not opened). */
+  openDrawer?: boolean;
+  quantity?: number;
+  disabled?: boolean;
+  maxQuantity?: number;
+  /** Shown in the toast (e.g. product title). */
+  itemName?: string;
+  /** After adding to cart, navigate here (e.g. `/checkout`) instead of opening the cart drawer. */
+  redirectHref?: string;
+  /** Optional unit price for Meta AddToCart value. */
+  unitPricePkr?: number;
+  /** Optional SKU for matching catalog items. */
+  sku?: string;
+  /** Optional content identifier override (falls back to `sku` or `variantId`). */
+  contentId?: string;
+  /** PDP catalog snapshot — instant cart resolve + fast Buy now. */
+  seed?: CartLineSeed;
+};
+
+export function AddToCartVariantButton({
+  variantId,
+  productId,
+  className = "",
+  label = "Add to cart",
+  ariaLabel,
+  openDrawer = true,
+  quantity = 1,
+  disabled = false,
+  maxQuantity = 99,
+  itemName,
+  redirectHref,
+  unitPricePkr,
+  sku,
+  contentId,
+  seed,
+}: Props) {
+  const router = useRouter();
+  const { addVariant, openCart, waitForCartResolution } = useCart();
+  const [adding, setAdding] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
+  const q = Math.min(maxQuantity, Math.max(1, Math.floor(quantity)));
+
+  useEffect(() => {
+    if (redirectHref) router.prefetch(redirectHref);
+  }, [redirectHref, router]);
+
+  return (
+    <PrimaryActionButton
+      disabled={disabled}
+      loading={adding}
+      className={className}
+      aria-label={
+        ariaLabel ?? (typeof label === "string" ? label : undefined)
+      }
+      onClick={async () => {
+        if (disabled || adding || justAdded) return;
+        setAdding(true);
+        try {
+          if (!seed) await delayMs(ADD_TO_CART_BUTTON_MS);
+          addVariant(variantId, productId, q, seed);
+          const cid = contentId || resolveVariantTrackingId({ sku, id: variantId }, variantId);
+          const trackedValue = toPkrValue((unitPricePkr ?? 0) * q);
+          trackMetaPixel("AddToCart", {
+            content_ids: [cid],
+            contents: metaContentsSingleItem({
+              id: cid,
+              quantity: q,
+              ...(unitPricePkr != null && Number.isFinite(unitPricePkr) ? { item_price: unitPricePkr } : {}),
+            }),
+            content_type: "product",
+            ...(itemName ? { content_name: itemName } : {}),
+            currency: defaultMetaCurrency(),
+            value: trackedValue,
+            num_items: q,
+          });
+          const opensDrawer = Boolean(openDrawer) && !redirectHref;
+          if (redirectHref) {
+            if (!seed) await waitForCartResolution();
+            toastAddedToCart({
+              description:
+                itemName != null
+                  ? q > 1
+                    ? `${itemName} · ${q} added`
+                    : itemName
+                  : undefined,
+              quantity: q,
+              brief: true,
+            });
+            router.push(redirectHref);
+          } else if (opensDrawer) {
+            openCart();
+            toastAddedToCart({
+              quantity: q,
+              brief: true,
+              onViewCart: openCart,
+            });
+            setJustAdded(true);
+            window.setTimeout(() => setJustAdded(false), 900);
+          } else {
+            toastAddedToCart({
+              description:
+                itemName != null
+                  ? q > 1
+                    ? `${itemName} · ${q} added`
+                    : itemName
+                  : undefined,
+              quantity: q,
+              onViewCart: openCart,
+            });
+            setJustAdded(true);
+            window.setTimeout(() => setJustAdded(false), 900);
+          }
+        } finally {
+          setAdding(false);
+        }
+      }}
+    >
+      {justAdded && typeof label === "string" ? "Added" : label}
+    </PrimaryActionButton>
+  );
+}
