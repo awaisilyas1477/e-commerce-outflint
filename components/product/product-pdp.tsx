@@ -1124,7 +1124,7 @@ export function ProductPdp({
               ) : null}
               {safeDescriptionHtml ? (
                 <div
-                  className="max-w-full overflow-x-auto text-neutral-600 [&_a]:text-neutral-900 [&_a]:underline [&_img]:h-auto [&_img]:max-w-full [&_li]:my-0.5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5"
+                  className="max-w-full overflow-x-auto text-[14px] leading-relaxed text-neutral-600 sm:text-[15px] [&_a]:font-medium [&_a]:text-neutral-900 [&_a]:underline [&_h3]:mb-2 [&_h3]:mt-5 [&_h3]:text-[15px] [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:text-neutral-900 [&_h3:first-child]:mt-0 [&_img]:h-auto [&_img]:max-w-full [&_li]:my-1 [&_li]:leading-relaxed [&_ol]:my-2.5 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_p]:my-2.5 [&_p]:leading-relaxed [&_strong]:font-semibold [&_strong]:text-neutral-800 [&_ul]:my-2.5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5"
                   dangerouslySetInnerHTML={{ __html: safeDescriptionHtml }}
                 />
               ) : null}
