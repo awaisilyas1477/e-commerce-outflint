@@ -239,7 +239,11 @@ export function GoogleIdentityProvider({ children }: ProviderProps) {
     };
   }, [clientId, loadGsiScript, pathname, skipPromptRoute]);
 
-  /** Single GIS initialize + One Tap prompt */
+  /**
+   * Single GIS initialize on every route that needs Google buttons (including
+   * /login /signup /checkout). One Tap `prompt` is separate — skipped on auth
+   * routes so it does not block `renderButton` / leave "Loading Google…" forever.
+   */
   useEffect(() => {
     if (
       !clientId ||
@@ -247,7 +251,6 @@ export function GoogleIdentityProvider({ children }: ProviderProps) {
       !gsiReady ||
       !sessionChecked ||
       signedIn ||
-      skipPromptRoute ||
       initOnce.current
     ) {
       return;
@@ -283,7 +286,29 @@ export function GoogleIdentityProvider({ children }: ProviderProps) {
         itp_support: true,
       });
       queueMicrotask(() => setIdentityInitialized(true));
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("[Google One Tap] initialize", e);
+      }
+      initOnce.current = false;
+    }
+  }, [clientId, loadGsiScript, gsiReady, sessionChecked, signedIn, router]);
 
+  /** One Tap only on storefront routes (not login/signup/checkout forms). */
+  useEffect(() => {
+    if (
+      !clientId ||
+      !identityInitialized ||
+      !gsiReady ||
+      signedIn ||
+      skipPromptRoute
+    ) {
+      return;
+    }
+    const google = window.google;
+    if (!google?.accounts?.id?.prompt) return;
+
+    try {
       google.accounts.id.prompt((notification) => {
         if (process.env.NODE_ENV !== "development") return;
         try {
@@ -308,17 +333,16 @@ export function GoogleIdentityProvider({ children }: ProviderProps) {
       });
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        console.error("[Google One Tap] initialize", e);
+        console.error("[Google One Tap] prompt", e);
       }
     }
   }, [
     clientId,
-    loadGsiScript,
+    identityInitialized,
     gsiReady,
-    sessionChecked,
     signedIn,
     skipPromptRoute,
-    router,
+    pathname,
   ]);
 
   const ctxValue = useMemo(
@@ -372,6 +396,8 @@ export function GoogleSignInCredentialButton({ label, nextHref }: CredentialButt
   const containerRef = useRef<HTMLDivElement>(null);
   const safeNext = safeNextPath(nextHref);
   const isSignup = label.toLowerCase().includes("sign up");
+  /** If GSI never initializes (blocked script, network), fall back to OAuth redirect. */
+  const [gsiTimedOut, setGsiTimedOut] = useState(false);
 
   useEffect(() => {
     if (!ctx?.setCredentialNextPath) return;
@@ -380,6 +406,12 @@ export function GoogleSignInCredentialButton({ label, nextHref }: CredentialButt
       ctx.setCredentialNextPath(undefined);
     };
   }, [ctx, safeNext]);
+
+  useEffect(() => {
+    if (!ctx || ctx.identityInitialized || gsiTimedOut) return;
+    const id = window.setTimeout(() => setGsiTimedOut(true), 8000);
+    return () => window.clearTimeout(id);
+  }, [ctx, ctx?.identityInitialized, gsiTimedOut]);
 
   useLayoutEffect(() => {
     const el = containerRef.current;
@@ -433,7 +465,7 @@ export function GoogleSignInCredentialButton({ label, nextHref }: CredentialButt
     return <GoogleSignInButton label={label} nextHref={nextHref} />;
   }
 
-  if (!ctx) {
+  if (!ctx || gsiTimedOut) {
     return <GoogleSignInButton label={label} nextHref={nextHref} />;
   }
 
