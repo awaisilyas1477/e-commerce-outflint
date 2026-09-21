@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Runs: supabase link --project-ref <from .env>
  * Optional: set SUPABASE_DB_PASSWORD in .env to pass -p non-interactively.
  */
@@ -15,7 +15,7 @@ const PROJECT_REF =
   process.env.NEXT_PUBLIC_SUPABASE_URL?.match(
     /^https:\/\/([a-z0-9]+)\.supabase\.co\/?$/i,
   )?.[1] ||
-  "onmnnxcdwcuegsbvjoqa";
+  "qnlqcfwdebrscvqxxahe";
 const pw = process.env.SUPABASE_DB_PASSWORD?.replace(/^["']|["']$/g, "");
 
 const args = ["supabase", "link", "--project-ref", PROJECT_REF];
@@ -31,3 +31,4 @@ const r = spawnSync("npx", args, {
 });
 
 process.exit(r.status ?? 1);
+

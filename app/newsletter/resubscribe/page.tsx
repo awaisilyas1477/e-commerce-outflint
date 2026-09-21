@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { createAnonServerSupabase } from "@/lib/supabase/anon-server";
+import { createServiceRoleClient } from "@/lib/supabase/service-role";
 
 export const metadata: Metadata = {
   title: "Newsletter subscribe again",
@@ -26,7 +26,7 @@ export default async function NewsletterResubscribePage({
 
   if (UUID_RE.test(raw)) {
     try {
-      const supabase = createAnonServerSupabase();
+      const supabase = createServiceRoleClient();
       const { data, error } = await supabase.rpc("newsletter_resubscribe_by_token", {
         p_token: raw,
       });

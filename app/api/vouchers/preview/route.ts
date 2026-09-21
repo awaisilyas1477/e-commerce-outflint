@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceRoleClient } from "@/lib/supabase/service-role";
 import {
   interpretPreviewVoucherRpcData,
   parseVoucherPreviewRequestBody,
@@ -34,10 +35,19 @@ export async function POST(req: Request) {
   const { code, cart_subtotal, product_ids } = parsed.value;
 
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("preview_voucher", {
+  const { data: authData } = await supabase.auth.getUser();
+  if (!authData.user?.id) {
+    return NextResponse.json(
+      { ok: false, error: "Not authenticated", error_code: "not_authenticated" } satisfies VoucherPreviewResult,
+      { status: 401 },
+    );
+  }
+  const srv = createServiceRoleClient();
+  const { data, error } = await srv.rpc("preview_voucher", {
     p_code: code,
     p_cart_subtotal: cart_subtotal,
     p_cart_product_ids: product_ids,
+    p_auth_uid: authData.user.id,
   });
 
   if (error) {

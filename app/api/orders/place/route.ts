@@ -131,8 +131,13 @@ export async function POST(req: Request) {
   };
 
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("place_order", {
-    p_payload: rpcPayload as unknown as Record<string, unknown>,
+  const { data: authData } = await supabase.auth.getUser();
+  const srv = createServiceRoleClient();
+  const { data, error } = await srv.rpc("place_order", {
+    p_payload: {
+      ...(rpcPayload as unknown as Record<string, unknown>),
+      ...(authData.user?.id ? { _auth_uid: authData.user.id } : {}),
+    },
   });
 
   if (error) {
@@ -165,8 +170,6 @@ export async function POST(req: Request) {
         if (!srk) {
           console.warn("[orders/place] newsletter: SUPABASE_SERVICE_ROLE_KEY not set; skipping opt-in");
         } else {
-          const { data: authData } = await supabase.auth.getUser();
-          const srv = createServiceRoleClient();
           const { error: subErr } = await srv.rpc("newsletter_subscribe_after_order", {
             p_email: rpcPayload.email.trim(),
             p_auth_uid: authData.user?.id ?? null,

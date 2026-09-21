@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAnonServerSupabase } from "@/lib/supabase/anon-server";
+import { createServiceRoleClient } from "@/lib/supabase/service-role";
 import { getRequestIp, rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 const UUID_RE =
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const supabase = createAnonServerSupabase();
+    const supabase = createServiceRoleClient();
     const { data, error } = await supabase.rpc("newsletter_unsubscribe_by_token", {
       p_token: token,
     });
