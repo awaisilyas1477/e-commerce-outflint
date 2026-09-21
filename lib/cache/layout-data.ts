@@ -63,6 +63,24 @@ const DEFAULT_REVALIDATE_SECONDS = 300;
 
 // ---------- Empty defaults ----------
 
+/**
+ * When `home_page_settings.featured_block` is null (common after catalog
+ * imports), the callout collage still renders from product images but the
+ * right-hand copy would be blank. Mirror SimpleCart’s structure with
+ * Outflint tailoring copy so the feature-row never ships empty.
+ */
+const DEFAULT_FEATURED: StoreBrandConfig["featured"] = {
+  eyebrow: "Shop by category",
+  title: "Tailoring essentials, sorted",
+  description:
+    "Browse presser feet, needles, sewing storage and machine accessories — curated for tailors across Pakistan.",
+  imageUrl: "",
+  primaryLabel: "Shop accessories",
+  primaryHref: "/collections/stitching-accessories",
+  secondaryLabel: "All collections",
+  secondaryHref: "/collections",
+};
+
 const EMPTY_FEATURED: StoreBrandConfig["featured"] = {
   eyebrow: "",
   title: "",
@@ -72,6 +90,16 @@ const EMPTY_FEATURED: StoreBrandConfig["featured"] = {
   primaryHref: "/",
   secondaryLabel: "",
   secondaryHref: "/",
+};
+
+const DEFAULT_WHY: StoreBrandConfig["whyShop"] = {
+  eyebrow: "Why Outflint",
+  title: "REAL PARTS. REAL SUPPORT.",
+  body: "Every listing shows clear pricing and stock. Sale items show compare-at pricing so you know the deal. Questions? Our team replies within one business day.",
+  ctaLabel: "Shop stitching accessories",
+  ctaHref: "/collections/stitching-accessories",
+  reviewsLine: "Customers rate us highly on delivery and product accuracy.",
+  imageUrl: "",
 };
 
 const EMPTY_WHY: StoreBrandConfig["whyShop"] = {
@@ -229,9 +257,9 @@ function mapFooterItemsFromPolicyPages(
 }
 
 function parseFeaturedBlock(raw: unknown): StoreBrandConfig["featured"] {
-  if (!raw || typeof raw !== "object") return EMPTY_FEATURED;
+  if (!raw || typeof raw !== "object") return DEFAULT_FEATURED;
   const o = raw as Record<string, unknown>;
-  return {
+  const parsed = {
     eyebrow: typeof o.eyebrow === "string" ? o.eyebrow : "",
     title: typeof o.title === "string" ? o.title : "",
     description: typeof o.description === "string" ? o.description : "",
@@ -242,12 +270,25 @@ function parseFeaturedBlock(raw: unknown): StoreBrandConfig["featured"] {
     secondaryHref:
       typeof o.secondaryHref === "string" && o.secondaryHref ? o.secondaryHref : "/",
   };
+  // Partial/empty JSON still leaves the right column blank — fill gaps from defaults.
+  const hasCopy =
+    parsed.title.trim() || parsed.description.trim() || parsed.eyebrow.trim();
+  if (!hasCopy) {
+    return {
+      ...DEFAULT_FEATURED,
+      imageUrl: parsed.imageUrl || DEFAULT_FEATURED.imageUrl,
+      primaryHref: parsed.primaryHref !== "/" ? parsed.primaryHref : DEFAULT_FEATURED.primaryHref,
+      secondaryHref:
+        parsed.secondaryHref !== "/" ? parsed.secondaryHref : DEFAULT_FEATURED.secondaryHref,
+    };
+  }
+  return parsed;
 }
 
 function parseWhyShopBlock(raw: unknown): StoreBrandConfig["whyShop"] {
-  if (!raw || typeof raw !== "object") return EMPTY_WHY;
+  if (!raw || typeof raw !== "object") return DEFAULT_WHY;
   const o = raw as Record<string, unknown>;
-  return {
+  const parsed = {
     eyebrow: typeof o.eyebrow === "string" ? o.eyebrow : "",
     title: typeof o.title === "string" ? o.title : "",
     body: typeof o.body === "string" ? o.body : "",
@@ -256,6 +297,16 @@ function parseWhyShopBlock(raw: unknown): StoreBrandConfig["whyShop"] {
     reviewsLine: typeof o.reviewsLine === "string" ? o.reviewsLine : "",
     imageUrl: typeof o.imageUrl === "string" ? o.imageUrl : "",
   };
+  const hasCopy =
+    parsed.title.trim() || parsed.body.trim() || parsed.eyebrow.trim();
+  if (!hasCopy) {
+    return {
+      ...DEFAULT_WHY,
+      imageUrl: parsed.imageUrl || DEFAULT_WHY.imageUrl,
+      ctaHref: parsed.ctaHref !== "/" ? parsed.ctaHref : DEFAULT_WHY.ctaHref,
+    };
+  }
+  return parsed;
 }
 
 function pickHandleFromUrl(url: string): string {
@@ -673,7 +724,7 @@ async function _loadAnalytics(): Promise<AnalyticsConfig> {
 
 export const getCachedStoreBrand = unstable_cache(
   _loadStoreBrand,
-  ["layout-store-brand-v5"],
+  ["layout-store-brand-v6"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.storeBrand],
