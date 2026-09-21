@@ -1,31 +1,28 @@
 import Image from "next/image";
 import { WordmarkLogo } from "@/components/brand/wordmark-logo";
 import {
-  FALLBACK_FOOTER_LOGO_URL,
-  FALLBACK_LOGO_URL,
   isRemoteAssetUrl,
-  resolveFooterLogoUrl,
   resolveLogoUrl,
   resolveSiteName,
 } from "@/lib/site-brand-env";
 
 /**
- * Site logo components — header uses dark wordmark;
- * footer uses light wordmark on dark backgrounds.
- * Bundled brand SVGs render inline so Montserrat (page font) applies.
+ * Site logo components — header uses dark mark on light chrome;
+ * footer uses the same dark (black-text) mark, larger.
  */
 
-const LOGO_WIDTH = 150;
-const LOGO_HEIGHT = 50;
+const LOGO_WIDTH = 280;
+const LOGO_HEIGHT = 166;
 
 /**
- * Shared scale — same as original header mark (pre-enlargement).
- * `w-auto` keeps the tight SVG crop from adding empty side padding.
+ * Shared scale — `w-auto` keeps the tight crop from adding empty side padding.
  */
 const LOGO_SIZE = {
   default: "h-8 w-auto sm:h-10 md:h-11",
   large: "h-11 w-auto sm:h-12",
   compact: "h-7 w-auto sm:h-9",
+  /** Footer — photographic mark needs more height to stay readable. */
+  footer: "h-16 w-auto sm:h-20 md:h-[5.5rem]",
 } as const;
 
 const markSizeClass = LOGO_SIZE;
@@ -42,11 +39,6 @@ function isBundledDarkLogo(src: string): boolean {
   const path = src.split("?")[0] ?? src;
   // Inline SVG wordmark only — PNG/WebP photographic logos use <Image>.
   return path === "/brand/logo-dark.svg" || path === "/brand/logo.svg";
-}
-
-function isBundledLightLogo(src: string): boolean {
-  const path = src.split("?")[0] ?? src;
-  return path === "/brand/logo-light.svg";
 }
 
 function SiteLogoImage({
@@ -133,19 +125,20 @@ type FullProps = {
   className?: string;
 };
 
-/** Footer / marketing — same size as header `default` for consistency. */
+/** Footer / marketing — dark (black text) logo at a larger size. */
 export function SiteLogoFull({ className = "" }: FullProps) {
-  const src = resolveFooterLogoUrl();
+  // Keep OUTFLINT text black even on dark footer backgrounds.
+  const src = resolveLogoUrl();
   const alt = resolveSiteName();
-  const sizeClass = LOGO_SIZE.default;
+  const sizeClass = LOGO_SIZE.footer;
 
-  if (isBundledLightLogo(src)) {
+  if (isBundledDarkLogo(src)) {
     return (
       <span
         className={`inline-flex shrink-0 items-center justify-start font-semibold ${sizeClass} ${className}`.trim()}
       >
         <WordmarkLogo
-          variant="light"
+          variant="dark"
           title={alt}
           className="h-full w-auto max-h-full"
         />
