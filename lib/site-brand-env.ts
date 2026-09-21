@@ -23,8 +23,8 @@ export const FALLBACK_LOGO_URL = "/brand/logo-dark.svg";
 /** Footer logo (light mark on dark backgrounds). */
 export const FALLBACK_FOOTER_LOGO_URL = "/brand/logo-light.svg";
 
-/** Local default when `NEXT_PUBLIC_FAVICON_URL` is unset (`public/brand/favicon.png`). */
-export const FALLBACK_FAVICON_URL = "/brand/favicon.png";
+/** Local default when `NEXT_PUBLIC_FAVICON_URL` is unset. */
+export const FALLBACK_FAVICON_URL = "/brand/favicon.svg";
 
 export function getEnvSiteName(): string {
   return process.env.NEXT_PUBLIC_SITE_NAME?.trim() ?? "";
