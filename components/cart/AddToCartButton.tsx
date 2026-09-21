@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useCart } from "@/app/providers/cart-provider";
 import {
   defaultMetaCurrency,
@@ -42,6 +43,20 @@ export function AddToCartButton({
     return null;
   }
 
+  if (product.inStock === false) {
+    return (
+      <Link
+        href={`/products/${product.slug}`}
+        className={
+          "btn inline-flex w-full cursor-pointer items-center justify-center !rounded-none border border-neutral-300 bg-neutral-100 text-center text-neutral-600 " +
+          className
+        }
+      >
+        Sold out
+      </Link>
+    );
+  }
+
   if (!product.defaultVariantId) {
     return (
       <Link
@@ -62,6 +77,10 @@ export function AddToCartButton({
       loading={adding}
       onClick={async () => {
         if (adding || justAdded) return;
+        if (product.inStock === false) {
+          toast.error("This item is out of stock.");
+          return;
+        }
         setAdding(true);
         try {
           const seed = cartSeedFromProduct(product);

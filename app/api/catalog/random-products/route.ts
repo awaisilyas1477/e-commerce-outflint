@@ -36,15 +36,20 @@ export async function GET(req: Request) {
   const all = await getCachedAllActiveProductTiles();
   const pool =
     excludeIds.size === 0 ? all : all.filter((p) => p.id && !excludeIds.has(p.id));
-  const responseProducts = shufflePick(pool, limit).map((p) => ({
+  /** Prefer in-stock tiles so “Popular right now” never offers OOS add-to-cart. */
+  const inStockPool = pool.filter((p) => p.inStock !== false);
+  const pickFrom = inStockPool.length > 0 ? inStockPool : pool;
+  const responseProducts = shufflePick(pickFrom, limit).map((p) => ({
     id: p.id,
     slug: p.slug,
     name: p.name,
     image: p.image,
     price: p.price,
     compareAtPrice: p.compareAtPrice,
+    collection: p.collection,
     defaultVariantId: p.defaultVariantId,
     defaultVariantSku: p.defaultVariantSku,
+    inStock: p.inStock,
   }));
   return NextResponse.json(responseProducts, {
     headers: {
