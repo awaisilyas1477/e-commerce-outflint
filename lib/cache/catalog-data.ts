@@ -80,8 +80,8 @@ const HOME_SECTIONS_TTL = 60 * 5;
 export function getCachedProductDetailBySlug(slug: string) {
   return unstable_cache(
     async () => dbGetProductDetailBySlug(slug),
-    // v8: parallelized product-detail queries (see dbGetProductDetailBySlug).
-    ["catalog:product-detail-v8", slug],
+    // v12: thread-snips product_assets + og image fixed.
+    ["catalog:product-detail-v12", slug],
     {
       revalidate: PRODUCT_DETAIL_TTL,
       tags: [CATALOG_CACHE_TAGS.product(slug), CATALOG_CACHE_TAGS.products],
@@ -128,7 +128,7 @@ export function getCachedProductsByCollectionSlug(slug: string) {
   const normalized = normalizeCollectionSlug(slug);
   return unstable_cache(
     async () => dbListProductsByCollectionSlug(normalized),
-    ["catalog:products-by-collection-v3", normalized],
+    ["catalog:products-by-collection-v4", normalized],
     {
       revalidate: LIST_TTL,
       tags: [
@@ -159,7 +159,7 @@ export function getCachedProductsBySlugs(slugs: readonly string[]) {
 
 export const getCachedAllActiveProductsForCards = unstable_cache(
   async () => dbListAllActiveProductsForCards(),
-  ["catalog:all-active-products"],
+  ["catalog:all-active-products-v2"],
   {
     revalidate: LIST_TTL,
     tags: [CATALOG_CACHE_TAGS.products],

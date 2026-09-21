@@ -1,5 +1,8 @@
 import { cache } from "react";
-import { getCachedAllActiveProductsForCards } from "@/lib/cache/catalog-data";
+import {
+  getCachedAllActiveProductsForCards,
+  getCachedProductsByCollectionSlug,
+} from "@/lib/cache/catalog-data";
 import { hasCatalogDb } from "@/app/lib/db/env";
 import { getHomeRailSections } from "@/app/lib/home-rails";
 import { optimizeSupplierImageUrl } from "@/lib/images/supplier-cdn";
@@ -32,14 +35,21 @@ function pushUnique(
 }
 
 /**
- * Five distinct product first-images for the Rad-style collection callout collage.
- * Prefers one product per home rail / category, then fills from the catalog.
+ * Five distinct product first-images for the Rad-style collection callout collage
+ * (homepage image band under the hero). Prefer Deals products first so that strip
+ * matches the deals catalog; then one per home rail; then fill from the catalog.
  */
 async function loadHomeCalloutImages(): Promise<CalloutProductImage[]> {
   if (!hasCatalogDb()) return [];
 
   const seen = new Set<string>();
   const out: CalloutProductImage[] = [];
+
+  const deals = await getCachedProductsByCollectionSlug("deals");
+  for (const p of deals) {
+    if (out.length >= CALLOUT_COUNT) break;
+    pushUnique(out, seen, p.image ?? "", p.name, p.slug);
+  }
 
   const rails = await getHomeRailSections();
   for (const rail of rails) {

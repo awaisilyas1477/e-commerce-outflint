@@ -12,10 +12,10 @@ export const PAKISTAN_STANDARD_CHECKOUT: CheckoutTemplateDef = {
       fields: [
         {
           id: "email",
-          label: "Email",
+          label: "Email (optional)",
           type: "email",
           autoComplete: "email",
-          required: true,
+          required: false,
           colSpan: 2,
         },
       ],

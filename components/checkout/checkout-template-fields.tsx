@@ -54,9 +54,7 @@ export function CheckoutTemplateFields({
   return (
     <div className={rootClassName}>
       {template.sections.map((section) => {
-        const visibleFields = section.fields.filter(
-          (field) => signedIn || field.id !== "email",
-        );
+        const visibleFields = section.fields;
 
         return (
         <section key={section.id}>
@@ -166,7 +164,7 @@ export function CheckoutTemplateFields({
                   <div key={field.id} className={span}>
                     <textarea
                       id={`co-${field.id}`}
-                      required={signedIn ? field.required : field.id === "email" ? false : field.required}
+                      required={field.id === "email" ? false : field.required}
                       value={v}
                       onChange={(e) => onChange(field.id, e.target.value)}
                       className={`min-h-[100px] w-full resize-y rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/15`}
@@ -192,7 +190,7 @@ export function CheckoutTemplateFields({
                       onProvinceSuggest={(province) => onChange("shipping_province", province)}
                       inputClassName={inputClassName}
                       required={
-                        signedIn ? field.required : field.id === "email" ? false : field.required
+                        field.id === "email" ? false : field.required
                       }
                       placeholder={resolvedPlaceholder}
                       error={saveAddressErrors[field.id]}
@@ -209,7 +207,7 @@ export function CheckoutTemplateFields({
                     </label>
                     <select
                       id={`co-${field.id}`}
-                      required={signedIn ? field.required : field.id === "email" ? false : field.required}
+                      required={field.id === "email" ? false : field.required}
                       value={v}
                       onChange={(e) => onChange(field.id, e.target.value)}
                       className={inputClassName}
@@ -229,7 +227,7 @@ export function CheckoutTemplateFields({
                   <input
                     id={`co-${field.id}`}
                     type={field.type === "email" ? "email" : "text"}
-                    required={signedIn ? field.required : field.id === "email" ? false : field.required}
+                    required={field.id === "email" ? false : field.required}
                     value={v}
                     onChange={(e) => onChange(field.id, e.target.value)}
                     className={inputClassName}
