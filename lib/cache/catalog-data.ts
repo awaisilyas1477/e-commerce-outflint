@@ -80,8 +80,8 @@ const HOME_SECTIONS_TTL = 60 * 5;
 export function getCachedProductDetailBySlug(slug: string) {
   return unstable_cache(
     async () => dbGetProductDetailBySlug(slug),
-    // v12: thread-snips product_assets + og image fixed.
-    ["catalog:product-detail-v12", slug],
+    // v13: presser-foot quick changer full Amazon gallery + tags.
+    ["catalog:product-detail-v13", slug],
     {
       revalidate: PRODUCT_DETAIL_TTL,
       tags: [CATALOG_CACHE_TAGS.product(slug), CATALOG_CACHE_TAGS.products],
