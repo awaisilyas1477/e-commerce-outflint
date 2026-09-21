@@ -186,6 +186,11 @@ export function CartDrawer() {
   const [backdropArmed, setBackdropArmed] = useState(false);
   const openGenRef = useRef(0);
 
+  // Drawer stays mounted across /checkout navigation — clear checkout loading on close/reopen.
+  useEffect(() => {
+    if (!isOpen) setCheckoutNavigating(false);
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) {
       setBackdropArmed(false);
