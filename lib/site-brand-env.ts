@@ -15,7 +15,7 @@ import type { SiteIdentity } from "@/lib/seo/types";
 import type { StoreBrandConfig } from "@/app/lib/store-brand.types";
 
 /** Shown when `NEXT_PUBLIC_SITE_NAME` is unset and no DB name is available. */
-export const FALLBACK_SITE_NAME = "SimpleCart Store";
+export const FALLBACK_SITE_NAME = "Outflint";
 
 /** Header logo (dark mark on light backgrounds). */
 export const FALLBACK_LOGO_URL = "/brand/logo-dark.svg";
