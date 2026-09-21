@@ -1,4 +1,4 @@
-import { ProductSection, WhyShop } from "@/components/storefront";
+import { ProductSection } from "@/components/storefront";
 import { ActiveWearBlock } from "@/components/home/ActiveWearBlock";
 import {
   HomeCollectionsStrip,
@@ -113,7 +113,6 @@ export async function HomeDeferredSections() {
           totalProductCount={rail.totalProductCount}
         />
       ))}
-      <WhyShop />
       <TrustRatingStrip aggregate={storeReviews} reviews={reviewHighlights} />
     </>
   );

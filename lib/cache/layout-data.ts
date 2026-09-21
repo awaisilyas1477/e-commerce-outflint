@@ -92,16 +92,6 @@ const EMPTY_FEATURED: StoreBrandConfig["featured"] = {
   secondaryHref: "/",
 };
 
-const DEFAULT_WHY: StoreBrandConfig["whyShop"] = {
-  eyebrow: "Why Outflint",
-  title: "REAL PARTS. REAL SUPPORT.",
-  body: "Every listing shows clear pricing and stock. Sale items show compare-at pricing so you know the deal. Questions? Our team replies within one business day.",
-  ctaLabel: "Shop stitching accessories",
-  ctaHref: "/collections/stitching-accessories",
-  reviewsLine: "Customers rate us highly on delivery and product accuracy.",
-  imageUrl: "",
-};
-
 const EMPTY_WHY: StoreBrandConfig["whyShop"] = {
   eyebrow: "",
   title: "",
@@ -286,9 +276,9 @@ function parseFeaturedBlock(raw: unknown): StoreBrandConfig["featured"] {
 }
 
 function parseWhyShopBlock(raw: unknown): StoreBrandConfig["whyShop"] {
-  if (!raw || typeof raw !== "object") return DEFAULT_WHY;
+  if (!raw || typeof raw !== "object") return EMPTY_WHY;
   const o = raw as Record<string, unknown>;
-  const parsed = {
+  return {
     eyebrow: typeof o.eyebrow === "string" ? o.eyebrow : "",
     title: typeof o.title === "string" ? o.title : "",
     body: typeof o.body === "string" ? o.body : "",
@@ -297,16 +287,6 @@ function parseWhyShopBlock(raw: unknown): StoreBrandConfig["whyShop"] {
     reviewsLine: typeof o.reviewsLine === "string" ? o.reviewsLine : "",
     imageUrl: typeof o.imageUrl === "string" ? o.imageUrl : "",
   };
-  const hasCopy =
-    parsed.title.trim() || parsed.body.trim() || parsed.eyebrow.trim();
-  if (!hasCopy) {
-    return {
-      ...DEFAULT_WHY,
-      imageUrl: parsed.imageUrl || DEFAULT_WHY.imageUrl,
-      ctaHref: parsed.ctaHref !== "/" ? parsed.ctaHref : DEFAULT_WHY.ctaHref,
-    };
-  }
-  return parsed;
 }
 
 function pickHandleFromUrl(url: string): string {
@@ -724,7 +704,7 @@ async function _loadAnalytics(): Promise<AnalyticsConfig> {
 
 export const getCachedStoreBrand = unstable_cache(
   _loadStoreBrand,
-  ["layout-store-brand-v6"],
+  ["layout-store-brand-v7"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.storeBrand],
