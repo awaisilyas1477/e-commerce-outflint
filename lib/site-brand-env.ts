@@ -3,8 +3,8 @@
  *
  * To change the logo or store name site-wide, update `.env`:
  *   NEXT_PUBLIC_SITE_NAME=Outflint
- *   NEXT_PUBLIC_LOGO_URL=/brand/logo-dark.svg
- *   NEXT_PUBLIC_FOOTER_LOGO_URL=/brand/logo-light.svg
+ *   NEXT_PUBLIC_LOGO_URL=/brand/logo-dark.webp
+ *   NEXT_PUBLIC_FOOTER_LOGO_URL=/brand/logo-light.webp
  *   NEXT_PUBLIC_FAVICON_URL=/brand/favicon.png
  *
  * Logo/favicon may be root-relative (`/brand/logo.svg`) or absolute URLs.
@@ -18,13 +18,13 @@ import type { StoreBrandConfig } from "@/app/lib/store-brand.types";
 export const FALLBACK_SITE_NAME = "Outflint";
 
 /** Header logo (dark mark on light backgrounds). */
-export const FALLBACK_LOGO_URL = "/brand/logo-dark.svg";
+export const FALLBACK_LOGO_URL = "/brand/logo-dark.webp";
 
 /** Footer logo (light mark on dark backgrounds). */
-export const FALLBACK_FOOTER_LOGO_URL = "/brand/logo-light.svg";
+export const FALLBACK_FOOTER_LOGO_URL = "/brand/logo-light.webp";
 
 /** Local default when `NEXT_PUBLIC_FAVICON_URL` is unset. */
-export const FALLBACK_FAVICON_URL = "/brand/favicon.svg";
+export const FALLBACK_FAVICON_URL = "/brand/favicon.png";
 
 export function getEnvSiteName(): string {
   return process.env.NEXT_PUBLIC_SITE_NAME?.trim() ?? "";

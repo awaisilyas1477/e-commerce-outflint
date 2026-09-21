@@ -40,23 +40,13 @@ type LogoMarkProps = {
 
 function isBundledDarkLogo(src: string): boolean {
   const path = src.split("?")[0] ?? src;
-  return (
-    path === FALLBACK_LOGO_URL ||
-    path === "/brand/logo-dark.svg" ||
-    path === "/brand/logo-dark.png" ||
-    path === "/brand/logo-dark.webp" ||
-    path === "/brand/logo.svg"
-  );
+  // Inline SVG wordmark only — PNG/WebP photographic logos use <Image>.
+  return path === "/brand/logo-dark.svg" || path === "/brand/logo.svg";
 }
 
 function isBundledLightLogo(src: string): boolean {
   const path = src.split("?")[0] ?? src;
-  return (
-    path === FALLBACK_FOOTER_LOGO_URL ||
-    path === "/brand/logo-light.svg" ||
-    path === "/brand/logo-light.png" ||
-    path === "/brand/logo-light.webp"
-  );
+  return path === "/brand/logo-light.svg";
 }
 
 function SiteLogoImage({
