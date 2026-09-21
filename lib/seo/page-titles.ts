@@ -12,7 +12,7 @@ export const HOME_METADATA_TITLE = "Everyday Essentials Online in Pakistan";
 
  * Collection listing title base â€” matches money-page SEO pattern.
 
- * Example: "Kitchen Essentials in Pakistan | Outflint"
+ * Example: "Presser Foot Collection in Pakistan | Outflint"
 
  */
 

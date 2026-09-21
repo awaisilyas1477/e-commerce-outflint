@@ -75,7 +75,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
     override,
     defaults: {
       title: section.name,
-      description: `${section.name} — curated home, kitchen and beauty essentials from ${identity.storeName || identity.siteTitle || "our shop"}.`,
+      description: `${section.name} — sewing machine parts, presser feet and tailoring accessories from ${identity.storeName || identity.siteTitle || "Outflint"}.`,
     },
   });
 }
@@ -124,7 +124,7 @@ export default async function HomeSectionListingPage({ params, searchParams }: P
   const displayName = seoHeadingFromMetaTitle(seoOverride?.title, section.name);
   const intro =
     seoOverride?.description?.trim() ||
-    `${section.name} — curated home, kitchen and beauty essentials from Outflint with COD across Pakistan.`;
+    `${section.name} — sewing machine parts, presser feet and tailoring accessories from Outflint with COD across Pakistan.`;
   const featuredIndex = buildFeaturedIndex(baseline);
   const maxCeil = maxPriceCeiling(baseline);
 

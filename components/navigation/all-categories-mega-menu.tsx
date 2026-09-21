@@ -33,58 +33,35 @@ function CategoryGlyph({ slug }: { slug: string }) {
     strokeLinecap: "round" as const,
     strokeLinejoin: "round" as const,
   };
-  if (s.includes("drink") || s.includes("tumbler") || s.includes("bottle")) {
+  if (s.includes("presser") || s.includes("foot")) {
     return (
       <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
-        <path d="M8 3h8l-1 3v12a3 3 0 0 1-3 3h0a3 3 0 0 1-3-3V6L8 3z" />
-        <path d="M9 8h6" />
+        <path d="M8 4h8v4H8z" />
+        <path d="M10 8v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V8" />
+        <path d="M9 20h6" />
       </svg>
     );
   }
-  if (s.includes("kitchen") || s.includes("cook")) {
-    return (
-      <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
-        <path d="M4 10h16v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9z" />
-        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-      </svg>
-    );
-  }
-  if (s.includes("appliance") || s.includes("heater") || s.includes("kettle")) {
-    return (
-      <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
-        <rect x="5" y="4" width="14" height="16" rx="2" />
-        <path d="M9 8h6M9 12h6M9 16h4" />
-      </svg>
-    );
-  }
-  if (s.includes("beauty") || s.includes("personal") || s.includes("care")) {
-    return (
-      <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
-        <path d="M12 3v4M9 7h6l1 13H8L9 7z" />
-        <path d="M10 11h4" />
-      </svg>
-    );
-  }
-  if (s.includes("lamp") || s.includes("light")) {
-    return (
-      <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
-        <path d="M9 18h6M10 21h4" />
-        <path d="M12 3a5 5 0 0 1 5 5c0 2.5-1.5 3.5-2.5 5H9.5C8.5 11.5 7 10.5 7 8a5 5 0 0 1 5-5z" />
-      </svg>
-    );
-  }
-  if (s.includes("pest") || s.includes("mosquito")) {
+  if (s.includes("stitch") || s.includes("sewing") || s.includes("accessories")) {
     return (
       <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
         <circle cx="12" cy="12" r="3" />
-        <path d="M5 8l4 3M19 8l-4 3M5 16l4-3M19 16l-4-3M12 5v2M12 17v2" />
+        <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8" />
       </svg>
     );
   }
-  if (s.includes("wellness") || s.includes("comfort") || s.includes("massage")) {
+  if (s.includes("storage") || s.includes("organizer") || s.includes("case")) {
     return (
       <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
-        <path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" />
+        <rect x="4" y="6" width="16" height="14" rx="2" />
+        <path d="M4 10h16M9 6V4h6v2" />
+      </svg>
+    );
+  }
+  if (s.includes("deal") || s.includes("sale")) {
+    return (
+      <svg viewBox="0 0 24 24" className={cls} aria-hidden {...stroke}>
+        <path d="M12 3l2.2 4.5L19 8.2l-3.5 3.4.8 4.9L12 14.8 7.7 16.5l.8-4.9L5 8.2l4.8-.7L12 3z" />
       </svg>
     );
   }

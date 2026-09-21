@@ -241,7 +241,7 @@ export function HeaderMobileSearch({ onOpenChange }: { onOpenChange?: (open: boo
 
   const rotatingHints = useMemo(() => {
     const names = popularCategories.map((c) => c.name).slice(0, 5);
-    return names.length > 0 ? names : ["kitchen tools", "drinkware", "home essentials"];
+    return names.length > 0 ? names : ["presser feet", "sewing needles", "Singer Brother Juki parts"];
   }, [popularCategories]);
 
   const matchedCategories = useMemo(() => {
@@ -413,7 +413,7 @@ export function HeaderMobileSearch({ onOpenChange }: { onOpenChange?: (open: boo
 
   const placeholder =
     hintsReady && !q
-      ? `Search for ${rotatingHints[hintIndex] ?? "home essentials"}`
+      ? `Search for ${rotatingHints[hintIndex] ?? "presser feet"}`
       : "Search products, categories…";
 
   return (

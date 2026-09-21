@@ -206,16 +206,16 @@ export function BlogArticleView({ article }: { article: BlogArticle }) {
       <div className="mt-12 rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-7">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-lg font-bold text-amber-400">
-            SC
+            OF
           </div>
           <div className="flex-1 text-sm text-neutral-600">
             <h4 className="font-bold text-neutral-900">
               Published by Outflint Editorial & Sourcing Desk
             </h4>
             <p className="mt-0.5 leading-relaxed">
-              Researched and verified by our Pakistani eCommerce product specialists.
-              We physically inspect catalog batches, test build quality, and evaluate pricing value
-              to deliver genuine advice for household shoppers across Pakistan.
+              Researched and verified by our Pakistani sewing-parts specialists.
+              We check fit notes for Singer, Brother, Juki and industrial machines,
+              review build quality, and keep pricing clear for tailor shops and home sewists.
             </p>
           </div>
         </div>

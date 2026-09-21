@@ -6,7 +6,7 @@ import { RiseUpTitle } from "@/components/ui/rise-up-title";
 /** Mobile display heading size — keep consistent across home rails, sections, and page titles. */
 export const mobileHeadingSizeClass = "text-[1.50rem] leading-[1.2]";
 
-/** Radstore-style home section titles (Kitchen / Shop collections / category rails, etc.). */
+/** Home section titles (Shop collections / category rails, etc.). */
 export const homeSectionTitleClass = `font-sans ${mobileHeadingSizeClass} font-black uppercase italic tracking-normal text-[#1c1d1d] sm:text-[29.7px] sm:leading-[35.64px]`;
 
 /** Content page H1 — same mobile size, scales up from sm. */

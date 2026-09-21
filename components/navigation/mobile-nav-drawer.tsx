@@ -152,50 +152,35 @@ function UserIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 function CategoryGlyph({ slug }: { slug: string }) {
   const s = slug.toLowerCase();
-  if (s.includes("bottle") || s.includes("tumbler") || s.includes("drink")) {
+  if (s.includes("presser") || s.includes("foot")) {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M7 2h10v3H7z" />
-        <path d="M8 5v2a4 4 0 0 0 1 2.83V20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V9.83A4 4 0 0 0 16 7V5" />
+        <path d="M8 4h8v4H8z" />
+        <path d="M10 8v8a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V8" />
+        <path d="M9 20h6" />
       </svg>
     );
   }
-  if (s.includes("kitchen") || s.includes("cutlery") || s.includes("cook")) {
+  if (s.includes("stitch") || s.includes("sewing") || s.includes("accessories")) {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M18 2v20M21 15V2a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3zM3 2v6a3 3 0 0 0 3 3v11M6 2v20" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
       </svg>
     );
   }
-  if (s.includes("appliance") || s.includes("electric") || s.includes("heater")) {
+  if (s.includes("storage") || s.includes("organizer") || s.includes("case")) {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <rect x="4" y="2" width="16" height="20" rx="2" />
-        <line x1="9" y1="6" x2="15" y2="6" />
-        <circle cx="12" cy="14" r="3" />
+        <rect x="4" y="6" width="16" height="14" rx="2" />
+        <path d="M4 10h16M9 6V4h6v2" />
       </svg>
     );
   }
-  if (s.includes("lamp") || s.includes("light")) {
+  if (s.includes("deal") || s.includes("sale")) {
     return (
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
-        <path d="M9 18h6M10 22h4" />
-      </svg>
-    );
-  }
-  if (s.includes("beauty") || s.includes("care") || s.includes("personal")) {
-    return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-      </svg>
-    );
-  }
-  if (s.includes("pest") || s.includes("mosquito")) {
-    return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <circle cx="12" cy="12" r="6" />
-        <path d="m18 12 3-3M6 12 3 9M18 12l3 3M6 12l-3 3M12 6V3M12 18v3" />
+        <path d="M12 3l2.2 4.5L19 8.2l-3.5 3.4.8 4.9L12 14.8 7.7 16.5l.8-4.9L5 8.2l4.8-.7L12 3z" />
       </svg>
     );
   }

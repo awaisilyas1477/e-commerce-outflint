@@ -32,7 +32,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       title,
       description:
         identity.siteDescription ||
-        `Search tumblers, bottles, kitchen tools, beauty gadgets and home essentials at ${identity.storeName || identity.siteTitle || "our shop"}.`,
+        `Search presser feet, needles, Singer Brother Juki parts and tailoring accessories at ${identity.storeName || identity.siteTitle || "Outflint"}.`,
       forceNoindex: true,
     },
   });
