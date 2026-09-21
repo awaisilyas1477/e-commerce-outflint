@@ -86,8 +86,8 @@ function formatPkr(n: number): string {
 }
 
 function categoryLabel(p: Product): string {
-  const raw = (p.collection || p.category || "home essentials").trim();
-  if (!raw || raw === "uncategorized") return "Home Essentials";
+  const raw = (p.collection || p.category || "stitching accessories").trim();
+  if (!raw || raw === "uncategorized") return "Stitching Accessories";
   return raw
     .replace(/-/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
@@ -111,7 +111,7 @@ export function buildProductBlogArticle(
   const rawDesc = plainText(product.description) || plainText(product.shortDescription);
   const desc =
     rawDesc ||
-    `${name} is a high-utility ${category.toLowerCase()} item crafted for daily reliability in Pakistani households.`;
+    `${name} is a practical ${category.toLowerCase()} part for tailors and garment workshops in Pakistan.`;
 
   const urls = collectProductImageUrls(product.imagesRaw, product.image);
   const img = (i: number, alt: string): BlogImage | null => {
@@ -144,16 +144,16 @@ export function buildProductBlogArticle(
   const introParagraphs = pick(
     [
       [
-        `When searching for ${name} online in Pakistan, shoppers want verifiable product information: accurate PKR pricing, real product photos, build quality details, and flexible payment options like Cash on Delivery.`,
-        `In this in-depth product review and buyer's guide, we break down everything you need to know about ${name} available at ${storeName}—including its design highlights, practical everyday use cases, and doorstep delivery terms across 400+ Pakistani cities.`,
+        `When searching for ${name} online in Pakistan, tailors want clear specs, accurate PKR pricing, real photos, and Cash on Delivery.`,
+        `This review covers ${name} at ${storeName}—fit notes, everyday workshop use, and doorstep delivery across Pakistani cities.`,
       ],
       [
-        `Are you considering buying ${name} in Pakistan? With numerous online listings of varying quality across social media, finding a genuine, quality-inspected unit backed by customer protection is essential.`,
-        `At ${storeName}, ${name} is curated to offer maximum utility and value at ${price}. This comprehensive guide reviews its standout features, build specifications, and why it is a top-rated pick in the ${category} category.`,
+        `Considering ${name} for your shop or home machine? Finding the right sewing part with verified stock and purchase protection matters.`,
+        `At ${storeName}, ${name} is listed at ${price}. Below we cover key features, build notes, and why it is a practical pick in ${category}.`,
       ],
       [
-        `Online eCommerce in Pakistan requires transparency—customers deserve to know exactly what arrives in their parcel before placing an order.`,
-        `Here is our hands-on review of ${name}. From initial unboxing to everyday performance in Pakistani conditions, we evaluate its durability, ease of use, and overall price-to-performance ratio.`,
+        `Online buyers of sewing machine parts deserve to know what arrives before they order.`,
+        `Here is our review of ${name}: from unboxing to stitch-floor use, with durability and value notes for Pakistani workshops.`,
       ],
     ],
     seed,
@@ -202,69 +202,65 @@ export function buildProductBlogArticle(
   const featureList = pick(
     [
       [
-        `High-Grade Material Construction: Designed to withstand frequent everyday use without premature wear or degradation.`,
-        `Ergonomic & Practical Form Factor: Intuitive handling that integrates seamlessly into your daily household or personal routine.`,
-        `Safety-Tested Performance: Verified for electrical/mechanical safety under standard Pakistani utility environments.`,
-        `Direct Warehouse Quality Inspection: Every unit is individually examined before being sealed in protective packaging.`,
+        `Workshop-ready build: Made for repeated use on industrial and home sewing machines.`,
+        `Clear fit guidance: Specs and compatibility notes help you match the right machine model.`,
+        `Inspected before dispatch: Each unit is checked so you receive the part you ordered.`,
+        `COD across Pakistan: Order today and pay when the courier arrives.`,
       ],
       [
-        `Durable & Long-Lasting: Crafted from premium materials that resist wear and tear over extended usage.`,
-        `Effortless Setup & Operation: Ready to use straight out of the box with clear operational instructions.`,
-        `Optimal Price-to-Value: Delivers premium functionality at an accessible ${price} price point.`,
-        `Reliable Doorstep Delivery: Shipped via Pakistan's top-tier logistics couriers with real-time tracking links.`,
+        `Durable materials suited to daily stitching and alterations work.`,
+        `Straightforward install for trained operators and home sewists.`,
+        `Fair PKR pricing at ${price} with transparent stock on the product page.`,
+        `Packed for safe courier transit to workshops and homes nationwide.`,
       ],
     ],
     seed + 1,
   );
   sections.push({ type: "list", items: featureList });
 
-  // 5. Category-Specific Expert Callout
-  const isDrinkware = /bottle|flask|tumbler|sipper|cup|mug|thermos/i.test(`${product.slug} ${name}`);
-  const isKitchen = /chopper|grinder|kettle|stove|utensil|cutter|mixer|cook/i.test(`${product.slug} ${name}`);
-  const isAppliance = /heater|fan|humidifier|iron|steamer/i.test(`${product.slug} ${name}`);
-  const isBeauty = /mirror|trimmer|blackhead|hair|skin|facial|beauty/i.test(`${product.slug} ${name}`);
-  const isPest = /mosquito|bat|pest|zapper|insect/i.test(`${product.slug} ${name}`);
+  // 5. Category-specific tip for sewing / tailoring parts
+  const isPresser =
+    /presser|foot|hemming|ruffl|zipper.?foot|edge.?guide/i.test(`${product.slug} ${name}`);
+  const isNeedle =
+    /needle|bobbin|hook|rotary|thread.?tension|spool/i.test(`${product.slug} ${name}`);
+  const isCutting =
+    /shear|scissor|snip|cutter|seam.?ripper|pinking/i.test(`${product.slug} ${name}`);
+  const isStorage =
+    /case|organizer|storage|tube|holder/i.test(`${product.slug} ${name}`);
 
-  if (isDrinkware) {
+  if (isPresser) {
     sections.push({
       type: "callout",
-      title: "Hydration & Thermal Performance Tip",
-      text: "To maximize temperature retention in double-wall drinkware, pre-rinse the container with cold water for chilled beverages or hot water for warm tea before filling. Avoid using abrasive steel scouring pads on outer matte coatings.",
+      title: "Presser Foot Fit Tip",
+      text: "Confirm shank type (high/low) and machine brand before ordering. Wipe the foot and needle plate clean after oiling so fabric feed stays even.",
       tone: "tip",
     });
-  } else if (isKitchen) {
+  } else if (isNeedle) {
     sections.push({
       type: "callout",
-      title: "Kitchen Appliance Maintenance Note",
-      text: "Operate electric choppers and grinders in short 5 to 10-second pulse intervals rather than continuous runs. This protects motor windings from heat buildup and ensures consistent culinary texture.",
+      title: "Needle & Thread Tip",
+      text: "Match needle size to fabric weight and rethread with the presser foot up. Replace bent or dull needles promptly to avoid skipped stitches.",
       tone: "tip",
     });
-  } else if (isAppliance) {
+  } else if (isCutting) {
     sections.push({
       type: "callout",
-      title: "Voltage & Power Safety Reminder",
-      text: "Always connect electric heating and high-load appliances into a dedicated wall outlet rather than unrated multi-plug extensions, particularly during peak load hours in Pakistan.",
-      tone: "warning",
-    });
-  } else if (isBeauty) {
-    sections.push({
-      type: "callout",
-      title: "Beauty Device Care & Sanitization",
-      text: "Ensure charging ports are completely dry before connecting to USB power. Clean optical mirror surfaces with a soft microfiber cloth to prevent micro-scratches.",
+      title: "Cutting Tool Care",
+      text: "Use fabric shears only on cloth—paper dulls edges quickly. Store blades closed and oil the pivot lightly for smooth cuts.",
       tone: "tip",
     });
-  } else if (isPest) {
+  } else if (isStorage) {
     sections.push({
       type: "callout",
-      title: "Battery Longevity Best Practice",
-      text: "Charge your rechargeable bat for 2 to 3 hours using a standard USB adapter. Do not leave the unit charging overnight to protect lithium-ion battery health.",
-      tone: "warning",
+      title: "Workshop Organisation",
+      text: "Label needle sizes and keep sharp tools in closed cases so benches stay safe and parts stay easy to find mid-job.",
+      tone: "tip",
     });
   } else {
     sections.push({
       type: "callout",
       title: "Verified Buyer Recommendation",
-      text: "Inspect your package upon arrival with the courier. Outflint provides full 7-day purchase protection against transit damage or manufacturing defects.",
+      text: "Inspect your package upon arrival with the courier. Outflint provides purchase protection against transit damage or wrong items.",
       tone: "info",
     });
   }
@@ -272,21 +268,21 @@ export function buildProductBlogArticle(
   // 6. Practical Use Cases
   sections.push({
     type: "heading",
-    text: `Everyday Use Cases for ${name} in Pakistani Households`,
+    text: `Where Tailors Use ${name}`,
   });
   const useCaseItems = pick(
     [
       [
-        `Daily home routines where ${category.toLowerCase()} tools save valuable time and effort.`,
-        `Gifting for family, friends, or colleagues who appreciate practical and durable everyday gadgets.`,
-        `Upgrading older, worn-out equipment with a modern, higher-specification replacement.`,
-        `Equipping compact modern apartments, hostellers, and university students on a sensible budget.`,
+        `Daily stitching and alterations on industrial or domestic lockstitch machines.`,
+        `Stocking a tailor shop or home sewing kit with reliable spare parts.`,
+        `Replacing worn feet, needles, or guides without waiting on local hardware shops.`,
+        `Training new operators with clear, standard-compatible accessories.`,
       ],
       [
-        `Streamlining morning preparations and busy household schedules with reliable performance.`,
-        `Ideal for self-care, desk setups, and active daily lifestyle routines across Pakistan.`,
-        `Safe, tested solution designed to handle regional climate and household requirements.`,
-        `Pairing with related products from ${storeName} for a complete coordinated home collection.`,
+        `Garment workshops that need consistent stitch quality shift after shift.`,
+        `Home sewists upgrading from generic market spares to better-fit parts.`,
+        `Overlock, shoe repair, and specialty machines that need matching attachments.`,
+        `Bundling related tools from ${storeName} for a complete stitching setup.`,
       ],
     ],
     seed + 2,

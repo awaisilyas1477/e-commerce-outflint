@@ -104,8 +104,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       identity,
       override: null,
       defaults: {
-        title: "Buying Guide & Review",
-        description: `Buying and lifestyle guides from ${storeName}.`,
+        title: "Product Review",
+        description: `Sewing and tailoring product reviews from ${storeName}.`,
         forceNoindex: true,
       },
     });

@@ -3,10 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import {
-  STATIC_BLOG_GUIDES,
-  staticGuideListingCard,
-} from "@/app/lib/blog/guides";
-import {
   buildProductBlogArticle,
   type BlogProductInput,
 } from "@/app/lib/blog/product-blog";
@@ -30,8 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
     identity,
     override,
     defaults: {
-      title: `${storeName} Buying Guides & Product Reviews | Online Shopping Pakistan`,
-      description: `Expert buying guides, hands-on product reviews, fabric comparisons, and COD delivery tips for shoppers in Pakistan. Shop smart at ${storeName}.`,
+      title: `${storeName} Product Reviews | Tailoring Parts Pakistan`,
+      description: `Hands-on reviews for every Outflint catalog item — presser feet, needles, sewing tools, and machine parts with COD across Pakistan.`,
       ogType: "website",
     },
   });
@@ -45,14 +41,10 @@ export default async function BlogsIndexPage() {
     override?.canonicalUrl,
     canonicalUrlFor("/blogs"),
   );
-  const title = override?.title?.trim() || `${storeName} Buying Guides & Product Reviews`;
+  const title = override?.title?.trim() || `${storeName} Product Reviews`;
   const description =
     override?.description?.trim() ||
-    `Expert buying guides, in-depth product reviews, sizing recommendations, and Cash on Delivery insights for shopping online across Pakistan.`;
-
-  const guideCards = [...STATIC_BLOG_GUIDES]
-    .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1))
-    .map((meta) => staticGuideListingCard(meta, storeName));
+    `Hands-on reviews for every sewing and tailoring product in the ${storeName} catalog — specs, PKR pricing, and Cash on Delivery across Pakistan.`;
 
   let productCards: Array<{
     slug: string;
@@ -87,12 +79,15 @@ export default async function BlogsIndexPage() {
     });
   }
 
-  const allCards = [...guideCards, ...productCards];
+  // Product reviews only — no SimpleCart-style topic guides.
+  const allCards = [...productCards].sort((a, b) =>
+    a.publishedAt < b.publishedAt ? 1 : -1,
+  );
 
   const breadcrumbId = `${canonical}#breadcrumb`;
   const crumbs = breadcrumbJsonLd([
     { name: "Home", url: "/" },
-    { name: "Blogs & Buying Guides", url: canonical },
+    { name: "Product Reviews", url: canonical },
   ]);
   (crumbs as { "@id"?: string })["@id"] = breadcrumbId;
 
@@ -123,16 +118,16 @@ export default async function BlogsIndexPage() {
             <span className="px-0.5 text-neutral-300" aria-hidden>
               /
             </span>
-            <span className="font-medium text-neutral-900">Blogs & Guides</span>
+            <span className="font-medium text-neutral-900">Product Reviews</span>
           </nav>
 
           <header className="mt-8 max-w-3xl border-b border-neutral-200/90 pb-8">
             <h1 className="text-2xl font-black uppercase tracking-tight text-neutral-900 sm:text-4xl md:text-5xl">
-              Buying Guides & Product Reviews
+              Product Reviews
             </h1>
             <p className="mt-4 text-base leading-relaxed text-neutral-600 sm:text-lg">
-              Practical buying guides, hands-on reviews for every catalog item, styling tips,
-              and Cash on Delivery advice for online shoppers in Pakistan.
+              Hands-on reviews for every presser foot, needle, sewing tool, and machine part
+              in our catalog — with clear specs, PKR pricing, and Cash on Delivery across Pakistan.
             </p>
           </header>
 
