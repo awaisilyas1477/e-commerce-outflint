@@ -18,7 +18,7 @@ export function buildWhatsAppUrl(phone: string, message: string): string | null 
 export type ProductWhatsAppContext = {
   productName: string;
   productUrl: string;
-  /** Public image URL — WhatsApp may show a link preview when the chat opens. */
+  /** Public image URL â€” WhatsApp may show a link preview when the chat opens. */
   imageUrl?: string;
   priceLabel?: string;
 };
@@ -30,7 +30,7 @@ export function buildProductWhatsAppMessage(
 ): string {
   const name = ctx.productName.trim() || "this product";
   const lines = [
-    `Hi ${storeName.trim() || "SimpleCart Store"},`,
+    `Hi ${storeName.trim() || "Outflint"},`,
     "",
     `I want to order: ${name}`,
   ];

@@ -24,7 +24,7 @@ import { JsonLd, breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo/jsonld";
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/blogs", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   return buildPageMetadata({
     pathname: "/blogs",
     identity,
@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlogsIndexPage() {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/blogs", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const canonical = resolveSeoCanonicalOverride(
     override?.canonicalUrl,
     canonicalUrlFor("/blogs"),

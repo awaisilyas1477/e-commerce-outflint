@@ -13,14 +13,14 @@ import { JsonLd, breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo/jsonld";
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/how-to-buy", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   return buildPageMetadata({
     pathname: "/how-to-buy",
     identity,
     override,
     defaults: {
       title: "How to Buy",
-      description: `Learn how to order from ${storeName} — browse products, add to cart, checkout with COD, and get delivery across Pakistan.`,
+      description: `Learn how to order from ${storeName} â€” browse products, add to cart, checkout with COD, and get delivery across Pakistan.`,
     },
   });
 }
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HowToBuyPage() {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/how-to-buy", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const canonical = resolveSeoCanonicalOverride(
     override?.canonicalUrl,
     canonicalUrlFor("/how-to-buy"),
@@ -36,7 +36,7 @@ export default async function HowToBuyPage() {
   const title = override?.title?.trim() || "How to Buy";
   const description =
     override?.description?.trim() ||
-    `Learn how to order from ${storeName} — browse products, add to cart, checkout with COD, and get delivery across Pakistan.`;
+    `Learn how to order from ${storeName} â€” browse products, add to cart, checkout with COD, and get delivery across Pakistan.`;
   const breadcrumbId = `${canonical}#breadcrumb`;
   const crumbs = breadcrumbJsonLd([
     { name: "Home", url: "/" },
@@ -86,7 +86,7 @@ export default async function HowToBuyPage() {
           <article className="space-y-6 py-8 text-base leading-relaxed text-neutral-700 sm:text-[1.05rem]">
             <ol className="list-decimal space-y-5 pl-5">
               <li>
-                <strong className="font-semibold text-neutral-900">Browse</strong> — Explore{" "}
+                <strong className="font-semibold text-neutral-900">Browse</strong> â€” Explore{" "}
                 <Link
                   href="/collections"
                   className="font-medium text-neutral-900 underline underline-offset-2 hover:text-neutral-700"
@@ -97,24 +97,24 @@ export default async function HowToBuyPage() {
                 stock, and details.
               </li>
               <li>
-                <strong className="font-semibold text-neutral-900">Add to cart</strong> —
+                <strong className="font-semibold text-neutral-900">Add to cart</strong> â€”
                 Choose quantity (and options if shown), then tap Add to cart. You can keep
                 shopping or go to checkout when ready.
               </li>
               <li>
-                <strong className="font-semibold text-neutral-900">Checkout</strong> — Enter
+                <strong className="font-semibold text-neutral-900">Checkout</strong> â€” Enter
                 your name, phone, and full delivery address. Confirm the items and any
                 shipping fee shown before you place the order.
               </li>
               <li>
-                <strong className="font-semibold text-neutral-900">Place your order</strong> —
+                <strong className="font-semibold text-neutral-900">Place your order</strong> â€”
                 Confirm your details at checkout and submit. Payment method options are shown
                 before you place the order.
               </li>
               <li>
-                <strong className="font-semibold text-neutral-900">Receive</strong> — We
-                typically pack within 1–2 business days. Delivery usually takes 2–5
-                business days in major cities and 4–8 business days in other areas.
+                <strong className="font-semibold text-neutral-900">Receive</strong> â€” We
+                typically pack within 1â€“2 business days. Delivery usually takes 2â€“5
+                business days in major cities and 4â€“8 business days in other areas.
               </li>
             </ol>
 
@@ -126,7 +126,7 @@ export default async function HowToBuyPage() {
               >
                 Contact us
               </Link>{" "}
-              — WhatsApp, phone, and email support are available Mon–Sat, 10:00 AM –
+              â€” WhatsApp, phone, and email support are available Monâ€“Sat, 10:00 AM â€“
               8:00 PM.
             </p>
           </article>

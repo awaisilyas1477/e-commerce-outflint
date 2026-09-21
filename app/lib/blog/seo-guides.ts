@@ -8,35 +8,35 @@ import {
 
 const STORY = {
   kettleQc: {
-    src: "/story/simplecart-store-01.jpg",
-    alt: "Quality checking products prepared for dispatch at SimpleCart Store",
+    src: "/story/Outflint-store-01.jpg",
+    alt: "Quality checking products prepared for dispatch at Outflint",
   },
   heaterDrinkware: {
-    src: "/story/simplecart-store-02.jpg",
+    src: "/story/Outflint-store-02.jpg",
     alt: "Curated lifestyle and everyday home items ready for packing",
   },
   lifestyleJar: {
-    src: "/story/simplecart-store-03.jpg",
+    src: "/story/Outflint-store-03.jpg",
     alt: "Drinkware and lifestyle essentials collection",
   },
   tumblerPack: {
-    src: "/story/simplecart-store-04.jpg",
+    src: "/story/Outflint-store-04.jpg",
     alt: "Protective bubble wrap packaging for safe courier delivery in Pakistan",
   },
   fanHeater: {
-    src: "/story/simplecart-store-05.jpg",
+    src: "/story/Outflint-store-05.jpg",
     alt: "Seasonal comfort appliances inspected for safety",
   },
   warehouseBusy: {
-    src: "/story/simplecart-store-06.jpg",
-    alt: "Organised inventory shelves at SimpleCart Store distribution facility",
+    src: "/story/Outflint-store-06.jpg",
+    alt: "Organised inventory shelves at Outflint distribution facility",
   },
   cartonStacks: {
-    src: "/story/simplecart-store-07.jpg",
+    src: "/story/Outflint-store-07.jpg",
     alt: "Packed parcels prepared for express courier handover across Pakistan",
   },
   inventoryAisle: {
-    src: "/story/simplecart-store-08.jpg",
+    src: "/story/Outflint-store-08.jpg",
     alt: "Warehouse staff performing multi-point quality inspection",
   },
 } as const satisfies Record<string, BlogImage>;
@@ -637,7 +637,7 @@ function buildGiftIdeasGuide(storeName: string, imageProducts: Product[]): BlogA
 
 // 13. Cash on Delivery (COD) Guide
 function buildCodGuide(storeName: string, imageProducts: Product[]): BlogArticle {
-  const meta = getStaticGuideMeta("cash-on-delivery-cod-simplecart-pakistan")!;
+  const meta = getStaticGuideMeta("cash-on-delivery-cod-Outflint-pakistan")!;
   const { sections, pushP, pushH, pushSub, pushL, pushNum, pushCallout, pushImg, pushCta } = startSections();
   const hero = STORY.tumblerPack;
 
@@ -703,8 +703,8 @@ function buildSafeShoppingGuide(storeName: string, imageProducts: Product[]): Bl
   ]);
 
   pushCallout(
-    "SimpleCart Purchase Protection",
-    "Every order placed with SimpleCart Store is backed by our 7-day purchase protection guarantee against transit damage or incorrect items.",
+    "Outflint Purchase Protection",
+    "Every order placed with Outflint is backed by our 7-day purchase protection guarantee against transit damage or incorrect items.",
     "info",
   );
 
@@ -755,9 +755,9 @@ function buildWelcome10Guide(storeName: string, imageProducts: Product[]): BlogA
   return finalize(meta, hero, sections);
 }
 
-// 16. Inside SimpleCart Store Guide
+// 16. Inside Outflint Guide
 function buildInsideStoreGuide(storeName: string): BlogArticle {
-  const meta = getStaticGuideMeta("inside-simplecart-store-real-stock-cod-pakistan")!;
+  const meta = getStaticGuideMeta("inside-Outflint-store-real-stock-cod-pakistan")!;
   const { sections, pushP, pushH, pushSub, pushL, pushCallout, pushImg, pushCta } = startSections();
   const hero = STORY.warehouseBusy;
 
@@ -789,7 +789,7 @@ function buildInsideStoreGuide(storeName: string): BlogArticle {
   pushImg(STORY.inventoryAisle);
 
   pushCta(
-    `Experience genuine inventory, verified quality, and fast courier dispatch with SimpleCart.`,
+    `Experience genuine inventory, verified quality, and fast courier dispatch with Outflint.`,
     "/collections",
     "Browse Complete Catalog at " + storeName,
   );
@@ -827,13 +827,13 @@ export function buildSeoGuideArticle(
       return buildWinterHeatersGuide(storeName, imageProducts);
     case "gift-ideas-under-budget-pakistan":
       return buildGiftIdeasGuide(storeName, imageProducts);
-    case "cash-on-delivery-cod-simplecart-pakistan":
+    case "cash-on-delivery-cod-Outflint-pakistan":
       return buildCodGuide(storeName, imageProducts);
     case "online-shopping-scams-safe-buying-guide-pakistan":
       return buildSafeShoppingGuide(storeName, imageProducts);
     case "welcome10-voucher-code-rs-100-discount":
       return buildWelcome10Guide(storeName, imageProducts);
-    case "inside-simplecart-store-real-stock-cod-pakistan":
+    case "inside-Outflint-store-real-stock-cod-pakistan":
       return buildInsideStoreGuide(storeName);
     default:
       return null;

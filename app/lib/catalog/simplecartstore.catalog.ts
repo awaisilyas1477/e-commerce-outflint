@@ -1,14 +1,14 @@
 import type { StoreCatalog } from "./types";
 
 /**
- * Default SimpleCartStore demo catalog for local seeding (`npm run seed:demo`).
+ * Default Outflint demo catalog for local seeding (`npm run seed:demo`).
  * Tailoring supplies: presser feet, needles, guides, machine oil, notions.
  */
 const COLLECTION_SLUG = "stitching-accessories";
 
-export const simpleCartStoreDemoCatalog: StoreCatalog = {
+export const OutflintDemoCatalog: StoreCatalog = {
   brand: {
-    siteTitle: "SimpleCartStore",
+    siteTitle: "Outflint",
     siteDescription:
       "Tailoring supplies, industrial sewing parts, and presser feet — clear specs, fair pricing, and fast delivery across Pakistan.",
     faviconUrl: "/brand/favicon.png",
@@ -28,7 +28,7 @@ export const simpleCartStoreDemoCatalog: StoreCatalog = {
       secondaryHref: "/collections",
     },
     whyShop: {
-      eyebrow: "Why SimpleCartStore",
+      eyebrow: "Why Outflint",
       title: "REAL PARTS. REAL SUPPORT.",
       body:
         "Every listing shows variant-level pricing and stock. Sale items show compare-at pricing so you know the deal. Questions? Our team replies within one business day.",

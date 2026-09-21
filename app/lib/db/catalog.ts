@@ -253,8 +253,9 @@ async function primaryDisplaySlugByProductId(
   return out;
 }
 
+/** Omit columns that older Outflint DBs may not have yet (e.g. video_url). */
 const PRODUCT_SELECT =
-  "id, slug, name, short_description, description, status, images, tags, rating, reviews_count, stock_total, free_delivery, video_url, created_at";
+  "id, slug, name, short_description, description, status, images, tags, rating, reviews_count, stock_total, free_delivery, created_at";
 /** Fields needed by product grids and search suggestions, excluding long copy. */
 const PRODUCT_CARD_SELECT =
   "id, slug, name, status, images, rating, reviews_count, stock_total, created_at";

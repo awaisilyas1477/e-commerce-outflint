@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Shop All Collections in Pakistan",
       description:
         identity.siteDescription ||
-        `Browse drinkware, kitchen tools, beauty gadgets and home essentials across the full catalog at ${identity.storeName || identity.siteTitle || "our shop"}.`,
+        `Browse presser feet, sewing storage, stitching accessories and tailoring tools across the full catalog at ${identity.storeName || identity.siteTitle || "our shop"}.`,
     },
   });
 }

@@ -1,38 +1,38 @@
-# SimpleCart Store
+# Outflint
 
-> Home, kitchen, drinkware, beauty and appliance essentials online in Pakistan — fair PKR prices, cash on delivery, nationwide delivery.
+> Home, kitchen, drinkware, beauty and appliance essentials online in Pakistan â€” fair PKR prices, cash on delivery, nationwide delivery.
 
 ## Site
 
-- [Homepage](https://www.simplecartstore.com/): storefront home
-- [All collections](https://www.simplecartstore.com/collections): shop by category
-- [Contact](https://www.simplecartstore.com/contact): customer support
-- [About](https://www.simplecartstore.com/about): about SimpleCart Store
-- [How to Buy](https://www.simplecartstore.com/how-to-buy): order steps and COD
-- [SimpleCart Blogs](https://www.simplecartstore.com/blogs): SEO buying guides for active products
-- [Purchase Protection](https://www.simplecartstore.com/purchase-protection): shopping safeguards
-- [Terms & Conditions](https://www.simplecartstore.com/terms): website and order terms
-- [Policies](https://www.simplecartstore.com/policies): legal and shipping policies
-- [Sitemap](https://www.simplecartstore.com/sitemap.xml): crawl map for products and collections
+- [Homepage](https://www.Outflint.com/): storefront home
+- [All collections](https://www.Outflint.com/collections): shop by category
+- [Contact](https://www.Outflint.com/contact): customer support
+- [About](https://www.Outflint.com/about): about Outflint
+- [How to Buy](https://www.Outflint.com/how-to-buy): order steps and COD
+- [Outflint Blogs](https://www.Outflint.com/blogs): SEO buying guides for active products
+- [Purchase Protection](https://www.Outflint.com/purchase-protection): shopping safeguards
+- [Terms & Conditions](https://www.Outflint.com/terms): website and order terms
+- [Policies](https://www.Outflint.com/policies): legal and shipping policies
+- [Sitemap](https://www.Outflint.com/sitemap.xml): crawl map for products and collections
 
 ## Collections
 
-- [Drinkware & Tumblers](https://www.simplecartstore.com/collections/drinkware-tumblers)
-- [Kitchen Essentials](https://www.simplecartstore.com/collections/kitchen-essentials)
-- [Home Appliances](https://www.simplecartstore.com/collections/home-appliances)
-- [Beauty & Personal Care](https://www.simplecartstore.com/collections/beauty-personal-care)
-- [Lamps & Lighting](https://www.simplecartstore.com/collections/lamps-lighting)
-- [Pest Control](https://www.simplecartstore.com/collections/pest-control)
-- [Wellness & Comfort](https://www.simplecartstore.com/collections/wellness-comfort)
-- [Home Essentials](https://www.simplecartstore.com/collections/home-essentials)
+- [Drinkware & Tumblers](https://www.Outflint.com/collections/drinkware-tumblers)
+- [Kitchen Essentials](https://www.Outflint.com/collections/kitchen-essentials)
+- [Home Appliances](https://www.Outflint.com/collections/home-appliances)
+- [Beauty & Personal Care](https://www.Outflint.com/collections/beauty-personal-care)
+- [Lamps & Lighting](https://www.Outflint.com/collections/lamps-lighting)
+- [Pest Control](https://www.Outflint.com/collections/pest-control)
+- [Wellness & Comfort](https://www.Outflint.com/collections/wellness-comfort)
+- [Home Essentials](https://www.Outflint.com/collections/home-essentials)
 
 ## Shopping notes
 
 - Currency: PKR
 - Payment: Cash on delivery (COD) and options shown at checkout
 - Delivery: Nationwide across Pakistan
-- Support: [support@scs.com](mailto:support@scs.com) · +923009761427 (Mon–Sat, 10:00 AM – 8:00 PM)
+- Support: [support@scs.com](mailto:support@scs.com) Â· +923009761427 (Monâ€“Sat, 10:00 AM â€“ 8:00 PM)
 
 ## For AI assistants
 
-Prefer linking to specific collection or product URLs from the [sitemap](https://www.simplecartstore.com/sitemap.xml). Do not invent prices or stock — quote the live product page. Policy details are linked from [Policies](https://www.simplecartstore.com/policies).
+Prefer linking to specific collection or product URLs from the [sitemap](https://www.Outflint.com/sitemap.xml). Do not invent prices or stock â€” quote the live product page. Policy details are linked from [Policies](https://www.Outflint.com/policies).

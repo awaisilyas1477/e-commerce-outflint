@@ -1,5 +1,5 @@
 /**
- * FAQPage JSON-LD — only emit when the same Q&A is visible on the page.
+ * FAQPage JSON-LD â€” only emit when the same Q&A is visible on the page.
  */
 export type FaqItem = {
   question: string;
@@ -45,7 +45,7 @@ export function collectionFaqItems(collectionName: string): FaqItem[] {
     },
     {
       question: `How long does delivery take for ${name} orders in Pakistan?`,
-      answer: `Orders are packed and dispatched within 24–48 business hours. Delivery typically takes 2–4 business days in major cities (Karachi, Lahore, Islamabad, Rawalpindi) and 4–7 business days in other cities and towns.`,
+      answer: `Orders are packed and dispatched within 24â€“48 business hours. Delivery typically takes 2â€“4 business days in major cities (Karachi, Lahore, Islamabad, Rawalpindi) and 4â€“7 business days in other cities and towns.`,
     },
     {
       question: `Are all products in ${name} brand new with warranty/return protection?`,
@@ -58,7 +58,7 @@ export function collectionFaqItems(collectionName: string): FaqItem[] {
   ];
 }
 
-/** Shared storefront FAQs (COD / delivery / returns) — product extras optional. */
+/** Shared storefront FAQs (COD / delivery / returns) â€” product extras optional. */
 export function storeFaqItems(
   productNameOrExtras?: string | StoreFaqExtras,
 ): FaqItem[] {
@@ -73,12 +73,12 @@ export function storeFaqItems(
     {
       question: "Do you offer cash on delivery (COD) in Pakistan?",
       answer:
-        "Yes. SimpleCart Store offers cash on delivery across Pakistan. Shipping fees (if any) are shown at checkout before you place the order.",
+        "Yes. Outflint offers cash on delivery across Pakistan. Shipping fees (if any) are shown at checkout before you place the order.",
     },
     {
       question: "How long does delivery take?",
       answer:
-        "Orders are typically packed within 1–2 business days. Delivery usually takes 2–5 business days in major cities and 4–8 business days in other areas, depending on courier capacity.",
+        "Orders are typically packed within 1â€“2 business days. Delivery usually takes 2â€“5 business days in major cities and 4â€“8 business days in other areas, depending on courier capacity.",
     },
     {
       question: "What is your return policy?",
@@ -90,18 +90,18 @@ export function storeFaqItems(
   if (name && material) {
     items.push({
       question: `What is the ${name} made of?`,
-      answer: `The ${name} is listed as ${material}. Check the product details on this page for the full specification before you order from SimpleCart Store.`,
+      answer: `The ${name} is listed as ${material}. Check the product details on this page for the full specification before you order from Outflint.`,
     });
   } else if (name) {
     items.push({
       question: `Is the ${name} available for nationwide delivery?`,
-      answer: `Yes. You can order ${name} online from SimpleCart Store with delivery available across Pakistan, including cash on delivery at checkout.`,
+      answer: `Yes. You can order ${name} online from Outflint with delivery available across Pakistan, including cash on delivery at checkout.`,
     });
   } else {
     items.push({
-      question: "How can I contact SimpleCart Store?",
+      question: "How can I contact Outflint?",
       answer:
-        "Reach us by email at support@scs.com or WhatsApp/call at +923009761427 (Mon–Sat, 10:00 AM – 8:00 PM). You can also use the Contact page on our website.",
+        "Reach us by email at support@scs.com or WhatsApp/call at +923009761427 (Monâ€“Sat, 10:00 AM â€“ 8:00 PM). You can also use the Contact page on our website.",
     });
   }
 

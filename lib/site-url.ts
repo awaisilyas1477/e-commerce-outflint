@@ -2,14 +2,14 @@
  * Absolute site URL for emails, redirects, canonicals, sitemap, JSON-LD, and
  * `metadataBase` in `app/layout.tsx`.
  *
- * Precedence: `NEXT_PUBLIC_SITE_URL` → `NEXT_PUBLIC_DEV_SITE_ORIGIN` → localhost.
+ * Precedence: `NEXT_PUBLIC_SITE_URL` â†’ `NEXT_PUBLIC_DEV_SITE_ORIGIN` â†’ localhost.
  *
  * **Production HTTPS:** In `NODE_ENV === "production"`, if the resolved origin
  * uses `http://` and the hostname is not a local dev host, it is rewritten to
  * `https://`. That way sitemaps, Open Graph, and canonicals never advertise
- * insecure URLs when env is mis-set to `http://simplecartstore.com` while Cloudflare
+ * insecure URLs when env is mis-set to `http://Outflint.com` while Cloudflare
  * still serves the shop over TLS (a common source of Search Console / PSI
- * “HTTPS” / page experience noise).
+ * â€œHTTPSâ€ / page experience noise).
  */
 function stripTrailingSlash(s: string): string {
   return s.replace(/\/$/, "");

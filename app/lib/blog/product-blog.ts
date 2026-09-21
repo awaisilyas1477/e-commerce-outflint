@@ -130,7 +130,7 @@ export function buildProductBlogArticle(
     `${name} review Pakistan`,
     `${name} cash on delivery`,
     `${category} online shopping Pakistan`,
-    `original ${name} SimpleCart`,
+    `original ${name} Outflint`,
     `${name} unboxing Pakistan`,
   ];
 
@@ -264,7 +264,7 @@ export function buildProductBlogArticle(
     sections.push({
       type: "callout",
       title: "Verified Buyer Recommendation",
-      text: "Inspect your package upon arrival with the courier. SimpleCart Store provides full 7-day purchase protection against transit damage or manufacturing defects.",
+      text: "Inspect your package upon arrival with the courier. Outflint provides full 7-day purchase protection against transit damage or manufacturing defects.",
       tone: "info",
     });
   }

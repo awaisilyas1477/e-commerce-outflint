@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: HOME_METADATA_TITLE,
       description:
         identity.siteDescription ||
-        `Shop home, kitchen and beauty essentials from ${identity.storeName || identity.siteTitle || "our shop"} with delivery across Pakistan.`,
+        `Shop stitching accessories, presser feet and tailoring tools from ${identity.storeName || identity.siteTitle || "Outflint"} with delivery across Pakistan.`,
     },
   });
 }
@@ -60,9 +60,9 @@ export default async function Home() {
     override?.canonicalUrl,
     canonicalUrlFor("/"),
   );
-  const homeDisplayTitle = "Everyday essentials, thoughtfully curated";
+  const homeDisplayTitle = "Premium stitching accessories for every tailor";
   const homeDisplayDescription =
-    "Browse drinkware, kitchen tools, beauty gadgets and home essentials — thoughtfully picked for comfort, convenience, and style, ready to make everyday living a little easier.";
+    "Shop presser feet, sewing storage, needles, industrial spare parts and tailoring tools — quality gear for beginners, professionals, and factory-level users across Pakistan.";
   const homeLd = webPageJsonLd({
     url: canonical,
     name:

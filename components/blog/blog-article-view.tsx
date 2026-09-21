@@ -85,9 +85,9 @@ function SectionBlock({ section }: { section: BlogSection }) {
       warning: "border-rose-400/80 bg-rose-50/70 text-rose-950",
     };
     const toneIcons = {
-      tip: "💡 Expert Pro-Tip",
-      info: "ℹ️ Key Takeaway",
-      warning: "⚠️ Important Buyer Note",
+      tip: "ðŸ’¡ Expert Pro-Tip",
+      info: "â„¹ï¸ Key Takeaway",
+      warning: "âš ï¸ Important Buyer Note",
     };
     const selectedTone = section.tone || "tip";
     return (
@@ -148,7 +148,7 @@ function SectionBlock({ section }: { section: BlogSection }) {
             href={section.href}
             className="inline-flex items-center justify-center rounded-xl bg-amber-400 px-6 py-3.5 text-sm font-bold text-neutral-950 transition hover:bg-amber-300 shadow-sm"
           >
-            {section.label} <span className="ml-2 font-bold" aria-hidden>→</span>
+            {section.label} <span className="ml-2 font-bold" aria-hidden>â†’</span>
           </Link>
         </div>
       </div>
@@ -167,10 +167,10 @@ export function BlogArticleView({ article }: { article: BlogArticle }) {
       {/* Quick Stats / Meta Pills */}
       <div className="mb-6 flex flex-wrap items-center gap-3 text-xs font-semibold text-neutral-600">
         <span className="rounded-full bg-neutral-100 px-3 py-1.5 text-neutral-800">
-          ⏱️ {article.readTimeMinutes || 5} min read
+          â±ï¸ {article.readTimeMinutes || 5} min read
         </span>
         <span className="rounded-full bg-amber-100 px-3 py-1.5 text-amber-900">
-          ✍️ Verified Buying Guide
+          âœï¸ Verified Buying Guide
         </span>
       </div>
 
@@ -183,7 +183,7 @@ export function BlogArticleView({ article }: { article: BlogArticle }) {
           aria-label="Table of contents"
         >
           <div className="text-xs font-bold uppercase tracking-wider text-neutral-500">
-            📑 In This Guide
+            ðŸ“‘ In This Guide
           </div>
           <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-sm font-medium text-neutral-800">
             {headings.map((h, i) => (
@@ -210,7 +210,7 @@ export function BlogArticleView({ article }: { article: BlogArticle }) {
           </div>
           <div className="flex-1 text-sm text-neutral-600">
             <h4 className="font-bold text-neutral-900">
-              Published by SimpleCart Editorial & Sourcing Desk
+              Published by Outflint Editorial & Sourcing Desk
             </h4>
             <p className="mt-0.5 leading-relaxed">
               Researched and verified by our Pakistani eCommerce product specialists.

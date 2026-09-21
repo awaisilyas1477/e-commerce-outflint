@@ -4,8 +4,8 @@
  */
 
 const DEFAULT_FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61593870744153";
-const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/simplecartstore/";
-const DEFAULT_YOUTUBE_URL = "https://www.youtube.com/@simplecartstore";
+const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/Outflint/";
+const DEFAULT_YOUTUBE_URL = "https://www.youtube.com/@Outflint";
 
 function readPublicUrl(envKey: string, fallback = "#"): string {
   const v = process.env[envKey]?.trim();
@@ -36,7 +36,7 @@ export type PublicSocialLink = {
   id: "facebook" | "instagram" | "tiktok" | "whatsapp" | "youtube";
   label: string;
   href: string;
-  /** True when env is empty / placeholder — UI keeps the icon but link is inactive. */
+  /** True when env is empty / placeholder â€” UI keeps the icon but link is inactive. */
   placeholder: boolean;
 };
 

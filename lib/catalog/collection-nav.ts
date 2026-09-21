@@ -1,5 +1,5 @@
 /**
- * Canonical collection slugs, display names, and legacy slug redirects.
+ * Canonical Outflint collection slugs, display names, and legacy slug redirects.
  * Keep footer, home tiles, header shop menu, and DB migrations aligned here.
  */
 export type CollectionNavItem = {
@@ -8,58 +8,49 @@ export type CollectionNavItem = {
   href: string;
 };
 
-/** Legacy slug → current slug (301 targets live in `url_redirects`). */
+/** Legacy / mismatched slug → current Outflint slug. */
 export const COLLECTION_SLUG_ALIASES: Record<string, string> = {
-  drinkware: "drinkware-tumblers",
-  kitchen: "kitchen-essentials",
-  appliances: "home-appliances",
-  beauty: "beauty-personal-care",
-  lighting: "lamps-lighting",
-  wellness: "wellness-comfort",
-  home: "home-essentials",
-  "water-bottles": "drinkware-tumblers",
+  // Outflint home_page_sections historically omitted "and"
+  "sewing-storage-organizer-cases": "sewing-storage-and-organizer-cases",
+  "presser-foot": "presser-foot-collection",
+  // Ignore leftover Outflint slugs if they appear in old configs
+  drinkware: "stitching-accessories",
+  "drinkware-tumblers": "stitching-accessories",
+  kitchen: "stitching-accessories",
+  "kitchen-essentials": "stitching-accessories",
+  appliances: "presser-foot-collection",
+  "home-appliances": "presser-foot-collection",
+  beauty: "sewing-storage-and-organizer-cases",
+  "beauty-personal-care": "sewing-storage-and-organizer-cases",
+  lighting: "deals",
+  "lamps-lighting": "deals",
+  wellness: "deals",
+  "wellness-comfort": "deals",
+  home: "stitching-accessories",
+  "home-essentials": "stitching-accessories",
+  "pest-control": "deals",
 };
 
 export const COLLECTION_NAV_ITEMS: CollectionNavItem[] = [
   {
-    slug: "drinkware-tumblers",
-    name: "Drinkware & Tumblers",
-    href: "/collections/drinkware-tumblers",
+    slug: "stitching-accessories",
+    name: "Stitching Accessories",
+    href: "/collections/stitching-accessories",
   },
   {
-    slug: "kitchen-essentials",
-    name: "Kitchen Essentials",
-    href: "/collections/kitchen-essentials",
+    slug: "presser-foot-collection",
+    name: "Presser Foot Collection",
+    href: "/collections/presser-foot-collection",
   },
   {
-    slug: "home-appliances",
-    name: "Home Appliances",
-    href: "/collections/home-appliances",
+    slug: "sewing-storage-and-organizer-cases",
+    name: "Sewing Storage & Organizer Cases",
+    href: "/collections/sewing-storage-and-organizer-cases",
   },
   {
-    slug: "beauty-personal-care",
-    name: "Beauty & Personal Care",
-    href: "/collections/beauty-personal-care",
-  },
-  {
-    slug: "lamps-lighting",
-    name: "Lamps & Lighting",
-    href: "/collections/lamps-lighting",
-  },
-  {
-    slug: "pest-control",
-    name: "Pest Control",
-    href: "/collections/pest-control",
-  },
-  {
-    slug: "wellness-comfort",
-    name: "Wellness & Comfort",
-    href: "/collections/wellness-comfort",
-  },
-  {
-    slug: "home-essentials",
-    name: "Home Essentials",
-    href: "/collections/home-essentials",
+    slug: "deals",
+    name: "Deals",
+    href: "/collections/deals",
   },
 ];
 

@@ -1,5 +1,5 @@
 export type StoreVerticalId =
-  /** SimpleCartStore-style tailoring / stitching demo catalog (default seed). */
+  /** Outflint-style tailoring / stitching demo catalog (default seed). */
   | "tailoring"
   | "clothing"
   | "jewellery"
@@ -13,10 +13,10 @@ export type AnnouncementBarSettings = {
    * Legacy single `announcement_html` is merged into this list when the array was empty.
    */
   messages: string[];
-  /** Time each message is visible before advancing (loop). Clamped server-side (e.g. 3–12s). */
+  /** Time each message is visible before advancing (loop). Clamped server-side (e.g. 3â€“12s). */
   rotationIntervalMs: number;
   /**
-   * First message (or legacy html) for backward compatibility — prefer `messages` in UI.
+   * First message (or legacy html) for backward compatibility â€” prefer `messages` in UI.
    * @deprecated use messages
    */
   html: string;
@@ -69,7 +69,7 @@ export type StoreBrandConfig = {
 };
 
 /**
- * Static vertical seed files only — not used for live storefront copy when DB is configured.
+ * Static vertical seed files only â€” not used for live storefront copy when DB is configured.
  */
 export type CatalogBrand = Omit<StoreBrandConfig, "storeName" | "announcementBar"> & {
   announcement: string;
@@ -77,7 +77,7 @@ export type CatalogBrand = Omit<StoreBrandConfig, "storeName" | "announcementBar
 };
 
 export type HeroSlide = {
-  /** Set when slide comes from DB — stable keys for animation */
+  /** Set when slide comes from DB â€” stable keys for animation */
   id?: string;
   title: string;
   href: string;

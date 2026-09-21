@@ -16,7 +16,7 @@ export type SendOrderConfirmationInput = {
   shippingSummary: string;
 };
 
-const STORE_NAME = "SimpleCartStore";
+const STORE_NAME = "Outflint";
 
 function formatPlacedAtLabel(date = new Date()): string {
   return date.toLocaleString("en-PK", {
@@ -52,7 +52,7 @@ export async function sendOrderConfirmationEmail(
   const { error } = await resend.emails.send({
     from,
     to: input.to,
-    subject: `${STORE_NAME} — Order confirmed (${input.orderNumber})`,
+    subject: `${STORE_NAME} â€” Order confirmed (${input.orderNumber})`,
     html: buildOrderConfirmationEmailHtml(templateParams),
     text: buildOrderConfirmationEmailText(templateParams),
   });

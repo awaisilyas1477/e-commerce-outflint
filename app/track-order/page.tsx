@@ -6,7 +6,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildRoutePageMetadata("/track-order", {
     title: "Track Order",
     description:
-      "Track your SimpleCart Store order status with your order number and phone. Delivery updates for shoppers across Pakistan.",
+      "Track your Outflint order status with your order number and phone. Delivery updates for shoppers across Pakistan.",
   });
 }
 

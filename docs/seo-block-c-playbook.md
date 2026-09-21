@@ -2,17 +2,17 @@
 
 Date: 2026-05-06
 Owner: Growth + Engineering
-Scope: SimpleCartStore storefront (www.simplecartstore.com)
+Scope: Outflint storefront (www.Outflint.com)
 
 ## 1) Publish Checklist (Go-Live)
 
 - [ ] Deploy latest `main` to production and confirm build is green.
 - [ ] Verify canonical host redirects:
-  - `http://www.simplecartstore.com/*` -> `https://www.simplecartstore.com/*`
-  - `https://simplecartstore.com/*` -> `https://www.simplecartstore.com/*`
+  - `http://www.Outflint.com/*` -> `https://www.Outflint.com/*`
+  - `https://Outflint.com/*` -> `https://www.Outflint.com/*`
 - [ ] Confirm `robots.txt` is live and has correct allow/disallow rules.
 - [ ] Confirm `sitemap.xml` is reachable and returns 200.
-- [ ] Confirm key route canonicals are absolute and use `https://www.simplecartstore.com`.
+- [ ] Confirm key route canonicals are absolute and use `https://www.Outflint.com`.
 - [ ] Confirm analytics mode behavior:
   - If GTM ID exists -> GTM is primary.
   - If GTM ID missing -> direct GA + optional Meta/TikTok snippets run.
@@ -25,19 +25,19 @@ Scope: SimpleCartStore storefront (www.simplecartstore.com)
 ## 2) Priority URLs to Validate
 
 ### Homepage + Core Routes
-- `https://www.simplecartstore.com/`
-- `https://www.simplecartstore.com/collections`
-- `https://www.simplecartstore.com/contact`
-- `https://www.simplecartstore.com/search?q=presser+foot`
+- `https://www.Outflint.com/`
+- `https://www.Outflint.com/collections`
+- `https://www.Outflint.com/contact`
+- `https://www.Outflint.com/search?q=presser+foot`
 
 ### Top Collections (Money Pages)
-- `https://www.simplecartstore.com/collections/presser-foot-collection`
-- `https://www.simplecartstore.com/collections/stitching-accessories`
-- `https://www.simplecartstore.com/collections/sewing-storage-and-organizer-cases`
+- `https://www.Outflint.com/collections/presser-foot-collection`
+- `https://www.Outflint.com/collections/stitching-accessories`
+- `https://www.Outflint.com/collections/sewing-storage-and-organizer-cases`
 
 ### Section Listing Indexability
-- `https://www.simplecartstore.com/s/needle-storage-case?sort=latest`
-- `https://www.simplecartstore.com/s/needle-storage-case?stock=in`
+- `https://www.Outflint.com/s/needle-storage-case?sort=latest`
+- `https://www.Outflint.com/s/needle-storage-case?stock=in`
 
 ## 3) KPI Targets (Next 14 Days)
 
@@ -75,7 +75,7 @@ Scope: SimpleCartStore storefront (www.simplecartstore.com)
 
 ## 5) Change Control Rules
 
-- Keep one canonical host only: `https://www.simplecartstore.com`.
+- Keep one canonical host only: `https://www.Outflint.com`.
 - Never add `noindex` to revenue pages unless explicitly required.
 - For faceted URLs, only allow approved params (`sort`, `stock`, `min`, `max`).
 - Any SEO migration must be reversible and have a narrow subject scope.

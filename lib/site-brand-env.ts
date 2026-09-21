@@ -2,7 +2,7 @@
  * Public site brand from environment variables.
  *
  * To change the logo or store name site-wide, update `.env`:
- *   NEXT_PUBLIC_SITE_NAME=SimpleCart Store
+ *   NEXT_PUBLIC_SITE_NAME=Outflint
  *   NEXT_PUBLIC_LOGO_URL=/brand/logo-dark.svg
  *   NEXT_PUBLIC_FOOTER_LOGO_URL=/brand/logo-light.svg
  *   NEXT_PUBLIC_FAVICON_URL=/brand/favicon.png

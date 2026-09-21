@@ -14,33 +14,33 @@ import { getPublicSiteUrl } from "@/lib/site-url";
 
 const STORE_GALLERY = [
   {
-    src: "/story/simplecart-store-06.jpg",
-    alt: "Warehouse inventory of household goods at SimpleCart Store Pakistan",
+    src: "/story/Outflint-store-06.jpg",
+    alt: "Warehouse inventory of household goods at Outflint Pakistan",
     caption: "Warehouse inventory",
   },
   {
-    src: "/story/simplecart-store-02.jpg",
-    alt: "Heater and drinkware from the SimpleCart Store catalogue",
+    src: "/story/Outflint-store-02.jpg",
+    alt: "Heater and drinkware from the Outflint catalogue",
     caption: "Home essentials",
   },
   {
-    src: "/story/simplecart-store-01.jpg",
-    alt: "Electric kettle prepared for packing at SimpleCart Store",
+    src: "/story/Outflint-store-01.jpg",
+    alt: "Electric kettle prepared for packing at Outflint",
     caption: "Pre-dispatch checks",
   },
   {
-    src: "/story/simplecart-store-04.jpg",
+    src: "/story/Outflint-store-04.jpg",
     alt: "Glass tumbler packed with protective wrap for shipping",
     caption: "Secure packing",
   },
   {
-    src: "/story/simplecart-store-07.jpg",
-    alt: "Cartons ready for dispatch at SimpleCart Store",
+    src: "/story/Outflint-store-07.jpg",
+    alt: "Cartons ready for dispatch at Outflint",
     caption: "Ready for dispatch",
   },
   {
-    src: "/story/simplecart-store-05.jpg",
-    alt: "Portable fan heater from SimpleCart Store appliances",
+    src: "/story/Outflint-store-05.jpg",
+    alt: "Portable fan heater from Outflint appliances",
     caption: "Appliances range",
   },
 ] as const;
@@ -48,14 +48,14 @@ const STORE_GALLERY = [
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/about", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   return buildPageMetadata({
     pathname: "/about",
     identity,
     override,
     defaults: {
       title: "About Us",
-      description: `About ${storeName} — mission, warehouse operations, careful packing, and cash-on-delivery shopping for home essentials across Pakistan.`,
+      description: `About ${storeName} â€” mission, warehouse operations, careful packing, and cash-on-delivery shopping for home essentials across Pakistan.`,
     },
   });
 }
@@ -63,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AboutPage() {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/about", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const canonical = resolveSeoCanonicalOverride(
     override?.canonicalUrl,
     canonicalUrlFor("/about"),
@@ -71,7 +71,7 @@ export default async function AboutPage() {
   const title = override?.title?.trim() || "About Us";
   const description =
     override?.description?.trim() ||
-    `About ${storeName} — mission, warehouse operations, careful packing, and cash-on-delivery shopping for home essentials across Pakistan.`;
+    `About ${storeName} â€” mission, warehouse operations, careful packing, and cash-on-delivery shopping for home essentials across Pakistan.`;
   const breadcrumbId = `${canonical}#breadcrumb`;
   const crumbs = breadcrumbJsonLd([
     { name: "Home", url: "/" },
@@ -128,7 +128,7 @@ export default async function AboutPage() {
               About Us
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-[1.05rem]">
-              Everyday home essentials, clear pricing, and nationwide COD — managed
+              Everyday home essentials, clear pricing, and nationwide COD â€” managed
               from our inventory in Pakistan.
             </p>
           </header>
@@ -136,7 +136,7 @@ export default async function AboutPage() {
           <article className="space-y-6 py-8 text-base leading-relaxed text-neutral-700 sm:text-[1.05rem]">
             <p>
               <strong className="font-semibold text-neutral-900">{storeName}</strong>{" "}
-              is an online store for practical home, kitchen and beauty essentials —
+              is an online store for practical home, kitchen and beauty essentials â€”
               drinkware, kitchen tools, small appliances, lighting and everyday wellness
               products chosen for daily use.
             </p>
@@ -150,7 +150,7 @@ export default async function AboutPage() {
               delivery where available at checkout.
             </p>
             <p>
-              Our mission is selective curation — not endless catalogues. We focus on
+              Our mission is selective curation â€” not endless catalogues. We focus on
               items people actually need, review them before dispatch, pack carefully,
               and keep shipping timelines transparent.
             </p>
@@ -166,8 +166,8 @@ export default async function AboutPage() {
               <li>Offer nationwide delivery across Pakistan.</li>
             </ol>
             <p>
-              Orders are typically packed within 1–2 business days. Delivery usually
-              takes 2–5 business days in major cities and 4–8 business days in other
+              Orders are typically packed within 1â€“2 business days. Delivery usually
+              takes 2â€“5 business days in major cities and 4â€“8 business days in other
               areas.
             </p>
           </article>
@@ -180,7 +180,7 @@ export default async function AboutPage() {
               From our warehouse
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-600">
-              A glimpse of inventory and packing at {storeName} — the operations behind
+              A glimpse of inventory and packing at {storeName} â€” the operations behind
               the products you browse online.
             </p>
             <ul className="mt-6 grid list-none grid-cols-2 gap-3 pl-0 sm:gap-4">
@@ -206,10 +206,10 @@ export default async function AboutPage() {
             <p className="mt-6 text-sm leading-relaxed text-neutral-600">
               For a fuller operations overview, read:{" "}
               <Link
-                href="/blogs/inside-simplecart-store-real-stock-cod-pakistan"
+                href="/blogs/inside-Outflint-store-real-stock-cod-pakistan"
                 className="font-semibold text-neutral-900 underline underline-offset-2 hover:text-neutral-700"
               >
-                How SimpleCart Store works — inventory, packing &amp; COD
+                How Outflint works â€” inventory, packing &amp; COD
               </Link>
               .
             </p>
@@ -227,14 +227,14 @@ export default async function AboutPage() {
               >
                 Contact us
               </Link>
-              , WhatsApp, phone, or email — we are here Mon–Sat, 10:00 AM – 8:00 PM.
+              , WhatsApp, phone, or email â€” we are here Monâ€“Sat, 10:00 AM â€“ 8:00 PM.
             </p>
             <p className="mt-4">
               <Link
                 href="/collections"
                 className="inline-flex font-semibold text-neutral-900 underline underline-offset-2 hover:text-neutral-700"
               >
-                Shop collections →
+                Shop collections â†’
               </Link>
             </p>
           </section>

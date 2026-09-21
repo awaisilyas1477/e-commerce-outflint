@@ -124,7 +124,7 @@ export default async function HomeSectionListingPage({ params, searchParams }: P
   const displayName = seoHeadingFromMetaTitle(seoOverride?.title, section.name);
   const intro =
     seoOverride?.description?.trim() ||
-    `${section.name} — curated home, kitchen and beauty essentials from SimpleCart Store with COD across Pakistan.`;
+    `${section.name} — curated home, kitchen and beauty essentials from Outflint with COD across Pakistan.`;
   const featuredIndex = buildFeaturedIndex(baseline);
   const maxCeil = maxPriceCeiling(baseline);
 

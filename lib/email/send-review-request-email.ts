@@ -13,7 +13,7 @@ export type SendReviewRequestEmailInput = {
   allReviewsUrl: string;
 };
 
-const STORE_NAME = "SimpleCartStore";
+const STORE_NAME = "Outflint";
 
 export async function sendReviewRequestEmail(
   input: SendReviewRequestEmailInput,
@@ -39,7 +39,7 @@ export async function sendReviewRequestEmail(
   const { error } = await resend.emails.send({
     from,
     to: input.to,
-    subject: `${STORE_NAME} — How was your order? (${input.orderNumber})`,
+    subject: `${STORE_NAME} â€” How was your order? (${input.orderNumber})`,
     html: buildReviewRequestEmailHtml(templateParams),
     text: buildReviewRequestEmailText(templateParams),
   });

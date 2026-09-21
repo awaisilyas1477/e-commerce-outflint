@@ -34,7 +34,7 @@ function storefrontImageRemotePattern():
 
 const storefrontImages = storefrontImageRemotePattern();
 
-/** Comma-separated hostnames (no protocol), e.g. `img.kwcdn.com,cdn.vendor.com` — merged into `images.remotePatterns`. */
+/** Comma-separated hostnames (no protocol), e.g. `img.kwcdn.com,cdn.vendor.com` â€” merged into `images.remotePatterns`. */
 function extraImageHostsFromEnv(): {
   protocol: "https";
   hostname: string;
@@ -62,7 +62,7 @@ function extraImageHostsFromEnv(): {
 }
 
 /**
- * Common supplier CDNs (dropship imports). Use explicit host + `*.kwcdn.com` — `**.kwcdn.com`
+ * Common supplier CDNs (dropship imports). Use explicit host + `*.kwcdn.com` â€” `**.kwcdn.com`
  * does not match `img.kwcdn.com` reliably in Next 16 image config.
  */
 const commonProductImageHosts: {
@@ -76,7 +76,7 @@ const commonProductImageHosts: {
   { protocol: "https", hostname: "*.media-amazon.com", pathname: "/**" },
   { protocol: "https", hostname: "ibrahimstores.com", pathname: "/**" },
   { protocol: "https", hostname: "www.ibrahimstores.com", pathname: "/**" },
-  // Squarespace asset CDN — many imported supplier feeds reference
+  // Squarespace asset CDN â€” many imported supplier feeds reference
   // `images.squarespace-cdn.com/...?format=...` URLs. Both the explicit host
   // and the single-level wildcard are listed because Next 16 image config
   // matches `*` exactly one subdomain segment and the supplier links can
@@ -85,7 +85,7 @@ const commonProductImageHosts: {
   { protocol: "https", hostname: "*.squarespace-cdn.com", pathname: "/**" },
   { protocol: "https", hostname: "static1.squarespace.com", pathname: "/**" },
   { protocol: "https", hostname: "*.squarespace.com", pathname: "/**" },
-  // Joom supplier CDN — e.g. `img.joomcdn.net/<hash>_original.jpeg`.
+  // Joom supplier CDN â€” e.g. `img.joomcdn.net/<hash>_original.jpeg`.
   { protocol: "https", hostname: "img.joomcdn.net", pathname: "/**" },
   { protocol: "https", hostname: "*.joomcdn.net", pathname: "/**" },
   // Daraz / Lazada PK product media (catalog imports + collection heroes).
@@ -102,7 +102,7 @@ const commonProductImageHosts: {
 ];
 
 // Note: the ProductCard on storefront grids falls back to plain `<img>` for
-// any host not served by us, Supabase Storage, or our CDN — see
+// any host not served by us, Supabase Storage, or our CDN â€” see
 // `productImageUseNativeImg` in `components/storefront.tsx`. The entries in
 // `commonProductImageHosts` are only needed for code paths that still use
 // `next/image` directly (e.g. Server Components rendering supplier URLs).
@@ -150,11 +150,11 @@ const nextConfig: NextConfig = {
       // Canonical host: force apex to `www` with a permanent redirect.
       {
         source: "/:path*",
-        has: [{ type: "host", value: "simplecartstore.com" }],
-        destination: "https://www.simplecartstore.com/:path*",
+        has: [{ type: "host", value: "Outflint.com" }],
+        destination: "https://www.Outflint.com/:path*",
         permanent: true,
       },
-      // Retired landing pages — keep permanent redirects so search engines
+      // Retired landing pages â€” keep permanent redirects so search engines
       // drop them and consolidate signals to the collections index.
       { source: "/bundles", destination: "/collections", permanent: true },
       { source: "/collections/sale", destination: "/collections", permanent: true },
@@ -184,7 +184,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1", ...extraDevOrigins()],
   /**
    * Dev-only: use in-memory webpack cache instead of PackFileCacheStrategy on disk.
-   * Avoids intermittent ENOENT on rename of `*.pack.gz_` → `*.pack.gz` when `.next` is
+   * Avoids intermittent ENOENT on rename of `*.pack.gz_` â†’ `*.pack.gz` when `.next` is
    * cleared mid-run, multiple clients compile at once, or cache dirs race.
    */
   webpack: (config, { dev }) => {
@@ -196,7 +196,7 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     /**
-     * Must list every `quality={…}` used by next/image (hero uses 60).
+     * Must list every `quality={â€¦}` used by next/image (hero uses 60).
      * Missing values force a runtime warning and can stall LCP optimization.
      */
     qualities: [60, 75],

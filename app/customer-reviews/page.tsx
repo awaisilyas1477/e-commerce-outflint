@@ -49,14 +49,14 @@ function parseStar(raw: string | undefined): number | null {
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/customer-reviews", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   return buildPageMetadata({
     pathname: "/customer-reviews",
     identity,
     override,
     defaults: {
       title: "Customer Reviews",
-      description: `Read verified customer reviews for ${storeName} — real ratings from shoppers across Pakistan.`,
+      description: `Read verified customer reviews for ${storeName} â€” real ratings from shoppers across Pakistan.`,
     },
   });
 }
@@ -80,7 +80,7 @@ export default async function CustomerReviewsPage({ searchParams }: Props) {
     getCachedReviewMediaGallery(),
   ]);
   const override = await loadSeoOverrideForRoute("/customer-reviews", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const canonical = resolveSeoCanonicalOverride(
     override?.canonicalUrl,
     canonicalUrlFor("/customer-reviews", sp),
@@ -88,7 +88,7 @@ export default async function CustomerReviewsPage({ searchParams }: Props) {
   const title = override?.title?.trim() || "Customer Reviews";
   const description =
     override?.description?.trim() ||
-    `Read verified customer reviews for ${storeName} — real ratings from shoppers across Pakistan.`;
+    `Read verified customer reviews for ${storeName} â€” real ratings from shoppers across Pakistan.`;
 
   const breadcrumbId = `${canonical}#breadcrumb`;
   const crumbs = breadcrumbJsonLd([
@@ -129,7 +129,7 @@ export default async function CustomerReviewsPage({ searchParams }: Props) {
           <div className="mt-10">
             <Suspense
               fallback={
-                <p className="py-12 text-center text-sm text-neutral-600">Loading reviews…</p>
+                <p className="py-12 text-center text-sm text-neutral-600">Loading reviewsâ€¦</p>
               }
             >
               <CustomerReviewsView

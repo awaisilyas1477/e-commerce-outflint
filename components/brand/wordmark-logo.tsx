@@ -39,7 +39,7 @@ export function WordmarkLogo({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       role="img"
-      aria-label={title || "SimpleCart Store"}
+      aria-label={title || "Outflint"}
     >
       {title ? <title>{title}</title> : null}
       <g transform="translate(0,10)">

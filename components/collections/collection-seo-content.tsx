@@ -15,7 +15,7 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
   "drinkware-tumblers": {
     title: "Buy Drinkware, Tumblers & Insulated Bottles Online in Pakistan",
     intro:
-      "Staying properly hydrated in Pakistan's varying climate requires high-grade, leakproof, and temperature-retaining drinkware. From insulated double-wall 304 stainless steel flasks that keep ice water freezing cold for up to 24 hours in Lahore's scorching summer heat, to aesthetic borosilicate glass sippers with bamboo lids for desk iced lattes and green teas, SimpleCart Store brings you premium drinkware with fast Cash on Delivery across Pakistan.",
+      "Staying properly hydrated in Pakistan's varying climate requires high-grade, leakproof, and temperature-retaining drinkware. From insulated double-wall 304 stainless steel flasks that keep ice water freezing cold for up to 24 hours in Lahore's scorching summer heat, to aesthetic borosilicate glass sippers with bamboo lids for desk iced lattes and green teas, Outflint brings you premium drinkware with fast Cash on Delivery across Pakistan.",
     subsections: [
       {
         heading: "Why Choose Double-Wall 304 Stainless Steel?",
@@ -31,12 +31,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "drinkware-buying-guide-pakistan",
-    relatedGuideTitle: "Read our Complete Drinkware & Tumbler Buying Guide →",
+    relatedGuideTitle: "Read our Complete Drinkware & Tumbler Buying Guide â†’",
   },
   "kitchen-essentials": {
     title: "Kitchen Essentials, Choppers & Cooking Gadgets in Pakistan",
     intro:
-      "Cooking hearty Pakistani meals shouldn't require exhausting hours of manual prep work. At SimpleCart Store, we curate durable, high-torque electric kitchen appliances, precision spice grinders, fast-boil stainless steel kettles, and non-scratch silicone utensils designed specifically for the demands of Pakistani cooking.",
+      "Cooking hearty Pakistani meals shouldn't require exhausting hours of manual prep work. At Outflint, we curate durable, high-torque electric kitchen appliances, precision spice grinders, fast-boil stainless steel kettles, and non-scratch silicone utensils designed specifically for the demands of Pakistani cooking.",
     subsections: [
       {
         heading: "High-Power Multi-Blade Food Choppers",
@@ -52,12 +52,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "kitchen-essentials-pakistani-homes",
-    relatedGuideTitle: "Read our 10 Essential Kitchen Tools & Appliances Guide →",
+    relatedGuideTitle: "Read our 10 Essential Kitchen Tools & Appliances Guide â†’",
   },
   "home-appliances": {
     title: "Small Home Appliances Online Shopping in Pakistan",
     intro:
-      "Modern Pakistani homes need smart, energy-efficient household appliances that operate reliably on local power grids, UPS backups, and hybrid solar systems. SimpleCart Store delivers quality-tested electric kettles, winter room heaters, compact stoves, and lifestyle electronics with Cash on Delivery nationwide.",
+      "Modern Pakistani homes need smart, energy-efficient household appliances that operate reliably on local power grids, UPS backups, and hybrid solar systems. Outflint delivers quality-tested electric kettles, winter room heaters, compact stoves, and lifestyle electronics with Cash on Delivery nationwide.",
     subsections: [
       {
         heading: "Winter Heating Solutions: Ceramic Fan & Radiant Heaters",
@@ -69,12 +69,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "home-appliances-buying-guide-pakistan",
-    relatedGuideTitle: "Read our Home Appliances Buying & Energy Saving Guide →",
+    relatedGuideTitle: "Read our Home Appliances Buying & Energy Saving Guide â†’",
   },
   "beauty-personal-care": {
     title: "Beauty & Personal Care Gadgets Online in Pakistan",
     intro:
-      "Elevate your daily grooming and skincare routine with professional vanity gadgets from SimpleCart Store. From daylight-simulating LED touch makeup mirrors to precision rechargeable hair trimmers, enjoy salon-quality grooming at home.",
+      "Elevate your daily grooming and skincare routine with professional vanity gadgets from Outflint. From daylight-simulating LED touch makeup mirrors to precision rechargeable hair trimmers, enjoy salon-quality grooming at home.",
     subsections: [
       {
         heading: "LED Touch Folding Makeup Vanity Mirrors",
@@ -86,12 +86,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "beauty-personal-care-gadgets-guide-pakistan",
-    relatedGuideTitle: "Read our Beauty & Grooming Gadgets Guide →",
+    relatedGuideTitle: "Read our Beauty & Grooming Gadgets Guide â†’",
   },
   "lamps-lighting": {
     title: "Modern Lamps & Ambient Room Lighting in Pakistan",
     intro:
-      "Lighting creates the ambiance and comfort of your living space. Discover eye-care rechargeable study desk lamps, soothing ambient night lights, and decorative lighting at SimpleCart Store with nationwide COD.",
+      "Lighting creates the ambiance and comfort of your living space. Discover eye-care rechargeable study desk lamps, soothing ambient night lights, and decorative lighting at Outflint with nationwide COD.",
     subsections: [
       {
         heading: "Flicker-Free Rechargeable LED Study Lamps",
@@ -103,12 +103,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "lamps-lighting-home-decor-guide-pakistan",
-    relatedGuideTitle: "Read our Lamps & Ambient Lighting Ideas Guide →",
+    relatedGuideTitle: "Read our Lamps & Ambient Lighting Ideas Guide â†’",
   },
   "pest-control": {
     title: "Pest Control & Mosquito Killer Bats Online in Pakistan",
     intro:
-      "Protect your family and home against seasonal mosquitoes, Dengue, and Malaria with rechargeable electric insect killer bats and non-toxic pest control devices from SimpleCart Store.",
+      "Protect your family and home against seasonal mosquitoes, Dengue, and Malaria with rechargeable electric insect killer bats and non-toxic pest control devices from Outflint.",
     subsections: [
       {
         heading: "3000V High-Voltage Rechargeable Mosquito Bats",
@@ -120,12 +120,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "pest-control-mosquito-killer-bats-guide-pakistan",
-    relatedGuideTitle: "Read our Dengue Prevention & Mosquito Bat Guide →",
+    relatedGuideTitle: "Read our Dengue Prevention & Mosquito Bat Guide â†’",
   },
   "wellness-comfort": {
     title: "Wellness, Body Massagers & Posture Comfort in Pakistan",
     intro:
-      "Relieve physical tension, chronic neck stiffness, and back fatigue after demanding workdays with ergonomic wellness devices and Shiatsu massagers from SimpleCart Store.",
+      "Relieve physical tension, chronic neck stiffness, and back fatigue after demanding workdays with ergonomic wellness devices and Shiatsu massagers from Outflint.",
     subsections: [
       {
         heading: "3D Shiatsu Kneading Neck & Back Massagers",
@@ -137,12 +137,12 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
       },
     ],
     relatedGuideSlug: "wellness-comfort-massagers-lifestyle-pakistan",
-    relatedGuideTitle: "Read our Daily Wellness & Posture Comfort Guide →",
+    relatedGuideTitle: "Read our Daily Wellness & Posture Comfort Guide â†’",
   },
   "home-essentials": {
     title: "Home Essentials & Daily Living Organizers in Pakistan",
     intro:
-      "Explore curated home essentials, practical lifestyle accessories, organizers, and everyday apparel at SimpleCart Store. Backed by authentic in-hand warehouse stock, protective packaging, and fast Cash on Delivery across 400+ Pakistani cities.",
+      "Explore curated home essentials, practical lifestyle accessories, organizers, and everyday apparel at Outflint. Backed by authentic in-hand warehouse stock, protective packaging, and fast Cash on Delivery across 400+ Pakistani cities.",
     subsections: [
       {
         heading: "Everyday Practicality & Long-Lasting Durability",
@@ -153,8 +153,8 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
         body: "Shop with total confidence with our hassle-free 7-day replacement guarantee.",
       },
     ],
-    relatedGuideSlug: "inside-simplecart-store-real-stock-cod-pakistan",
-    relatedGuideTitle: "Learn How SimpleCart Sourcing & Quality Inspection Works →",
+    relatedGuideSlug: "inside-Outflint-store-real-stock-cod-pakistan",
+    relatedGuideTitle: "Learn How Outflint Sourcing & Quality Inspection Works â†’",
   },
 };
 

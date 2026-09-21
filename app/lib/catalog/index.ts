@@ -1,14 +1,14 @@
 import type { StoreVerticalId } from "../store-brand.types";
 import type { StoreCatalog } from "./types";
 import { clothingCatalog } from "./clothing.catalog";
-import { simpleCartStoreDemoCatalog } from "./simplecartstore.catalog";
+import { OutflintDemoCatalog } from "./simplecartstore.catalog";
 import { jewelleryCatalog } from "./jewellery.catalog";
 import { homeComplianceCatalog } from "./home-compliance.catalog";
 
 export function getCatalog(vertical: StoreVerticalId): StoreCatalog {
   switch (vertical) {
     case "tailoring":
-      return simpleCartStoreDemoCatalog;
+      return OutflintDemoCatalog;
     case "jewellery":
       return jewelleryCatalog;
     case "home-compliance":
@@ -16,7 +16,7 @@ export function getCatalog(vertical: StoreVerticalId): StoreCatalog {
     case "clothing":
       return clothingCatalog;
     default:
-      return simpleCartStoreDemoCatalog;
+      return OutflintDemoCatalog;
   }
 }
 

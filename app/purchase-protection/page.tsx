@@ -16,14 +16,14 @@ export async function generateMetadata(): Promise<Metadata> {
     "/purchase-protection",
     identity.locale,
   );
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   return buildPageMetadata({
     pathname: "/purchase-protection",
     identity,
     override,
     defaults: {
       title: "Purchase Protection",
-      description: `Shop with confidence at ${storeName}. Learn how we protect your purchase — secure checkout, careful packing, and help if something goes wrong.`,
+      description: `Shop with confidence at ${storeName}. Learn how we protect your purchase â€” secure checkout, careful packing, and help if something goes wrong.`,
     },
   });
 }
@@ -34,7 +34,7 @@ export default async function PurchaseProtectionPage() {
     "/purchase-protection",
     identity.locale,
   );
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const canonical = resolveSeoCanonicalOverride(
     override?.canonicalUrl,
     canonicalUrlFor("/purchase-protection"),
@@ -42,7 +42,7 @@ export default async function PurchaseProtectionPage() {
   const title = override?.title?.trim() || "Purchase Protection";
   const description =
     override?.description?.trim() ||
-    `Shop with confidence at ${storeName}. Learn how we protect your purchase — secure checkout, careful packing, and help if something goes wrong.`;
+    `Shop with confidence at ${storeName}. Learn how we protect your purchase â€” secure checkout, careful packing, and help if something goes wrong.`;
   const breadcrumbId = `${canonical}#breadcrumb`;
   const crumbs = breadcrumbJsonLd([
     { name: "Home", url: "/" },
@@ -108,7 +108,7 @@ export default async function PurchaseProtectionPage() {
               Careful packing
             </h2>
             <p>
-              Orders are packed carefully within 1–2 business days. We aim to reduce
+              Orders are packed carefully within 1â€“2 business days. We aim to reduce
               damage in transit and to send the correct item as described on the product
               page.
             </p>
@@ -138,7 +138,7 @@ export default async function PurchaseProtectionPage() {
 
             <h2 className="pt-2 text-lg font-semibold text-neutral-900">Support</h2>
             <p>
-              Friendly help is available Mon–Sat, 10:00 AM – 8:00 PM by WhatsApp, phone,
+              Friendly help is available Monâ€“Sat, 10:00 AM â€“ 8:00 PM by WhatsApp, phone,
               or email. We will guide you through the next steps for your order.
             </p>
           </article>

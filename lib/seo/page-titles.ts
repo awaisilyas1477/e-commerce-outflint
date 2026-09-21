@@ -10,9 +10,9 @@ export const HOME_METADATA_TITLE = "Everyday Essentials Online in Pakistan";
 
 /**
 
- * Collection listing title base — matches money-page SEO pattern.
+ * Collection listing title base â€” matches money-page SEO pattern.
 
- * Example: "Kitchen Essentials in Pakistan | SimpleCartStore"
+ * Example: "Kitchen Essentials in Pakistan | Outflint"
 
  */
 
@@ -28,7 +28,7 @@ export function collectionMetadataTitle(slug: string, fallbackName: string): str
 
 
 
-/** Product PDP title base — commercial intent without duplicating the site suffix. */
+/** Product PDP title base â€” commercial intent without duplicating the site suffix. */
 
 export function productMetadataTitle(productName: string): string {
 
@@ -46,9 +46,9 @@ export function productMetadataTitle(productName: string): string {
 
 const BRAND_ONLY_KEYS = new Set([
 
-  "simplecartstore",
+  "Outflint",
 
-  "simplecart",
+  "Outflint",
 
   "outflint",
 
@@ -58,7 +58,7 @@ const BRAND_ONLY_KEYS = new Set([
 
 
 
-/** Collapse for brand-only comparisons (`SimpleCart Store` → `simplecartstore`). */
+/** Collapse for brand-only comparisons (`Outflint` â†’ `Outflint`). */
 
 export function normalizeBrandKey(value: string): string {
 

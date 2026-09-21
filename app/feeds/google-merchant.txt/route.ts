@@ -6,7 +6,7 @@ import { FALLBACK_STANDARD_DELIVERY_PAISA } from "@/lib/checkout-constants";
 
 /**
  * Google Merchant Center primary feed (tab-delimited).
- * Submit in GMC: https://www.simplecartstore.com/feeds/google-merchant.txt
+ * Submit in GMC: https://www.Outflint.com/feeds/google-merchant.txt
  */
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -259,7 +259,7 @@ export async function GET() {
     const shopRow = shopBy.get(p.id);
     const gtin = (shopRow?.gtin || "").trim();
     const mpn = (shopRow?.mpn || "").trim() || sku;
-    const brand = (shopRow?.brand_name || "").trim() || "SimpleCart Store";
+    const brand = (shopRow?.brand_name || "").trim() || "Outflint";
     const material = (shopRow?.material || "").trim();
 
     const invRow = invBy.get(v.id);
@@ -283,7 +283,7 @@ export async function GET() {
     const description =
       stripHtml(p.description || "") ||
       stripHtml(p.short_description || "") ||
-      `${p.name} — shop online at SimpleCart Store with cash on delivery across Pakistan.`;
+      `${p.name} â€” shop online at Outflint with cash on delivery across Pakistan.`;
 
     const optionBits = Object.values(v.option_values || {})
       .map((x) => String(x || "").trim())

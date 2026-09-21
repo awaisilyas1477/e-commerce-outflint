@@ -18,7 +18,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "drinkware-buying-guide-pakistan",
     title: "Drinkware & Tumbler Buying Guide for Pakistan — Best Sippers, Flasks & Insulated Bottles (2026)",
-    metaTitle: "Best Tumblers & Drinkware Buying Guide Pakistan | SimpleCart",
+    metaTitle: "Best Tumblers & Drinkware Buying Guide Pakistan | Outflint",
     metaDescription:
       "Looking for the best tumbler, glass sipper, or insulated water bottle in Pakistan? Compare 304 stainless steel vs borosilicate glass, thermal retention, and COD prices.",
     publishedAt: "2026-08-28T16:00:00.000Z",
@@ -43,7 +43,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "kitchen-essentials-pakistani-homes",
     title: "10 Essential Kitchen Tools & Electric Appliances for Pakistani Homes (2026 Guide)",
-    metaTitle: "10 Essential Kitchen Tools & Appliances Pakistan | SimpleCart",
+    metaTitle: "10 Essential Kitchen Tools & Appliances Pakistan | Outflint",
     metaDescription:
       "Must-have kitchen gadgets for Pakistani cooking: multi-blade choppers, spice grinders, electric kettles, and prep tools. Buy online with Cash on Delivery nationwide.",
     publishedAt: "2026-08-28T15:30:00.000Z",
@@ -66,7 +66,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "home-appliances-buying-guide-pakistan",
     title: "Small Home Appliances Buying Guide in Pakistan — Energy Efficiency & Longevity",
-    metaTitle: "Home Appliances Buying Guide Pakistan | SimpleCart Store",
+    metaTitle: "Home Appliances Buying Guide Pakistan | Outflint",
     metaDescription:
       "How to choose durable, energy-saving small home appliances in Pakistan: electric kettles, mini stoves, heaters, and humidifiers. Low wattage and voltage protection tips.",
     publishedAt: "2026-08-28T15:00:00.000Z",
@@ -88,7 +88,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "beauty-personal-care-gadgets-guide-pakistan",
     title: "Top Beauty & Grooming Gadgets in Pakistan — LED Mirrors, Trimmers & Vanity Tools",
-    metaTitle: "Beauty & Grooming Gadgets Guide Pakistan | SimpleCart Store",
+    metaTitle: "Beauty & Grooming Gadgets Guide Pakistan | Outflint",
     metaDescription:
       "Upgrade your daily vanity and grooming routine with LED touch makeup mirrors, rechargeable trimmers, and skin care tools. Tested for Pakistani users with COD delivery.",
     publishedAt: "2026-08-28T14:30:00.000Z",
@@ -109,7 +109,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "pest-control-mosquito-killer-bats-guide-pakistan",
     title: "Mosquito Killer Bats & Pest Control in Pakistan — Dengue & Malaria Prevention Guide",
-    metaTitle: "Mosquito Killer Bats & Dengue Prevention Pakistan | SimpleCart",
+    metaTitle: "Mosquito Killer Bats & Dengue Prevention Pakistan | Outflint",
     metaDescription:
       "Protect your family against dengue and seasonal mosquitoes with rechargeable electric bats and insect zappers. Battery longevity, safety mesh, and charging tips.",
     publishedAt: "2026-08-28T14:00:00.000Z",
@@ -130,7 +130,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "lamps-lighting-home-decor-guide-pakistan",
     title: "Lamps & Ambient Lighting Guide — Aesthetic Study Lamps, Night Lights & Room Decor",
-    metaTitle: "Lamps & Ambient Lighting Guide Pakistan | SimpleCart Store",
+    metaTitle: "Lamps & Ambient Lighting Guide Pakistan | Outflint",
     metaDescription:
       "Transform your bedroom, desk, or living area with rechargeable LED desk lamps, soothing ambient night lights, and decorative lamps. Shop online with COD in Pakistan.",
     publishedAt: "2026-08-28T13:30:00.000Z",
@@ -149,7 +149,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "wellness-comfort-massagers-lifestyle-pakistan",
     title: "Daily Wellness & Posture Comfort — Top Massagers & Ergonomic Living Gadgets",
-    metaTitle: "Wellness & Posture Comfort Products Pakistan | SimpleCart",
+    metaTitle: "Wellness & Posture Comfort Products Pakistan | Outflint",
     metaDescription:
       "Relieve neck stiffness, back pain, and muscle fatigue after long work hours. Explore portable electronic massagers and ergonomic relaxation tools with COD delivery.",
     publishedAt: "2026-08-28T13:00:00.000Z",
@@ -168,7 +168,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "fabric-guide-terry-cotton-lycra-pakistan",
     title: "Fabric & Material Guide: Terry Cotton vs Lycra Stretch vs Fleece for Pakistani Climate",
-    metaTitle: "Fabric Guide: Terry vs Lycra vs Fleece Pakistan | SimpleCart",
+    metaTitle: "Fabric Guide: Terry vs Lycra vs Fleece Pakistan | Outflint",
     metaDescription:
       "Learn how to choose the right fabric for Pakistani summers and winters. Comprehensive comparison of French Terry, 4-Way Lycra Stretch, and Micro-Fleece.",
     publishedAt: "2026-08-28T12:00:00.000Z",
@@ -188,7 +188,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "oversized-t-shirts-styling-size-guide-pakistan",
     title: "The Ultimate Oversized T-Shirt Size & Styling Guide for Pakistan",
-    metaTitle: "Oversized T-Shirts Size & Styling Guide Pakistan | SimpleCart",
+    metaTitle: "Oversized T-Shirts Size & Styling Guide Pakistan | Outflint",
     metaDescription:
       "How to style oversized drop-shoulder tees and choose the right size according to Pakistani body types. Fit tips, styling ideas, and COD shopping.",
     publishedAt: "2026-08-28T11:00:00.000Z",
@@ -207,7 +207,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "wash-and-care-guide-garments-pakistan",
     title: "How to Wash & Care for Garments in Pakistan — Prevent Shrinkage & Color Fading",
-    metaTitle: "Wash & Care Guide for Clothes in Pakistan | SimpleCart",
+    metaTitle: "Wash & Care Guide for Clothes in Pakistan | Outflint",
     metaDescription:
       "Expert laundry tips for Pakistani water conditions: protect acid-wash colors, preserve elasticity in stretch fabrics, and prevent shrinkage.",
     publishedAt: "2026-08-28T10:00:00.000Z",
@@ -228,7 +228,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
     title: "Winter Room Heaters Buying Guide for Pakistan — Stay Warm Safely & Save Energy",
     metaTitle: "Room Heaters Buying Guide Pakistan | Winter Comfort",
     metaDescription:
-      "How to choose the right room heater for Pakistani winters: room size, safety, power use, and placement. Shop heaters with COD at SimpleCart Store.",
+      "How to choose the right room heater for Pakistani winters: room size, safety, power use, and placement. Shop heaters with COD at Outflint.",
     publishedAt: "2026-08-26T18:30:00.000Z",
     readTimeMinutes: 7,
     categoryLabel: "Seasonal Winter Care",
@@ -237,7 +237,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
       "winter heater buying guide",
       "electric heater online Pakistan",
       "fan heater Pakistan",
-      "home appliances heaters SimpleCart",
+      "home appliances heaters Outflint",
     ],
     collectionSlug: "home-appliances",
     imageProductSlugs: [
@@ -248,7 +248,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "gift-ideas-under-budget-pakistan",
     title: "25 Practical & Trendy Gift Ideas Under Rs 1,500, Rs 3,000 & Rs 5,000 in Pakistan",
-    metaTitle: "Budget Gift Ideas Under Rs 3000 Pakistan | SimpleCart Store",
+    metaTitle: "Budget Gift Ideas Under Rs 3000 Pakistan | Outflint",
     metaDescription:
       "Thoughtful, high-utility gift ideas under Rs 1,500, Rs 3,000, and Rs 5,000 for birthdays, anniversaries, family, and colleagues in Pakistan with nationwide COD.",
     publishedAt: "2026-08-26T18:50:00.000Z",
@@ -268,9 +268,9 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
     ],
   },
   {
-    slug: "cash-on-delivery-cod-simplecart-pakistan",
+    slug: "cash-on-delivery-cod-Outflint-pakistan",
     title: "Cash on Delivery (COD) Online Shopping in Pakistan — The Ultimate Safe Buyer's Guide",
-    metaTitle: "Cash on Delivery (COD) Shopping Guide Pakistan | SimpleCart Store",
+    metaTitle: "Cash on Delivery (COD) Shopping Guide Pakistan | Outflint",
     metaDescription:
       "Everything you need to know about Cash on Delivery (COD) in Pakistan: order confirmation, delivery timelines, courier tracking, and return protection.",
     publishedAt: "2026-08-26T18:00:00.000Z",
@@ -289,7 +289,7 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   {
     slug: "online-shopping-scams-safe-buying-guide-pakistan",
     title: "How to Avoid Online Shopping Scams in Pakistan — 7 Golden Rules for COD Shoppers",
-    metaTitle: "How to Avoid Online Shopping Scams in Pakistan | SimpleCart",
+    metaTitle: "How to Avoid Online Shopping Scams in Pakistan | Outflint",
     metaDescription:
       "Protect your hard-earned money from fake online pages and fraud parcels. Learn 7 golden rules for safe cash-on-delivery shopping in Pakistan.",
     publishedAt: "2026-08-28T09:00:00.000Z",
@@ -307,16 +307,16 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
   },
   {
     slug: "welcome10-voucher-code-rs-100-discount",
-    title: "SimpleCart Voucher Codes & Discounts: How to Save More on Every Order",
+    title: "Outflint Voucher Codes & Discounts: How to Save More on Every Order",
     metaTitle: "WELCOME10 Voucher Code | Rs 100 Discount Pakistan",
     metaDescription:
-      "Use voucher code WELCOME10 at SimpleCart Store checkout for a Rs 100 welcome bonus when you shop online in Pakistan with Cash on Delivery.",
+      "Use voucher code WELCOME10 at Outflint checkout for a Rs 100 welcome bonus when you shop online in Pakistan with Cash on Delivery.",
     publishedAt: "2026-08-22T10:00:00.000Z",
     readTimeMinutes: 4,
     categoryLabel: "Deals & Discounts",
     keywords: [
       "WELCOME10 voucher code",
-      "SimpleCart Store discount code",
+      "Outflint discount code",
       "Rs 100 welcome bonus Pakistan",
       "new user voucher COD",
       "checkout discount Pakistan",
@@ -325,19 +325,19 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
     imageProductSlugs: [],
   },
   {
-    slug: "inside-simplecart-store-real-stock-cod-pakistan",
-    title: "Inside SimpleCart Store — Real Warehouse Inventory, Quality Check & Fast Courier Dispatch",
-    metaTitle: "How SimpleCart Store Works | Real Stock & COD Pakistan",
+    slug: "inside-Outflint-store-real-stock-cod-pakistan",
+    title: "Inside Outflint — Real Warehouse Inventory, Quality Check & Fast Courier Dispatch",
+    metaTitle: "How Outflint Works | Real Stock & COD Pakistan",
     metaDescription:
-      "See how SimpleCart Store operates: real in-hand inventory, rigorous quality checks, protective parcel packing, and fast COD delivery across Pakistan.",
+      "See how Outflint operates: real in-hand inventory, rigorous quality checks, protective parcel packing, and fast COD delivery across Pakistan.",
     publishedAt: "2026-08-26T16:00:00.000Z",
     readTimeMinutes: 6,
     categoryLabel: "Behind the Scenes",
     keywords: [
-      "SimpleCart Store Pakistan",
+      "Outflint Pakistan",
       "trusted online shopping Pakistan",
       "COD delivery Pakistan online store",
-      "how SimpleCart Store works",
+      "how Outflint works",
       "ecommerce warehouse Pakistan",
     ],
     collectionSlug: "home-essentials",
@@ -346,22 +346,22 @@ export const STATIC_BLOG_GUIDES: StaticGuideMeta[] = [
 ];
 
 export const STATIC_GUIDE_LISTING_HERO: Record<string, string> = {
-  "drinkware-buying-guide-pakistan": "/story/simplecart-store-03.jpg",
-  "kitchen-essentials-pakistani-homes": "/story/simplecart-store-01.jpg",
-  "home-appliances-buying-guide-pakistan": "/story/simplecart-store-05.jpg",
-  "beauty-personal-care-gadgets-guide-pakistan": "/story/simplecart-store-02.jpg",
-  "pest-control-mosquito-killer-bats-guide-pakistan": "/story/simplecart-store-08.jpg",
-  "lamps-lighting-home-decor-guide-pakistan": "/story/simplecart-store-03.jpg",
-  "wellness-comfort-massagers-lifestyle-pakistan": "/story/simplecart-store-02.jpg",
-  "fabric-guide-terry-cotton-lycra-pakistan": "/story/simplecart-store-06.jpg",
-  "oversized-t-shirts-styling-size-guide-pakistan": "/story/simplecart-store-07.jpg",
-  "wash-and-care-guide-garments-pakistan": "/story/simplecart-store-08.jpg",
-  "winter-room-heaters-buying-guide-pakistan": "/story/simplecart-store-05.jpg",
-  "gift-ideas-under-budget-pakistan": "/story/simplecart-store-02.jpg",
-  "cash-on-delivery-cod-simplecart-pakistan": "/story/simplecart-store-04.jpg",
-  "online-shopping-scams-safe-buying-guide-pakistan": "/story/simplecart-store-04.jpg",
-  "welcome10-voucher-code-rs-100-discount": "/story/simplecart-store-04.jpg",
-  "inside-simplecart-store-real-stock-cod-pakistan": "/story/simplecart-store-06.jpg",
+  "drinkware-buying-guide-pakistan": "/story/Outflint-store-03.jpg",
+  "kitchen-essentials-pakistani-homes": "/story/Outflint-store-01.jpg",
+  "home-appliances-buying-guide-pakistan": "/story/Outflint-store-05.jpg",
+  "beauty-personal-care-gadgets-guide-pakistan": "/story/Outflint-store-02.jpg",
+  "pest-control-mosquito-killer-bats-guide-pakistan": "/story/Outflint-store-08.jpg",
+  "lamps-lighting-home-decor-guide-pakistan": "/story/Outflint-store-03.jpg",
+  "wellness-comfort-massagers-lifestyle-pakistan": "/story/Outflint-store-02.jpg",
+  "fabric-guide-terry-cotton-lycra-pakistan": "/story/Outflint-store-06.jpg",
+  "oversized-t-shirts-styling-size-guide-pakistan": "/story/Outflint-store-07.jpg",
+  "wash-and-care-guide-garments-pakistan": "/story/Outflint-store-08.jpg",
+  "winter-room-heaters-buying-guide-pakistan": "/story/Outflint-store-05.jpg",
+  "gift-ideas-under-budget-pakistan": "/story/Outflint-store-02.jpg",
+  "cash-on-delivery-cod-Outflint-pakistan": "/story/Outflint-store-04.jpg",
+  "online-shopping-scams-safe-buying-guide-pakistan": "/story/Outflint-store-04.jpg",
+  "welcome10-voucher-code-rs-100-discount": "/story/Outflint-store-04.jpg",
+  "inside-Outflint-store-real-stock-cod-pakistan": "/story/Outflint-store-06.jpg",
 };
 
 export function getStaticGuideMeta(slug: string): StaticGuideMeta | undefined {
@@ -391,7 +391,7 @@ export function staticGuideListingCard(
   const heroSrc =
     heroImageOverride ||
     STATIC_GUIDE_LISTING_HERO[meta.slug] ||
-    "/story/simplecart-store-01.jpg";
+    "/story/Outflint-store-01.jpg";
   return {
     slug: meta.slug,
     title: meta.title,

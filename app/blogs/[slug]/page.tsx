@@ -95,7 +95,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const identity = await loadSiteIdentity();
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const resolved = await resolveArticle(slug, storeName);
 
   if (!resolved) {
@@ -128,7 +128,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogArticlePage({ params }: Props) {
   const { slug } = await params;
   const identity = await loadSiteIdentity();
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const resolved = await resolveArticle(slug, storeName);
 
   if (!resolved) {

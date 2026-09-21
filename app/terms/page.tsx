@@ -13,7 +13,7 @@ import { JsonLd, breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo/jsonld";
 export async function generateMetadata(): Promise<Metadata> {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/terms", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   return buildPageMetadata({
     pathname: "/terms",
     identity,
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function TermsPage() {
   const identity = await loadSiteIdentity();
   const override = await loadSeoOverrideForRoute("/terms", identity.locale);
-  const storeName = identity.storeName || identity.siteTitle || "SimpleCart Store";
+  const storeName = identity.storeName || identity.siteTitle || "Outflint";
   const canonical = resolveSeoCanonicalOverride(
     override?.canonicalUrl,
     canonicalUrlFor("/terms"),
@@ -143,7 +143,7 @@ export default async function TermsPage() {
               >
                 Contact us
               </Link>
-              . We are available Mon–Sat, 10:00 AM – 8:00 PM.
+              . We are available Monâ€“Sat, 10:00 AM â€“ 8:00 PM.
             </p>
           </article>
         </div>
