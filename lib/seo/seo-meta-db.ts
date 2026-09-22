@@ -182,7 +182,8 @@ async function loadSeoOverrideForSubjectImpl(
   const localeKey = (localeHint ?? "").trim() || "default";
   return unstable_cache(
     () => fetchSeoOverrideForSubject(subjectType, subjectId, localeHint),
-    ["seo-meta-subject-v1", subjectType, subjectId, localeKey],
+    // v4: scissors SEO left→right handed + collection SEO refreshes.
+    ["seo-meta-subject-v4", subjectType, subjectId, localeKey],
     { revalidate: SEO_META_TTL, tags: ["seo:meta", `seo:meta:${subjectType}:${subjectId}`] },
   )();
 }

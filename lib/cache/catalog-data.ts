@@ -80,8 +80,8 @@ const HOME_SECTIONS_TTL = 60 * 5;
 export function getCachedProductDetailBySlug(slug: string) {
   return unstable_cache(
     async () => dbGetProductDetailBySlug(slug),
-    // v20: snap button pliers with 72 buttons listing.
-    ["catalog:product-detail-v20", slug],
+    // v34: scissors title fixed left→right handed.
+    ["catalog:product-detail-v34", slug],
     {
       revalidate: PRODUCT_DETAIL_TTL,
       tags: [CATALOG_CACHE_TAGS.product(slug), CATALOG_CACHE_TAGS.products],
@@ -112,7 +112,7 @@ export function getCachedCollectionBySlug(slug: string) {
   const normalized = normalizeCollectionSlug(slug);
   return unstable_cache(
     async () => dbGetCollectionBySlug(normalized),
-    ["catalog:collection-by-slug-v3", normalized],
+    ["catalog:collection-by-slug-v4", normalized],
     {
       revalidate: LIST_TTL,
       tags: [
