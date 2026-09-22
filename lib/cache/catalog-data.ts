@@ -80,8 +80,8 @@ const HOME_SECTIONS_TTL = 60 * 5;
 export function getCachedProductDetailBySlug(slug: string) {
   return unstable_cache(
     async () => dbGetProductDetailBySlug(slug),
-    // v41: 6mm narrow rolled hemmer foot listed.
-    ["catalog:product-detail-v41", slug],
+    // v42: 4mm narrow rolled hemmer foot listed.
+    ["catalog:product-detail-v42", slug],
     {
       revalidate: PRODUCT_DETAIL_TTL,
       tags: [CATALOG_CACHE_TAGS.product(slug), CATALOG_CACHE_TAGS.products],
@@ -159,7 +159,7 @@ export function getCachedProductsBySlugs(slugs: readonly string[]) {
 
 export const getCachedAllActiveProductsForCards = unstable_cache(
   async () => dbListAllActiveProductsForCards(),
-  ["catalog:all-active-products-v9"],
+  ["catalog:all-active-products-v10"],
   {
     revalidate: LIST_TTL,
     tags: [CATALOG_CACHE_TAGS.products],
@@ -169,7 +169,7 @@ export const getCachedAllActiveProductsForCards = unstable_cache(
 /** Lightweight catalog payload for the collections product grid. */
 export const getCachedAllActiveProductTiles = unstable_cache(
   async () => dbListAllActiveProductTiles(),
-  ["catalog:all-active-product-tiles-v8"],
+  ["catalog:all-active-product-tiles-v9"],
   {
     revalidate: LIST_TTL,
     tags: [CATALOG_CACHE_TAGS.products],
