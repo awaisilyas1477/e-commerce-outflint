@@ -69,7 +69,7 @@ async function fetchProductSeoExtras(productId: string): Promise<ProductSeoExtra
 async function loadProductSeoExtrasImpl(productId: string): Promise<ProductSeoExtras> {
   return unstable_cache(
     () => fetchProductSeoExtras(productId),
-    ["product-seo-extras-v3", productId],
+    ["product-seo-extras-v4", productId],
     {
       revalidate: 60 * 5,
       tags: ["seo:product-extras", `seo:product-extras:${productId}`],
