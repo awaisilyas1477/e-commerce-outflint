@@ -54,7 +54,10 @@ export function CheckoutTemplateFields({
   return (
     <div className={rootClassName}>
       {template.sections.map((section) => {
-        const visibleFields = section.fields;
+        // Guests: don't show email — optional email is only for signed-in accounts.
+        const visibleFields = section.fields.filter(
+          (field) => signedIn || field.id !== "email",
+        );
 
         return (
         <section key={section.id}>
