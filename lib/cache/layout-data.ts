@@ -272,6 +272,12 @@ function parseFeaturedBlock(raw: unknown): StoreBrandConfig["featured"] {
         parsed.secondaryHref !== "/" ? parsed.secondaryHref : DEFAULT_FEATURED.secondaryHref,
     };
   }
+  // Replace the short homepage line until admin/DB can be updated with service role.
+  const shortDesc =
+    "Browse presser feet, needles and sewing accessories for Singer Brother Juki.";
+  if (parsed.description.trim().replace(/\.$/, "") === shortDesc.replace(/\.$/, "")) {
+    parsed.description = DEFAULT_FEATURED.description;
+  }
   return parsed;
 }
 
@@ -704,7 +710,7 @@ async function _loadAnalytics(): Promise<AnalyticsConfig> {
 
 export const getCachedStoreBrand = unstable_cache(
   _loadStoreBrand,
-  ["layout-store-brand-v10"],
+  ["layout-store-brand-v11"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.storeBrand],
