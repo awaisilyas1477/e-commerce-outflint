@@ -73,7 +73,7 @@ const DEFAULT_FEATURED: StoreBrandConfig["featured"] = {
   eyebrow: "Shop by category",
   title: "Tailoring Tools",
   description:
-    "Browse presser feet, needles, sewing storage and machine accessories — curated for tailors across Pakistan.",
+    "Browse presser feet, needles, and everyday sewing accessories for Singer, Brother, and Juki machines — built for tailor shops and home sewers across Pakistan.",
   imageUrl: "",
   primaryLabel: "Shop accessories",
   primaryHref: "/collections/stitching-accessories",
@@ -704,7 +704,7 @@ async function _loadAnalytics(): Promise<AnalyticsConfig> {
 
 export const getCachedStoreBrand = unstable_cache(
   _loadStoreBrand,
-  ["layout-store-brand-v9"],
+  ["layout-store-brand-v10"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.storeBrand],
