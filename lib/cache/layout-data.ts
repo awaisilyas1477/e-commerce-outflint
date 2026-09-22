@@ -71,7 +71,7 @@ const DEFAULT_REVALIDATE_SECONDS = 300;
  */
 const DEFAULT_FEATURED: StoreBrandConfig["featured"] = {
   eyebrow: "Shop by category",
-  title: "Tailoring essentials, sorted",
+  title: "Tailoring Tools",
   description:
     "Browse presser feet, needles, sewing storage and machine accessories — curated for tailors across Pakistan.",
   imageUrl: "",
@@ -704,7 +704,7 @@ async function _loadAnalytics(): Promise<AnalyticsConfig> {
 
 export const getCachedStoreBrand = unstable_cache(
   _loadStoreBrand,
-  ["layout-store-brand-v8"],
+  ["layout-store-brand-v9"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.storeBrand],
