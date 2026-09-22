@@ -112,7 +112,7 @@ export function getCachedCollectionBySlug(slug: string) {
   const normalized = normalizeCollectionSlug(slug);
   return unstable_cache(
     async () => dbGetCollectionBySlug(normalized),
-    ["catalog:collection-by-slug-v4", normalized],
+    ["catalog:collection-by-slug-v5", normalized],
     {
       revalidate: LIST_TTL,
       tags: [
