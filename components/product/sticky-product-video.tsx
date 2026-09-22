@@ -316,17 +316,20 @@ export function StickyProductVideo({
             loop={!rotateMini}
             autoPlay
             playsInline
-            preload="auto"
+            preload="metadata"
             poster={mini.posterUrl || undefined}
+            onError={() => {
+              if (rotateMini) advanceMini();
+            }}
           />
-          {/* Warm the next clip so rotation doesn’t stall on mid-range phones. */}
+          {/* Warm the next clip lightly so rotation doesn’t stall. */}
           {rotateMini && nextMini && nextMini.src !== miniSrc ? (
             <video
               className="pointer-events-none absolute h-0 w-0 opacity-0"
               src={nextMini.src}
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               aria-hidden
               tabIndex={-1}
             />
