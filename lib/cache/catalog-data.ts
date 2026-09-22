@@ -80,8 +80,8 @@ const HOME_SECTIONS_TTL = 60 * 5;
 export function getCachedProductDetailBySlug(slug: string) {
   return unstable_cache(
     async () => dbGetProductDetailBySlug(slug),
-    // v42: 4mm narrow rolled hemmer foot listed.
-    ["catalog:product-detail-v42", slug],
+    // v43: include products.video_url on PDP sticky reel.
+    ["catalog:product-detail-v43", slug],
     {
       revalidate: PRODUCT_DETAIL_TTL,
       tags: [CATALOG_CACHE_TAGS.product(slug), CATALOG_CACHE_TAGS.products],
