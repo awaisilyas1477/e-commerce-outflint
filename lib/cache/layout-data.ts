@@ -73,7 +73,7 @@ const DEFAULT_FEATURED: StoreBrandConfig["featured"] = {
   eyebrow: "Shop by category",
   title: "Tailoring Tools",
   description:
-    "Browse presser feet, needles, and everyday sewing accessories for Singer, Brother, and Juki machines — built for tailor shops and home sewers across Pakistan.",
+    "Browse presser feet, needles, and everyday sewing accessories for Singer, Brother, and Juki machines — built for tailor shops and home sewers across Pakistan. Find hemmer feet, edge guides, bobbins, snips, and machine oil with clear photos and stock. Cash on delivery nationwide, so your workshop keeps moving without waiting on parts.",
   imageUrl: "",
   primaryLabel: "Shop accessories",
   primaryHref: "/collections/stitching-accessories",
@@ -272,10 +272,14 @@ function parseFeaturedBlock(raw: unknown): StoreBrandConfig["featured"] {
         parsed.secondaryHref !== "/" ? parsed.secondaryHref : DEFAULT_FEATURED.secondaryHref,
     };
   }
-  // Replace the short homepage line until admin/DB can be updated with service role.
-  const shortDesc =
-    "Browse presser feet, needles and sewing accessories for Singer Brother Juki.";
-  if (parsed.description.trim().replace(/\.$/, "") === shortDesc.replace(/\.$/, "")) {
+  // Homepage featured copy is owned in code until DB can be updated with service role.
+  const legacyDescriptions = new Set([
+    "Browse presser feet, needles and sewing accessories for Singer Brother Juki.",
+    "Browse presser feet, needles and sewing accessories for Singer Brother Juki",
+    "Browse presser feet, needles, and everyday sewing accessories for Singer, Brother, and Juki machines — built for tailor shops and home sewers across Pakistan.",
+    "Browse presser feet, needles, and everyday sewing accessories for Singer, Brother, and Juki machines - built for tailor shops and home sewers across Pakistan.",
+  ]);
+  if (legacyDescriptions.has(parsed.description.trim())) {
     parsed.description = DEFAULT_FEATURED.description;
   }
   return parsed;
@@ -710,7 +714,7 @@ async function _loadAnalytics(): Promise<AnalyticsConfig> {
 
 export const getCachedStoreBrand = unstable_cache(
   _loadStoreBrand,
-  ["layout-store-brand-v11"],
+  ["layout-store-brand-v12"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.storeBrand],
