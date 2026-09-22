@@ -178,7 +178,7 @@ export const getCachedAllActiveProductTiles = unstable_cache(
 
 export const getCachedListCollections = unstable_cache(
   async () => dbListCollections(),
-  ["catalog:list-collections-v2"],
+  ["catalog:list-collections-v3"],
   {
     revalidate: LIST_TTL,
     tags: [CATALOG_CACHE_TAGS.collections],

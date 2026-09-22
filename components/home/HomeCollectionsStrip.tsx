@@ -13,6 +13,7 @@ import {
   collectionHref,
   normalizeCollectionSlug,
 } from "@/lib/catalog/collection-nav";
+import type { Product } from "@/app/lib/catalog/types";
 
 export type HomeCollectionTile = {
   slug: string;
@@ -20,7 +21,68 @@ export type HomeCollectionTile = {
   href: string;
   imageUrl: string;
   count: number;
+  /** Unique when the same collection appears with alternate product photos. */
+  tileKey?: string;
 };
+
+/** Same exclusions as homepage presser-foot callout collage. */
+function isWeakCollectionImage(name: string, slug: string, image: string) {
+  const hay = `${name} ${slug}`.toLowerCase();
+  if (
+    /tailor\s*register|customer\s*naap|needle\s*plate|feed\s*dog|premium\s*tailor\s*tool|tailor\s*tool\s*bundle/.test(
+      hay,
+    )
+  ) {
+    return true;
+  }
+  if (slug.includes("16mm-industrial-single-needle")) return true;
+  if (/ebayimg\.com/i.test(image)) return true;
+  return false;
+}
+
+function imageKey(url: string) {
+  return url.trim().split("?")[0]!.toLowerCase();
+}
+
+/** Stable daily shuffle so ISR cache stays coherent but tiles rotate. */
+function daySeed() {
+  const d = new Date();
+  return d.getUTCFullYear() * 1000 + (d.getUTCMonth() + 1) * 40 + d.getUTCDate();
+}
+
+function seededShuffle<T>(items: T[], seed: number): T[] {
+  const a = [...items];
+  let s = seed >>> 0 || 1;
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    const j = s % (i + 1);
+    const tmp = a[i]!;
+    a[i] = a[j]!;
+    a[j] = tmp;
+  }
+  return a;
+}
+
+function pickProductImages(
+  products: Product[],
+  seed: number,
+  seen: Set<string>,
+  limit: number,
+): string[] {
+  const out: string[] = [];
+  const shuffled = seededShuffle(products, seed);
+  for (const p of shuffled) {
+    if (out.length >= limit) break;
+    const raw = (p.image ?? "").trim();
+    if (!raw) continue;
+    if (isWeakCollectionImage(p.name, p.slug, raw)) continue;
+    const key = imageKey(raw);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(optimizeSupplierImageUrl(raw, 400));
+  }
+  return out;
+}
 
 /** Supplier CDNs (Daraz etc.) use native img with sized lazcdn URLs. */
 function isNativeImg(src: string): boolean {
@@ -41,6 +103,8 @@ function isNativeImg(src: string): boolean {
 export async function loadHomeCollectionTiles(): Promise<HomeCollectionTile[]> {
   if (!hasCatalogDb()) return [];
   const collections = await getCachedListCollections();
+  const seed = daySeed();
+  const seen = new Set<string>();
 
   const candidates = collections.filter((col) => {
     const slug = col.slug?.trim();
@@ -48,43 +112,93 @@ export async function loadHomeCollectionTiles(): Promise<HomeCollectionTile[]> {
     return Boolean(slug && name && slug !== "sale");
   });
 
-  // Parallel: one round-trip wave instead of serial per-collection awaits.
-  const tiles = await Promise.all(
-    candidates.map(async (col): Promise<HomeCollectionTile | null> => {
+  const loaded = await Promise.all(
+    candidates.map(async (col, index) => {
       const rawSlug = col.slug.trim();
       const slug = normalizeCollectionSlug(rawSlug);
       const name = collectionDisplayName(slug, col.name.trim());
       const products = await getCachedProductsByCollectionSlug(slug);
-      if (products.length === 0) return null;
-
-      const displayName = name;
-      const hero = (col.hero_image ?? "").trim();
-      const fallback =
-        products.find((p) => (p.image ?? "").trim())?.image?.trim() ?? "";
-      return {
-        slug,
-        name: displayName,
-        href: collectionHref(slug),
-        imageUrl: optimizeSupplierImageUrl(hero || fallback, 400),
-        count: products.length,
-      };
+      return { col, slug, name, products, index };
     }),
   );
 
-  return tiles.filter((t): t is HomeCollectionTile => t != null);
+  // Presser-foot claims a strong unique shot first (same pool idea as callout).
+  const ordered = [...loaded].sort((a, b) => {
+    const ap = a.slug === "presser-foot-collection" ? 0 : 1;
+    const bp = b.slug === "presser-foot-collection" ? 0 : 1;
+    return ap - bp || a.index - b.index;
+  });
+
+  const bySlug = new Map<
+    string,
+    { name: string; href: string; count: number; images: string[] }
+  >();
+
+  for (const row of ordered) {
+    if (row.products.length === 0) continue;
+    // Primary + alternate so the marquee isn't clones of one photo.
+    const images = pickProductImages(
+      row.products,
+      seed + row.index * 97,
+      seen,
+      2,
+    );
+    const hero = (row.col.hero_image ?? "").trim();
+    if (images.length === 0 && hero) {
+      const key = imageKey(hero);
+      if (!seen.has(key)) {
+        seen.add(key);
+        images.push(optimizeSupplierImageUrl(hero, 400));
+      }
+    }
+    if (images.length === 0) {
+      const fallback =
+        row.products.find((p) => (p.image ?? "").trim())?.image?.trim() ?? "";
+      if (fallback) images.push(optimizeSupplierImageUrl(fallback, 400));
+    }
+    bySlug.set(row.slug, {
+      name: row.name,
+      href: collectionHref(row.slug),
+      count: row.products.length,
+      images,
+    });
+  }
+
+  const tiles: HomeCollectionTile[] = [];
+  for (const row of loaded) {
+    const data = bySlug.get(row.slug);
+    if (!data || data.images.length === 0) continue;
+    data.images.forEach((imageUrl, i) => {
+      tiles.push({
+        slug: row.slug,
+        name: data.name,
+        href: data.href,
+        imageUrl,
+        count: data.count,
+        tileKey: i === 0 ? row.slug : `${row.slug}-alt-${i}`,
+      });
+    });
+  }
+
+  return tiles;
 }
 
 /** Shared image-overlay tiles — used on home strip and `/collections` hub. */
 export function CollectionImageTiles({ tiles }: { tiles: HomeCollectionTile[] }) {
   if (tiles.length === 0) return null;
 
+  // Hub grid: one tile per collection (primary image only).
+  const primary = tiles.filter(
+    (t, i, arr) => arr.findIndex((x) => x.slug === t.slug) === i,
+  );
+
   return (
     <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
-      {tiles.map((tile, i) => {
+      {primary.map((tile, i) => {
         const native = isNativeImg(tile.imageUrl);
         return (
           <li
-            key={tile.slug}
+            key={tile.tileKey ?? tile.slug}
             className="home-collection-tile"
             style={{ ["--tile-i" as string]: i }}
           >
@@ -214,7 +328,6 @@ export function HomeCollectionsStrip({
         </div>
       </div>
 
-      {/* Full-bleed marquee — edge to edge (no shell gutters) */}
       <div className="relative pb-4 sm:pb-5">
         <HomeCollectionsMarquee tiles={tiles} />
       </div>

@@ -128,17 +128,21 @@ export function HomeCollectionsMarquee({ tiles }: { tiles: HomeCollectionTile[] 
       <div className="home-collections-marquee-mask overflow-hidden py-0.5 motion-reduce:hidden">
         <div className="home-collections-marquee-track flex w-max gap-2.5 md:gap-3.5">
           {lap.map((tile, i) => (
-            <TileCard key={`${tile.slug}-a-${i}`} tile={tile} />
+            <TileCard key={`${tile.tileKey ?? tile.slug}-a-${i}`} tile={tile} />
           ))}
           {lap.map((tile, i) => (
-            <TileCard key={`${tile.slug}-b-${i}`} tile={tile} duplicate />
+            <TileCard
+              key={`${tile.tileKey ?? tile.slug}-b-${i}`}
+              tile={tile}
+              duplicate
+            />
           ))}
         </div>
       </div>
 
       <ul className="hidden list-none gap-2.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] motion-reduce:flex md:gap-3.5 [&::-webkit-scrollbar]:hidden">
         {tiles.map((tile) => (
-          <li key={tile.slug} className="shrink-0">
+          <li key={tile.tileKey ?? tile.slug} className="shrink-0">
             <TileCard tile={tile} />
           </li>
         ))}
@@ -154,7 +158,7 @@ export function CollectionSquareGrid({ tiles }: { tiles: HomeCollectionTile[] })
   return (
     <ul className="flex list-none flex-wrap gap-2.5 md:gap-3.5">
       {tiles.map((tile) => (
-        <li key={tile.slug} className="shrink-0">
+        <li key={tile.tileKey ?? tile.slug} className="shrink-0">
           <TileCard tile={tile} />
         </li>
       ))}
