@@ -187,7 +187,7 @@ export const getCachedListCollections = unstable_cache(
 
 export const getCachedActiveHomePageSectionsWithTags = unstable_cache(
   async () => dbListActiveHomePageSectionsWithTags(),
-  ["catalog:home-sections-with-tags"],
+  ["catalog:home-sections-with-tags-v2"],
   {
     revalidate: HOME_SECTIONS_TTL,
     tags: [CATALOG_CACHE_TAGS.homeSections],

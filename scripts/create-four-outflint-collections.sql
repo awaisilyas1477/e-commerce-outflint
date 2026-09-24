@@ -132,3 +132,20 @@ where c.slug in (
 )
 group by c.slug, c.name, c.sort_order
 order by c.sort_order, c.slug;
+
+-- Homepage product rails (same source as existing category sections below the grid)
+insert into public.home_page_sections (name, slug, is_active, sort_order)
+values
+  ('Needles & Bobbins', 'needles-and-bobbins', true, 4),
+  ('Scissors & Cutting Tools', 'scissors-and-cutting-tools', true, 5),
+  ('Sewing Machine Parts', 'sewing-machine-parts', true, 6),
+  ('Measuring & Marking Tools', 'measuring-and-marking-tools', true, 7)
+on conflict (slug) do update set
+  name = excluded.name,
+  is_active = true,
+  sort_order = excluded.sort_order,
+  updated_at = now();
+
+update public.home_page_sections
+set sort_order = 8, updated_at = now()
+where slug = 'deals';
