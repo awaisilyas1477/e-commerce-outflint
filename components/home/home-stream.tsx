@@ -1,31 +1,29 @@
 import { ProductSection } from "@/components/storefront";
-import { ActiveWearBlock } from "@/components/home/ActiveWearBlock";
 import {
   HomeCollectionsStrip,
   loadHomeCollectionTiles,
 } from "@/components/home/HomeCollectionsStrip";
 import { TrustRatingStrip } from "@/components/home/TrustRatingStrip";
 import { ProductCardSkeleton } from "@/components/ui/product-card-skeleton";
-import { getHomeCalloutImages } from "@/app/lib/home-callout-images";
 import { getHomeRailSections } from "@/app/lib/home-rails";
 import { getCachedHomeReviewHighlights } from "@/lib/cache/home-review-highlights";
 import { getCachedStoreReviewAggregate } from "@/lib/cache/store-review-aggregate";
 import { RecentlyViewedSection } from "@/components/product/recently-viewed-section";
 
-/** Skeleton for collections / callout strip under the hero. */
+/** Skeleton for Daraz-style categories grid under the hero. */
 export function HomeFirstStripSkeleton() {
   return (
-    <div className="border-b border-[#e8e8e1] bg-white" aria-busy="true" aria-label="Loading collections">
-      <div className="mx-auto max-w-7xl shell-x pb-2.5 pt-4 sm:pb-3 sm:pt-5">
-        <div className="mb-0 h-6 w-40 animate-pulse rounded bg-neutral-100" />
-      </div>
-      <div className="flex gap-2.5 overflow-hidden pb-4 md:gap-3.5 sm:pb-5">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="size-[112px] shrink-0 animate-pulse rounded-2xl bg-neutral-100 sm:size-[140px] md:size-[168px] lg:size-[188px]"
-          />
-        ))}
+    <div className="border-b border-[#eff0f5] bg-white" aria-busy="true" aria-label="Loading categories">
+      <div className="mx-auto max-w-7xl shell-x pb-3 pt-3 sm:pb-4 sm:pt-4">
+        <div className="mb-3 h-4 w-24 animate-pulse rounded bg-neutral-100" />
+        <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 lg:grid-cols-8">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="flex flex-col items-center gap-1.5">
+              <div className="aspect-square w-full animate-pulse rounded-sm bg-neutral-100" />
+              <div className="h-2.5 w-12 animate-pulse rounded bg-neutral-100" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -72,21 +70,12 @@ export function HomeDeferredSkeleton() {
 }
 
 /**
- * First visual strip after hero — collections + callouts.
+ * First visual strip after hero — collections only (no featured callout).
  * Streams independently so the hero can paint without waiting on rails/reviews.
  */
 export async function HomeFirstStrip() {
-  const [collectionTiles, calloutImages] = await Promise.all([
-    loadHomeCollectionTiles(),
-    getHomeCalloutImages(),
-  ]);
-
-  return (
-    <>
-      <ActiveWearBlock calloutImages={calloutImages} />
-      <HomeCollectionsStrip tiles={collectionTiles} />
-    </>
-  );
+  const collectionTiles = await loadHomeCollectionTiles();
+  return <HomeCollectionsStrip tiles={collectionTiles} />;
 }
 
 /**

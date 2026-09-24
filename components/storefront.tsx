@@ -45,10 +45,10 @@ function CartGlyph({ className }: { className?: string }) {
   );
 }
 const stripShellClass =
-  "shopify-section shopify-section-group-header-group flex min-h-[37px] w-full shrink-0 items-center justify-center overflow-hidden shell-x py-1.5 text-center text-[13px] font-medium leading-snug tracking-wide";
+  "shopify-section shopify-section-group-header-group flex min-h-[37px] w-full shrink-0 items-center justify-center overflow-hidden shell-x py-1.5 text-center text-[12px] font-medium leading-none tracking-wide sm:text-[13px] sm:leading-snug";
 
 const announcementProseClass =
-  "announcement-bar-prose w-full text-center [&_a]:underline [&_a]:text-inherit [&_b]:font-semibold [&_em]:italic [&_i]:italic [&_p]:m-0 [&_p]:inline [&_strong]:font-semibold";
+  "announcement-bar-prose w-full truncate text-center whitespace-nowrap [&_a]:underline [&_a]:text-inherit [&_b]:font-semibold [&_em]:italic [&_i]:italic [&_p]:m-0 [&_p]:inline [&_strong]:font-semibold";
 
 type AnnouncementRotatorProps = {
   messagesHtml: string[];

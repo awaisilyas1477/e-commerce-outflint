@@ -88,6 +88,74 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
     relatedGuideSlug: "",
     relatedGuideTitle: "Browse all product reviews →",
   },
+  "needles-and-bobbins": {
+    title: "Sewing Needles, Bobbins & Firki Online in Pakistan",
+    intro:
+      "Restock bobbins, firki, needle cases, and threaders at Outflint — sized for home and industrial machines with Cash on Delivery across Pakistan.",
+    subsections: [
+      {
+        heading: "Bobbins & Firki Sets",
+        body: "Metal and alloy bobbin packs keep lockstitch machines running without mid-job shortages.",
+      },
+      {
+        heading: "Needle Cases & Threaders",
+        body: "Store sharps safely and re-thread quickly between garment sizes and fabric changes.",
+      },
+    ],
+    relatedGuideSlug: "",
+    relatedGuideTitle: "Browse needle & bobbin product reviews →",
+  },
+  "scissors-and-cutting-tools": {
+    title: "Tailor Scissors, Snips & Cutting Tools in Pakistan",
+    intro:
+      "Shop dressmaking shears, thread snips, seam rippers, and fabric cutters built for daily tailor-floor use — COD available nationwide.",
+    subsections: [
+      {
+        heading: "Shears for Fabric & Leather",
+        body: "Right-handed steel scissors and pinking shears for clean edges on cloth, leather, and upholstery.",
+      },
+      {
+        heading: "Bench Snips & Rippers",
+        body: "Thread snips and seam rippers speed finishing work and fix stitch mistakes without damaging panels.",
+      },
+    ],
+    relatedGuideSlug: "",
+    relatedGuideTitle: "Browse cutting tool product reviews →",
+  },
+  "sewing-machine-parts": {
+    title: "Industrial Sewing Machine Spare Parts Online in Pakistan",
+    intro:
+      "Replace hooks, tension units, needle plates, winders, belts, and clamps without waiting on imported kits — clear photos and COD at Outflint.",
+    subsections: [
+      {
+        heading: "Hooks, Plates & Feed",
+        body: "Rotary hooks, needle plates, and feed dogs keep stitch formation clean on lockstitch floors.",
+      },
+      {
+        heading: "Tension, Belts & Clamps",
+        body: "Tension assemblies, motor belts, foot lifters, and quick-change clamps reduce downtime between jobs.",
+      },
+    ],
+    relatedGuideSlug: "",
+    relatedGuideTitle: "Browse machine parts product reviews →",
+  },
+  "measuring-and-marking-tools": {
+    title: "Sewing Rulers, Gauges & Marking Tools in Pakistan",
+    intro:
+      "Measure accurately before you cut — tailor rulers, seam gauges, marking pens, and measuring tapes for shops and home sewists.",
+    subsections: [
+      {
+        heading: "Curve Rulers & Scales",
+        body: "French curves, hip curves, and shirt rulers help draft armholes, necklines, and fittings cleanly.",
+      },
+      {
+        heading: "Seam Guides & Markers",
+        body: "Magnetic seam guides and heat-erase pens keep stitch lines consistent across curtains, shirts, and hems.",
+      },
+    ],
+    relatedGuideSlug: "",
+    relatedGuideTitle: "Browse measuring tool product reviews →",
+  },
 };
 
 export function CollectionSeoContent({ slug }: { slug: string }) {

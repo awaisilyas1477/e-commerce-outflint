@@ -279,6 +279,58 @@ const COLLECTION_TARGETS = [
       "tailoring tools pakistan",
     ],
   },
+  {
+    slug: "needles-and-bobbins",
+    title: "Sewing Needles, Bobbins & Firki Pakistan | Outflint",
+    description:
+      "Buy sewing machine bobbins, firki, needle cases and threaders in Pakistan. Restock home & industrial machines with COD – Outflint.",
+    keywords: [
+      "sewing machine bobbins",
+      "metal sewing machine bobbins",
+      "sewing accessories kit",
+      "needle threader",
+      "firki bobbin",
+    ],
+  },
+  {
+    slug: "scissors-and-cutting-tools",
+    title: "Tailor Scissors, Snips & Cutting Tools Pakistan | Outflint",
+    description:
+      "Shop tailor shears, fabric scissors, thread snips and seam rippers in Pakistan. Workshop cutting tools with COD – Outflint.",
+    keywords: [
+      "tailoring scissors pakistan",
+      "fabric scissors",
+      "thread snips",
+      "seam ripper",
+      "pinking shears",
+    ],
+  },
+  {
+    slug: "sewing-machine-parts",
+    title: "Industrial Sewing Machine Spare Parts Pakistan | Outflint",
+    description:
+      "Replace hooks, tension units, needle plates, bobbin winders and belts. Industrial sewing machine spare parts with COD – Outflint.",
+    keywords: [
+      "sewing machine parts",
+      "brother sewing machine parts",
+      "juki industrial sewing machine accessories",
+      "rotary hook",
+      "needle plate feed dog",
+    ],
+  },
+  {
+    slug: "measuring-and-marking-tools",
+    title: "Sewing Rulers, Gauges & Marking Tools Pakistan | Outflint",
+    description:
+      "Buy tailor rulers, seam gauges, marking pens and measuring tapes in Pakistan. Accurate cutting tools with COD – Outflint.",
+    keywords: [
+      "tailor ruler",
+      "magnetic seam guide for sewing machine",
+      "sewing marking pens",
+      "measuring tape tailor",
+      "french curve ruler",
+    ],
+  },
 ];
 
 const ROUTE_TARGETS = [

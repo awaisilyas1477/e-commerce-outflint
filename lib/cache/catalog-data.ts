@@ -128,7 +128,7 @@ export function getCachedProductsByCollectionSlug(slug: string) {
   const normalized = normalizeCollectionSlug(slug);
   return unstable_cache(
     async () => dbListProductsByCollectionSlug(normalized),
-    ["catalog:products-by-collection-v4", normalized],
+    ["catalog:products-by-collection-v5", normalized],
     {
       revalidate: LIST_TTL,
       tags: [
@@ -178,7 +178,7 @@ export const getCachedAllActiveProductTiles = unstable_cache(
 
 export const getCachedListCollections = unstable_cache(
   async () => dbListCollections(),
-  ["catalog:list-collections-v3"],
+  ["catalog:list-collections-v4"],
   {
     revalidate: LIST_TTL,
     tags: [CATALOG_CACHE_TAGS.collections],

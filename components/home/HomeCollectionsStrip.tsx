@@ -5,8 +5,6 @@ import {
   getCachedProductsByCollectionSlug,
 } from "@/lib/cache/catalog-data";
 import { hasCatalogDb } from "@/app/lib/db/env";
-import { HomeSectionTitle } from "@/components/ui/home-section-title";
-import { HomeCollectionsMarquee } from "@/components/home/home-collections-marquee";
 import { optimizeSupplierImageUrl } from "@/lib/images/supplier-cdn";
 import {
   collectionDisplayName,
@@ -276,11 +274,10 @@ export function CollectionImageTiles({ tiles }: { tiles: HomeCollectionTile[] })
   );
 }
 
-/** Compact collection strip under the featured band — infinite marquee banners. */
+/** Daraz-style Categories grid — no marquee/carousel. */
 export function HomeCollectionsStrip({
   tiles,
   headingId = "home-collections-heading",
-  headingAs = "h2",
   showViewAll = true,
 }: {
   tiles: HomeCollectionTile[];
@@ -291,45 +288,79 @@ export function HomeCollectionsStrip({
 }) {
   if (tiles.length === 0) return null;
 
+  const primary = tiles.filter(
+    (t, i, arr) => arr.findIndex((x) => x.slug === t.slug) === i,
+  );
+
   return (
     <section
       aria-labelledby={headingId}
-      className="relative overflow-hidden border-b border-[#e8e8e1] bg-[linear-gradient(180deg,#f7f5f2_0%,#ffffff_55%,#ffffff_100%)]"
+      className="border-b border-[#eff0f5] bg-white"
     >
-      <div
-        className="pointer-events-none absolute -left-16 top-4 h-32 w-32 rounded-full bg-[#E0703A]/[0.06] blur-3xl"
-        aria-hidden
-      />
-
-      <div className="relative mx-auto max-w-7xl shell-x pb-2.5 pt-4 sm:pb-3 sm:pt-5">
-        <div className="flex items-end justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#E0703A] sm:text-[11px]">
-              Browse
-            </p>
-            <HomeSectionTitle
-              id={headingId}
-              as={headingAs}
-              center={false}
-              className="!mt-0.5"
-            >
-              Shop collections
-            </HomeSectionTitle>
-          </div>
+      <div className="relative mx-auto max-w-7xl shell-x pb-3 pt-3 sm:pb-4 sm:pt-4">
+        <div className="mb-2.5 flex items-center justify-between gap-2 sm:mb-3">
+          <h2
+            id={headingId}
+            className="text-[16px] font-normal leading-none text-[#424242] sm:text-[18px]"
+          >
+            Categories
+          </h2>
           {showViewAll ? (
             <Link
               href="/collections"
-              className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#1c1d1d]/12 bg-white/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#1c1d1d] shadow-sm transition hover:border-[#E0703A] hover:text-[#E0703A] sm:px-3.5 sm:text-[11px]"
+              className="text-[12px] font-normal uppercase tracking-wide text-[#1a9cb7] sm:text-[13px]"
             >
-              View all
-              <span aria-hidden>→</span>
+              VIEW ALL
             </Link>
           ) : null}
         </div>
-      </div>
 
-      <div className="relative pb-4 sm:pb-5">
-        <HomeCollectionsMarquee tiles={tiles} />
+        <ul className="grid grid-cols-4 gap-x-1.5 gap-y-3 sm:grid-cols-6 sm:gap-x-2 sm:gap-y-4 lg:grid-cols-8">
+          {primary.map((tile) => {
+            const src = tile.imageUrl
+              ? optimizeSupplierImageUrl(tile.imageUrl, 200) || tile.imageUrl
+              : "";
+            const native = src ? isNativeImg(src) : false;
+            return (
+              <li key={tile.tileKey ?? tile.slug}>
+                <Link
+                  href={tile.href}
+                  className="flex flex-col items-center text-center transition hover:opacity-90"
+                >
+                  <span className="relative block aspect-square w-full max-w-[96px] overflow-hidden rounded-[2px] border border-[#e2e2e2] bg-[#fafafa] sm:max-w-none">
+                    {src ? (
+                      native ? (
+                        // eslint-disable-next-line @next/next/no-img-element -- supplier CDNs
+                        <img
+                          src={src}
+                          alt=""
+                          className="absolute inset-0 h-full w-full object-cover object-center"
+                          loading="lazy"
+                          decoding="async"
+                          width={120}
+                          height={120}
+                        />
+                      ) : (
+                        <Image
+                          src={src}
+                          alt=""
+                          fill
+                          className="object-cover object-center"
+                          sizes="(max-width: 640px) 22vw, 12vw"
+                        />
+                      )
+                    ) : (
+                      <span className="absolute inset-0 bg-neutral-100" />
+                    )}
+                  </span>
+                  <span className="mt-1.5 line-clamp-2 min-h-[2em] px-0.5 text-[11px] leading-tight text-[#212121] sm:text-[12px]">
+                    {tile.name}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

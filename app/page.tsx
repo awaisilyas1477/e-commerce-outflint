@@ -21,7 +21,6 @@ import {
   HOME_METADATA_TITLE,
 } from "@/lib/seo";
 import { JsonLd, webPageJsonLd } from "@/lib/seo/jsonld";
-import { HomeSectionTitle } from "@/components/ui/home-section-title";
 import { HERO_IMAGE_QUALITY, HERO_IMAGE_SIZES } from "@/lib/images/hero";
 import { HomeStickyProductVideo } from "@/components/home/HomeStickyProductVideo";
 
@@ -126,19 +125,8 @@ export default async function Home() {
           <HeroBanner slides={homeMarketing.slides} />
         ) : null}
         <TopStrip />
-        <section className="border-b border-[#e8e8e1] bg-white">
-          <div className="mx-auto max-w-7xl shell-x py-2.5 text-center sm:py-4">
-            <HomeSectionTitle
-              as="h1"
-              className="!text-[1.2rem] !leading-tight sm:!text-[clamp(1.35rem,2.4vw,1.75rem)]"
-            >
-              {homeDisplayTitle}
-            </HomeSectionTitle>
-            <p className="mx-auto mt-1 max-w-xl text-[12px] leading-snug text-neutral-600 line-clamp-2 sm:mt-1.5 sm:max-w-2xl sm:text-[15px] sm:leading-normal sm:line-clamp-none">
-              {homeDisplayDescription}
-            </p>
-          </div>
-        </section>
+        {/* Visible marketing H1 removed — keep one sr-only H1 for a11y/SEO. */}
+        <h1 className="sr-only">{homeDisplayTitle}</h1>
         {homeMarketing.missionParagraph ? (
           <MissionStrip missionHtml={homeMarketing.missionParagraph} />
         ) : null}

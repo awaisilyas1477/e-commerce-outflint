@@ -22,8 +22,8 @@ export const COLLECTION_SLUG_ALIASES: Record<string, string> = {
   "home-appliances": "presser-foot-collection",
   beauty: "sewing-storage-and-organizer-cases",
   "beauty-personal-care": "sewing-storage-and-organizer-cases",
-  lighting: "deals",
-  "lamps-lighting": "deals",
+  lighting: "stitching-accessories",
+  "lamps-lighting": "stitching-accessories",
   wellness: "deals",
   "wellness-comfort": "deals",
   home: "stitching-accessories",
@@ -46,6 +46,26 @@ export const COLLECTION_NAV_ITEMS: CollectionNavItem[] = [
     slug: "sewing-storage-and-organizer-cases",
     name: "Sewing Storage & Organizer Cases",
     href: "/collections/sewing-storage-and-organizer-cases",
+  },
+  {
+    slug: "needles-and-bobbins",
+    name: "Needles & Bobbins",
+    href: "/collections/needles-and-bobbins",
+  },
+  {
+    slug: "scissors-and-cutting-tools",
+    name: "Scissors & Cutting Tools",
+    href: "/collections/scissors-and-cutting-tools",
+  },
+  {
+    slug: "sewing-machine-parts",
+    name: "Sewing Machine Parts",
+    href: "/collections/sewing-machine-parts",
+  },
+  {
+    slug: "measuring-and-marking-tools",
+    name: "Measuring & Marking Tools",
+    href: "/collections/measuring-and-marking-tools",
   },
   {
     slug: "deals",

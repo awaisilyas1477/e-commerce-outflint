@@ -723,7 +723,7 @@ export const getCachedStoreBrand = unstable_cache(
 
 export const getCachedAnnouncementBar = unstable_cache(
   _loadAnnouncementBar,
-  ["layout-announcement-bar"],
+  ["layout-announcement-bar-v2"],
   {
     revalidate: DEFAULT_REVALIDATE_SECONDS,
     tags: [LAYOUT_CACHE_TAGS.announcementBar],
