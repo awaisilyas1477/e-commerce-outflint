@@ -182,8 +182,8 @@ async function loadSeoOverrideForSubjectImpl(
   const localeKey = (localeHint ?? "").trim() || "default";
   return unstable_cache(
     () => fetchSeoOverrideForSubject(subjectType, subjectId, localeHint),
-    // v4: scissors SEO left→right handed + collection SEO refreshes.
-    ["seo-meta-subject-v4", subjectType, subjectId, localeKey],
+    // v5: Outflint long-tail keyword campaign (Juki/Brother/Singer feet + parts).
+    ["seo-meta-subject-v5", subjectType, subjectId, localeKey],
     { revalidate: SEO_META_TTL, tags: ["seo:meta", `seo:meta:${subjectType}:${subjectId}`] },
   )();
 }
@@ -195,7 +195,7 @@ async function loadSeoOverrideForRouteImpl(
   const localeKey = (localeHint ?? "").trim() || "default";
   return unstable_cache(
     () => fetchSeoOverrideForRoute(subjectKey, localeHint),
-    ["seo-meta-route-v1", subjectKey, localeKey],
+    ["seo-meta-route-v2", subjectKey, localeKey],
     { revalidate: SEO_META_TTL, tags: ["seo:meta", `seo:meta:route:${subjectKey}`] },
   )();
 }

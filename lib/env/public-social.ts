@@ -1,42 +1,47 @@
 /**
  * Social URLs for footer / mobile nav.
  * Icons always render; missing env vars fall back to configured brand handles.
+ *
+ * IMPORTANT: Next.js only inlines NEXT_PUBLIC_* on the client when accessed as
+ * static property reads (process.env.NEXT_PUBLIC_FOO). Dynamic process.env[key]
+ * is undefined in the browser and causes SSR/client hydration mismatches.
  */
 
-const DEFAULT_FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61593870744153";
+const DEFAULT_FACEBOOK_URL =
+  "https://www.facebook.com/profile.php?id=61593870744153";
 const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/Outflint/";
 const DEFAULT_YOUTUBE_URL = "https://www.youtube.com/@Outflint";
 
-function readPublicUrl(envKey: string, fallback = "#"): string {
-  const v = process.env[envKey]?.trim();
+function pickPublicUrl(value: string | undefined, fallback: string): string {
+  const v = value?.trim();
   return v && v.length > 0 ? v : fallback;
 }
 
 export function getPublicInstagramUrl(): string {
-  return readPublicUrl("NEXT_PUBLIC_INSTAGRAM_URL", DEFAULT_INSTAGRAM_URL);
+  return pickPublicUrl(process.env.NEXT_PUBLIC_INSTAGRAM_URL, DEFAULT_INSTAGRAM_URL);
 }
 
 export function getPublicFacebookUrl(): string {
-  return readPublicUrl("NEXT_PUBLIC_FACEBOOK_URL", DEFAULT_FACEBOOK_URL);
+  return pickPublicUrl(process.env.NEXT_PUBLIC_FACEBOOK_URL, DEFAULT_FACEBOOK_URL);
 }
 
 export function getPublicTikTokUrl(): string {
-  return readPublicUrl("NEXT_PUBLIC_TIKTOK_URL", "#");
+  return pickPublicUrl(process.env.NEXT_PUBLIC_TIKTOK_URL, "#");
 }
 
 export function getPublicWhatsAppUrl(): string {
-  return readPublicUrl("NEXT_PUBLIC_WHATSAPP_URL", "#");
+  return pickPublicUrl(process.env.NEXT_PUBLIC_WHATSAPP_URL, "#");
 }
 
 export function getPublicYouTubeUrl(): string {
-  return readPublicUrl("NEXT_PUBLIC_YOUTUBE_URL", DEFAULT_YOUTUBE_URL);
+  return pickPublicUrl(process.env.NEXT_PUBLIC_YOUTUBE_URL, DEFAULT_YOUTUBE_URL);
 }
 
 export type PublicSocialLink = {
   id: "facebook" | "instagram" | "tiktok" | "whatsapp" | "youtube";
   label: string;
   href: string;
-  /** True when env is empty / placeholder â€” UI keeps the icon but link is inactive. */
+  /** True when env is empty / placeholder — UI keeps the icon but link is inactive. */
   placeholder: boolean;
 };
 
