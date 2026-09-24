@@ -24,7 +24,11 @@ import { useCart } from "@/app/providers/cart-provider";
 import { formatPkr } from "@/app/lib/format-currency";
 import { NAV2_ACCENT } from "@/components/navigation/nav2-theme";
 
-const STRIP_VISIBLE = 5;
+/**
+ * Extra collections (not in `header_nav_menu_items`) go under More — keep the
+ * department strip short. Primary links come only from the curated header menu.
+ */
+const STRIP_VISIBLE = 0;
 const MORE_PANEL_MIN_W = 200;
 const menuEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const CLOSE_MENUS = "storefront:close-mega-menus";
