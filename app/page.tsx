@@ -11,6 +11,7 @@ import {
   HomeFirstStrip,
   HomeFirstStripSkeleton,
 } from "@/components/home/home-stream";
+import { RecentlyViewedSection } from "@/components/product/recently-viewed-section";
 import { getHomeMarketingData } from "@/app/lib/home-marketing";
 import {
   buildPageMetadata,
@@ -134,6 +135,9 @@ export default async function Home() {
         <Suspense fallback={<HomeFirstStripSkeleton />}>
           <HomeFirstStrip />
         </Suspense>
+
+        {/* Client island — paints from localStorage without waiting on rails. */}
+        <RecentlyViewedSection className="mx-auto max-w-7xl shell-x" />
 
         <Suspense fallback={<HomeDeferredSkeleton />}>
           <HomeDeferredSections />

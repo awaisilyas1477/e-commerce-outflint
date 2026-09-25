@@ -23,27 +23,20 @@ export type ProductWhatsAppContext = {
   priceLabel?: string;
 };
 
-/** Prefill so Meta / site WhatsApp chats include product name + link (+ image URL). */
+/** Prefill so WhatsApp chats include product name, price, and link. */
 export function buildProductWhatsAppMessage(
   storeName: string,
   ctx: ProductWhatsAppContext,
 ): string {
+  const brand = storeName.trim() || "Outflint";
   const name = ctx.productName.trim() || "this product";
-  const lines = [
-    `Hi ${storeName.trim() || "Outflint"},`,
-    "",
-    `I want to order: ${name}`,
-  ];
+  const lines = [`Hi ${brand}, I want to order: ${name}`];
   if (ctx.priceLabel?.trim()) {
     lines.push(`Price: ${ctx.priceLabel.trim()}`);
   }
   if (ctx.productUrl.trim()) {
-    lines.push(`Product: ${ctx.productUrl.trim()}`);
+    lines.push(ctx.productUrl.trim());
   }
-  if (ctx.imageUrl?.trim()) {
-    lines.push(`Photo: ${ctx.imageUrl.trim()}`);
-  }
-  lines.push("", "Please confirm availability.");
   return lines.join("\n");
 }
 

@@ -51,7 +51,8 @@ export async function GET(req: Request) {
 
   return NextResponse.json(responseProducts, {
     headers: {
-      "Cache-Control": "private, no-store",
+      // Short private cache — same tab revisits feel instant.
+      "Cache-Control": "private, max-age=60",
     },
   });
 }

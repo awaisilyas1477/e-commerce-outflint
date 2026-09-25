@@ -42,6 +42,9 @@ import { StickyProductVideo } from "@/components/product/sticky-product-video";
 import { parseProductVideoSource } from "@/lib/product-video/url";
 import { formatPurchaseStockMessage, isLowStock } from "@/lib/low-stock";
 import { recordRecentlyViewed } from "@/lib/recently-viewed";
+import { useStoreBrand } from "@/app/providers/store-brand-provider";
+import { buildProductWhatsAppUrl } from "@/lib/whatsapp";
+import { getPublicSiteUrl } from "@/lib/site-url";
 
 function sellableQty(v: DbProductVariantRow): number {
   return Math.max(0, (v.quantity_on_hand ?? 0) - (v.quantity_reserved ?? 0));
@@ -189,6 +192,7 @@ export function ProductPdp({
     collectionLabel.trim() !== "" &&
     collectionLabel.toLowerCase() !== "uncategorized";
   const { isOpen: cartDrawerOpen } = useCart();
+  const { storeName, footer } = useStoreBrand();
 
   const variantKeys = useMemo(
     () =>
@@ -261,10 +265,6 @@ export function ProductPdp({
     });
     return () => subscription.unsubscribe();
   }, []);
-
-  useEffect(() => {
-    recordRecentlyViewed(productSlug);
-  }, [productSlug]);
 
   useEffect(() => {
     let cancelled = false;
@@ -386,6 +386,36 @@ export function ProductPdp({
     () => buildGallery(assets, product.images),
     [assets, product.images],
   );
+
+  useEffect(() => {
+    const cover =
+      gallery.find((g) => g.kind === "image")?.url ||
+      firstImage(product.images) ||
+      "";
+    const priceRow = matchedVariant ?? variants[0];
+    recordRecentlyViewed(productSlug, {
+      id: product.id,
+      name: product.name,
+      image: cover,
+      price: priceRow ? Number(priceRow.price) : undefined,
+      compareAtPrice:
+        priceRow?.compare_at_price != null
+          ? Number(priceRow.compare_at_price)
+          : null,
+      defaultVariantId: priceRow?.id,
+      defaultVariantSku: priceRow?.sku ?? undefined,
+      inStock: priceRow ? sellableQty(priceRow) > 0 : undefined,
+    });
+  }, [
+    productSlug,
+    product.id,
+    product.name,
+    product.images,
+    gallery,
+    matchedVariant,
+    variants,
+  ]);
+
   const [activeMedia, setActiveMedia] = useState(0);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [slideDir, setSlideDir] = useState<1 | -1>(1);
@@ -568,6 +598,30 @@ export function ProductPdp({
   const showStickyVideo = Boolean(parseProductVideoSource(stickyVideoUrl));
   const stickyPoster =
     gallery.find((g) => g.kind === "image")?.url || firstImage(product.images) || null;
+
+  const productWhatsAppHref = useMemo(() => {
+    const phone = footer.phone?.trim() || "";
+    if (!phone) return "";
+    const priceRow = matchedVariant ?? priceVariant ?? variants[0];
+    const origin = getPublicSiteUrl().replace(/\/$/, "");
+    return (
+      buildProductWhatsAppUrl(phone, storeName, {
+        productName: product.name,
+        productUrl: `${origin}/products/${productSlug}`,
+        imageUrl: stickyPoster || undefined,
+        priceLabel: priceRow ? formatPkr(Number(priceRow.price)) : undefined,
+      }) ?? ""
+    );
+  }, [
+    footer.phone,
+    storeName,
+    product.name,
+    productSlug,
+    matchedVariant,
+    priceVariant,
+    variants,
+    stickyPoster,
+  ]);
 
   return (
     <>
@@ -1135,18 +1189,23 @@ export function ProductPdp({
         </div>
       </section>
 
-      {showStickyVideo ? (
+      {(showStickyVideo || productWhatsAppHref) ? (
         <StickyProductVideo
-          reels={[
-            {
-              videoUrl: stickyVideoUrl,
-              productName: product.name,
-              productHref: `/products/${productSlug}`,
-              posterUrl: stickyPoster,
-            },
-          ]}
-          suppressMini={showStickyBar}
+          reels={
+            showStickyVideo
+              ? [
+                  {
+                    videoUrl: stickyVideoUrl,
+                    productName: product.name,
+                    productHref: `/products/${productSlug}`,
+                    posterUrl: stickyPoster,
+                  },
+                ]
+              : []
+          }
           bottomClassName={showStickyBar ? "bottom-24" : "bottom-4"}
+          whatsappHref={productWhatsAppHref || undefined}
+          whatsappLabel={`WhatsApp about ${product.name}`}
         />
       ) : null}
 

@@ -8,7 +8,6 @@ import { ProductCardSkeleton } from "@/components/ui/product-card-skeleton";
 import { getHomeRailSections } from "@/app/lib/home-rails";
 import { getCachedHomeReviewHighlights } from "@/lib/cache/home-review-highlights";
 import { getCachedStoreReviewAggregate } from "@/lib/cache/store-review-aggregate";
-import { RecentlyViewedSection } from "@/components/product/recently-viewed-section";
 
 /** Skeleton for Daraz-style categories grid under the hero. */
 export function HomeFirstStripSkeleton() {
@@ -80,6 +79,8 @@ export async function HomeFirstStrip() {
 
 /**
  * Product rails + social proof — deferred after hero + first strip.
+ * Recently viewed is client-only and mounts earlier on the home page so it
+ * does not wait behind rails/reviews.
  */
 export async function HomeDeferredSections() {
   const [railSections, storeReviews, reviewHighlights] = await Promise.all([
@@ -90,7 +91,6 @@ export async function HomeDeferredSections() {
 
   return (
     <>
-      <RecentlyViewedSection className="mx-auto max-w-7xl shell-x" />
       {railSections.map((rail) => (
         <ProductSection
           key={rail.viewAllHref}
