@@ -13,21 +13,21 @@ type CollectionSeoData = {
 
 const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
   "stitching-accessories": {
-    title: "Buy Stitching Accessories & Sewing Machine Parts Online in Pakistan",
+    title: "Buy Stitching Accessories & Sewing Accessories Online in Pakistan",
     intro:
-      "Outflint stocks everyday sewing tools and spare parts for tailor shops and home machines — needles, snips, guides, oil, and workshop essentials with Cash on Delivery across Pakistan.",
+      "Shop stitching accessories and sewing accessories online in Pakistan — needles, snips, guides, machine parts, and everyday tailoring tools for shops and home machines, with Cash on Delivery nationwide.",
     subsections: [
       {
-        heading: "Workshop-Ready Spare Parts",
-        body: "Replace worn guides, tension parts, and small fittings without delaying orders. Clear product photos and specs help you match industrial and domestic machines.",
+        heading: "Sewing Machine Accessories & Spare Parts",
+        body: "Restock stitching machine accessories, thread guides, tension parts, and small fittings without delaying orders. Clear photos and specs help match industrial and domestic machines.",
       },
       {
-        heading: "Needles, Snips & Hand Tools",
-        body: "Keep a reliable bench kit: needle assortments, thread snips, seam rippers, and threaders built for daily stitching volume.",
+        heading: "Kits, Boxes & Everyday Hand Tools",
+        body: "Build a sewing accessories kit for the bench: needle assortments, thread snips, seam rippers, and threaders — practical stitching accessories for daily volume.",
       },
       {
-        heading: "COD for Tailors Nationwide",
-        body: "Order the parts you need and pay when the courier arrives — practical for shops that restock mid-week.",
+        heading: "Online Orders with COD Across Pakistan",
+        body: "Order sewing accessories online and pay when the courier arrives — reliable for tailor shops that restock mid-week across Karachi, Lahore, and beyond.",
       },
     ],
     relatedGuideSlug: "",
@@ -55,17 +55,17 @@ const COLLECTION_SEO_DATA: Record<string, CollectionSeoData> = {
     relatedGuideTitle: "Read presser foot product reviews →",
   },
   "sewing-storage-and-organizer-cases": {
-    title: "Sewing Storage & Organizer Cases Online in Pakistan",
+    title: "Sewing Accessories Organizer, Box & Storage Cases in Pakistan",
     intro:
-      "Keep needles, bobbins, and small tools sorted with portable cases and organizers from Outflint — built for busy benches and travel kits.",
+      "Keep needles, bobbins, and small tools sorted with a sewing accessories organizer, stitching accessories box, and portable cases from Outflint — built for busy benches and travel kits.",
     subsections: [
       {
-        heading: "Needle & Notion Cases",
-        body: "Label sizes clearly and store sharps safely so benches stay organized between jobs.",
+        heading: "Needle Cases & Notion Holders",
+        body: "Label sizes clearly and store sharps safely in a sewing accessories case or holder so benches stay organized between jobs.",
       },
       {
-        heading: "Portable Kits for Home Sewists",
-        body: "Compact tubes and cases fit in a drawer or bag without mixing machine oil and fabric.",
+        heading: "Portable Kits, Bags & Boxes",
+        body: "Compact sewing accessories bags, boxes, and pouches fit in a drawer or bag without mixing machine oil and fabric.",
       },
     ],
     relatedGuideSlug: "",
